@@ -63,6 +63,8 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 03, Plan 01]** prefers-reduced-motion support for streaming cursor animation
 - **[Phase 03, Plan 02]** Status-driven UI pattern: ChatInput status prop controls disabled state, button variant, and aria-live announcements
 - **[Phase 03, Plan 02]** Prompt auto-submit: SuggestedPrompts onPromptClick calls same handleSubmit as ChatInput (no two-step confirm)
+- **[Phase 03, Plan 03]** useChat onFinish focuses input via forwarded ref (no manual status polling)
+- **[Phase 03, Plan 03]** ChatErrorBanner wired to regenerate() for one-click retry on errors
 - **[Phase 03, Plan 04]** Used buttonVariants() for anchor-styled buttons (base-ui Button lacks asChild support unlike Radix)
 - **[Phase 03, Plan 04]** Two-indicator threshold for TNS fallback detection prevents false positives on casual "conseiller" mentions
 - **[Phase 03, Plan 04]** Fallback CTA renders only after streaming completes (!isStreaming && !isLoading) to avoid premature display
