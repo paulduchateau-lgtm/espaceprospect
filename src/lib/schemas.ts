@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { tool } from 'ai';
+import { tool, zodSchema } from 'ai';
 
 /**
  * Dashboard data schema for structured output extraction via Claude tool_use.
@@ -96,6 +96,6 @@ export type Profile = z.infer<typeof profileSchema>;
 export const dashboardTool = tool({
   description:
     'Generate personalized dashboard data based on the TNS prospect situation analysis. MUST be called after every conversational response.',
-  inputSchema: dashboardSchema,
+  inputSchema: zodSchema(dashboardSchema),
   execute: async (input) => input,
 });
