@@ -53,15 +53,44 @@ export async function POST(req: Request) {
   // Convert UI messages to model format (async in AI SDK 6)
   const modelMessages = await convertToModelMessages(messages);
 
-  // Stream Claude response with dashboard tool
-  const result = streamText({
-    model: anthropic('claude-sonnet-4-20250514'),
-    system: buildSystemPrompt(ragContext),
-    messages: modelMessages,
-    tools: {
-      generate_dashboard: dashboardTool,
-    },
-  });
+  try {
+    // Stream Claude response with dashboard tool
+    const result = streamText({
+      model: anthropic('claude-sonnet-4-20250514'),
+      system: buildSystemPrompt(ragContext),
+      messages: modelMessages,
+      tools: {
+        generate_dashboard: dashboardTool,
+      },
+    });
 
-  return result.toUIMessageStreamResponse();
+    return result.toUIMessageStreamResponse();
+  } catch (error) {
+    console.error('[API Chat Error]', error);
+
+    let status = 500;
+    let errorMessage = 'Internal server error';
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+
+      if (errorMessage.includes('rate') || errorMessage.includes('429')) {
+        status = 429;
+      } else if (errorMessage.includes('401') || errorMessage.includes('authentication')) {
+        status = 401;
+      } else if (errorMessage.includes('403')) {
+        status = 403;
+      } else if (errorMessage.includes('overloaded') || errorMessage.includes('529')) {
+        status = 529;
+      }
+    }
+
+    return new Response(
+      JSON.stringify({ error: errorMessage }),
+      {
+        status,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
 }
