@@ -90,38 +90,38 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CONV-01 | — | Pending |
-| CONV-02 | — | Pending |
-| CONV-03 | — | Pending |
-| CONV-04 | — | Pending |
-| CONV-05 | — | Pending |
-| CONV-06 | — | Pending |
-| DASH-01 | — | Pending |
-| DASH-02 | — | Pending |
-| DASH-03 | — | Pending |
-| DASH-04 | — | Pending |
-| DASH-05 | — | Pending |
-| DASH-06 | — | Pending |
-| RAG-01 | — | Pending |
-| RAG-02 | — | Pending |
-| RAG-03 | — | Pending |
-| RAG-04 | — | Pending |
-| RAG-05 | — | Pending |
-| CONF-01 | — | Pending |
-| CONF-02 | — | Pending |
-| CONF-03 | — | Pending |
-| CONF-04 | — | Pending |
-| PERS-01 | — | Pending |
-| PERS-02 | — | Pending |
-| PERS-03 | — | Pending |
-| UX-01 | — | Pending |
-| UX-02 | — | Pending |
-| UX-03 | — | Pending |
+| CONV-01 | 3 | Pending |
+| CONV-02 | 3 | Pending |
+| CONV-03 | 3 | Pending |
+| CONV-04 | 2 | Pending |
+| CONV-05 | 2 | Pending |
+| CONV-06 | 3 | Pending |
+| DASH-01 | 4 | Pending |
+| DASH-02 | 4 | Pending |
+| DASH-03 | 4 | Pending |
+| DASH-04 | 4 | Pending |
+| DASH-05 | 4 | Pending |
+| DASH-06 | 4 | Pending |
+| RAG-01 | 1 | Pending |
+| RAG-02 | 1 | Pending |
+| RAG-03 | 1 | Pending |
+| RAG-04 | 2 | Pending |
+| RAG-05 | 2 | Pending |
+| CONF-01 | 1 | Pending |
+| CONF-02 | 5 | Pending |
+| CONF-03 | 5 | Pending |
+| CONF-04 | 5 | Pending |
+| PERS-01 | 5 | Pending |
+| PERS-02 | 5 | Pending |
+| PERS-03 | 5 | Pending |
+| UX-01 | 6 | Pending |
+| UX-02 | 6 | Pending |
+| UX-03 | 3 | Pending |
 
 **Coverage:**
 - v1 requirements: 27 total
-- Mapped to phases: 0
-- Unmapped: 27 ⚠️
+- Mapped to phases: 27
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-20*
