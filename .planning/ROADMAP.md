@@ -50,7 +50,7 @@
 
 ### Plan Progress
 - [x] 04-01: Dashboard Card Components (RiskCard, ProductCard, PartnerCard, ResourceList, AdvisorCTA, Zod schemas, partner config)
-- [ ] 04-02: Dashboard Layout
+- [x] 04-02: Dashboard Layout & Data Flow (DashboardLayout, DashboardSkeleton, useChatWithDashboard, SSE dashboard events, animation variants)
 - [ ] 04-03: Transition Animation
 - [ ] 04-04: Responsive & Polish
 
