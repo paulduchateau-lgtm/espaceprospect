@@ -3,19 +3,19 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-20T15:21:41Z"
+last_updated: "2026-03-20T16:33:00Z"
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 15
-  completed_plans: 13
+  completed_plans: 14
 ---
 
 # Project State
 
 ## Current Phase
 
-Phase 4: Dashboard & Transition Animation (In Progress, 2/4 plans done)
+Phase 4: Dashboard & Transition Animation (In Progress, 3/4 plans done)
 
 ## Project Reference
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 | 1 | Foundation & Data Acquisition | ● Complete (3/3) |
 | 2 | Core AI Loop | ● Complete (4/4) |
 | 3 | Conversational UI | ● Complete (4/4) |
-| 4 | Dashboard & Transition Animation | ◐ In Progress (2/4) |
+| 4 | Dashboard & Transition Animation | ◐ In Progress (3/4) |
 | 5 | Persistence & Legal Compliance | ○ Pending |
 | 6 | Hardening & Demo Preparation | ○ Pending |
 
@@ -74,6 +74,10 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 04, Plan 02]** Wrapped AI SDK toUIMessageStream with custom ReadableStream to emit named SSE "dashboard" event while preserving useChat protocol
 - **[Phase 04, Plan 02]** Used toolResult.output (not .result) for AI SDK 6 TypedToolResult compatibility
 - **[Phase 04, Plan 02]** Phase state machine pattern: chatting -> analyzing -> dashboard for useChatWithDashboard hook
+- **[Phase 04, Plan 04]** SplitPanel created independently from Plan 04-03 (parallel execution); includes both desktop split and mobile tab layout
+- **[Phase 04, Plan 04]** MobileCTA uses lg:hidden to defer to desktop AdvisorCTA at >= 1024px breakpoint
+- **[Phase 04, Plan 04]** 72px bottom padding (48px button + 24px padding) prevents mobile content overlap with fixed CTA
+- **[Phase 04, Plan 04]** Mobile card stagger 80ms vs desktop 120ms for faster perceived load on smaller viewports
 
 ---
 *Initialized: 2026-03-20*
