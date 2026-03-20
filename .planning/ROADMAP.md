@@ -48,6 +48,12 @@
 **Goal:** Build the personalized dashboard and implement the animated chat-to-dashboard transition that constitutes the prototype's "wow moment."
 **Requirements:** DASH-01, DASH-02, DASH-03, DASH-04, DASH-05, DASH-06
 
+### Plan Progress
+- [x] 04-01: Dashboard Card Components (RiskCard, ProductCard, PartnerCard, ResourceList, AdvisorCTA, Zod schemas, partner config)
+- [ ] 04-02: Dashboard Layout
+- [ ] 04-03: Transition Animation
+- [ ] 04-04: Responsive & Polish
+
 ### Success Criteria
 1. After the AI response completes, the chat panel animates to 1/3 width and the dashboard slides in from the right with a progressive card-by-card reveal
 2. The dashboard displays risk cards sorted by pertinence, product cards with relevance explanations, partner service cards (Caarl, Doado, Noctia), and curated resource links

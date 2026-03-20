@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-20T17:00:00.000Z"
+last_updated: "2026-03-20T15:19:59.767Z"
 progress:
   total_phases: 6
   completed_phases: 3
@@ -15,13 +15,13 @@ progress:
 
 ## Current Phase
 
-Phase 3: Conversational UI (Complete, 4/4 plans done)
+Phase 4: Dashboard & Transition Animation (In Progress, 1/4 plans done)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-20)
 **Core value:** Un TNS qui arrive sur le site comprend en moins de 2 minutes comment MetLife peut l'aider, à travers une expérience conversationnelle simple et personnalisée.
-**Current focus:** Phase 03 — conversational-ui (complete, all 4 plans done)
+**Current focus:** Phase 04 — dashboard-transition
 
 ## Phase Status
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 | 1 | Foundation & Data Acquisition | ● Complete (3/3) |
 | 2 | Core AI Loop | ● Complete (4/4) |
 | 3 | Conversational UI | ● Complete (4/4) |
-| 4 | Dashboard & Transition Animation | ○ Pending |
+| 4 | Dashboard & Transition Animation | ◐ In Progress (1/4) |
 | 5 | Persistence & Legal Compliance | ○ Pending |
 | 6 | Hardening & Demo Preparation | ○ Pending |
 
@@ -68,6 +68,9 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 03, Plan 04]** Used buttonVariants() for anchor-styled buttons (base-ui Button lacks asChild support unlike Radix)
 - **[Phase 03, Plan 04]** Two-indicator threshold for TNS fallback detection prevents false positives on casual "conseiller" mentions
 - **[Phase 03, Plan 04]** Fallback CTA renders only after streaming completes (!isStreaming && !isLoading) to avoid premature display
+- **[Phase 04, Plan 01]** Used buttonVariants() for ProductCard external link (base-ui Button lacks asChild)
+- **[Phase 04, Plan 01]** Added clientProductSchema with optional coverageType/sourceIds for client-side dashboard rendering
+- **[Phase 04, Plan 01]** dashboardDataSchema defaults partners/resources to empty arrays when omitted
 
 ---
 *Initialized: 2026-03-20*
