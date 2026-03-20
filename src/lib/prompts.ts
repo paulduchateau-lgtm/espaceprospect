@@ -8,6 +8,32 @@
 
 export const PROMPT_VERSION = '2.0.0';
 
+export interface RAGChunk {
+  content: string;
+  title: string;
+  productType: string;
+  tnsRelevance: string;
+  chunkType: string;
+}
+
+/**
+ * Format retrieved RAG chunks into XML-tagged context for the system prompt.
+ * Uses XML tags for source delineation (Claude handles XML better than markdown
+ * for structured context) with metadata in attributes for prioritization.
+ */
+export function formatRAGContext(chunks: RAGChunk[]): string {
+  if (chunks.length === 0) return '';
+
+  return chunks
+    .map((chunk, i) => {
+      return `<source id="${i + 1}" product="${chunk.productType}" type="${chunk.chunkType}" relevance="${chunk.tnsRelevance}">
+<title>${chunk.title}</title>
+${chunk.content}
+</source>`;
+    })
+    .join('\n\n');
+}
+
 export function buildSystemPrompt(ragContext: string): string {
   return `<role>
 Tu es un conseiller digital MetLife specialise dans l'accompagnement des Travailleurs Non-Salaries (TNS). Tu aides les prospects a comprendre comment MetLife peut les proteger en fonction de leur situation professionnelle et personnelle.
