@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import { ConsentBanner } from "@/components/legal/ConsentBanner";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { TrustSignals } from "@/components/legal/TrustSignals";
@@ -8,6 +8,10 @@ import { TrustSignals } from "@/components/legal/TrustSignals";
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
 }));
+
+afterEach(() => {
+  cleanup();
+});
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -27,40 +31,48 @@ Object.defineProperty(window, "localStorage", { value: localStorageMock });
 
 describe("ConsentBanner", () => {
   beforeEach(() => {
+    cleanup();
     localStorageMock.clear();
     localStorageMock.getItem.mockClear();
     localStorageMock.setItem.mockClear();
   });
 
-  it("renders the consent dialog when localStorage has no consent key", () => {
+  it("renders the consent dialog when localStorage has no consent key", async () => {
     localStorageMock.getItem.mockReturnValue(null);
     render(
       <ConsentBanner>
         <div data-testid="child-content">Protected Content</div>
       </ConsentBanner>
     );
-    expect(screen.getByRole("dialog")).toBeDefined();
-    expect(screen.getByTestId("consent-accept")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByRole("dialog")).toBeDefined();
+      expect(screen.getByTestId("consent-accept")).toBeDefined();
+    });
   });
 
-  it("renders children directly when localStorage has consent", () => {
+  it("renders children directly when localStorage has consent", async () => {
     localStorageMock.getItem.mockReturnValue("true");
     render(
       <ConsentBanner>
         <div data-testid="child-content">Protected Content</div>
       </ConsentBanner>
     );
-    expect(screen.getByTestId("child-content")).toBeDefined();
-    expect(screen.queryByRole("dialog")).toBeNull();
+    await waitFor(() => {
+      expect(screen.getByTestId("child-content")).toBeDefined();
+      expect(screen.queryByRole("dialog")).toBeNull();
+    });
   });
 
-  it("stores consent in localStorage when accept is clicked", () => {
+  it("stores consent in localStorage when accept is clicked", async () => {
     localStorageMock.getItem.mockReturnValue(null);
     render(
       <ConsentBanner>
         <div>Content</div>
       </ConsentBanner>
     );
+    await waitFor(() => {
+      expect(screen.getByTestId("consent-accept")).toBeDefined();
+    });
     fireEvent.click(screen.getByTestId("consent-accept"));
     expect(localStorageMock.setItem).toHaveBeenCalledWith(
       "metlife-rgpd-consent",
@@ -68,15 +80,17 @@ describe("ConsentBanner", () => {
     );
   });
 
-  it("dims children with pointer-events-none when not consented", () => {
+  it("dims children with pointer-events-none when not consented", async () => {
     localStorageMock.getItem.mockReturnValue(null);
     const { container } = render(
       <ConsentBanner>
         <div>Content</div>
       </ConsentBanner>
     );
-    const dimmedDiv = container.querySelector(".pointer-events-none.opacity-50");
-    expect(dimmedDiv).not.toBeNull();
+    await waitFor(() => {
+      const dimmedDiv = container.querySelector(".pointer-events-none.opacity-50");
+      expect(dimmedDiv).not.toBeNull();
+    });
   });
 });
 
