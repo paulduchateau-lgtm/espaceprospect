@@ -42,3 +42,10 @@ next-env.d.ts
 
 # Local database
 local.db
+
+# Scraping pipeline output
+/data/scraped/
+/data/chunks/
+
+# Crawlee storage
+/storage/
