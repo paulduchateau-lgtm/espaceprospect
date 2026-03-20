@@ -3,25 +3,25 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-20T14:48:26.486Z"
+last_updated: "2026-03-20T16:02:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 15
-  completed_plans: 7
+  completed_plans: 9
 ---
 
 # Project State
 
 ## Current Phase
 
-Phase 2: Core AI Loop (Complete, 4/4 plans done)
+Phase 3: Conversational UI (In Progress, 2/4 plans done)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-20)
 **Core value:** Un TNS qui arrive sur le site comprend en moins de 2 minutes comment MetLife peut l'aider, à travers une expérience conversationnelle simple et personnalisée.
-**Current focus:** Phase 02 complete — ready for Phase 03
+**Current focus:** Phase 03 — conversational-ui (03-01 + 03-02 complete)
 
 ## Phase Status
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 |-------|------|--------|
 | 1 | Foundation & Data Acquisition | ● Complete (3/3) |
 | 2 | Core AI Loop | ● Complete (4/4) |
-| 3 | Conversational UI | ○ Pending |
+| 3 | Conversational UI | ◐ In Progress (2/4) |
 | 4 | Dashboard & Transition Animation | ○ Pending |
 | 5 | Persistence & Legal Compliance | ○ Pending |
 | 6 | Hardening & Demo Preparation | ○ Pending |
@@ -57,6 +57,8 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 02, Plan 04]** Separated Claude streaming latency from RAG/embedding latency for validation (Voyage AI free tier ~22s)
 - **[Phase 02, Plan 04]** Strengthened no-price system prompt constraint (Claude was quoting RAG source amounts)
 - **[Phase 02, Plan 04]** Fixed libsql vector_top_k: returns rowid only, no distance column
+- **[Phase 03, Plan 02]** Status-driven UI pattern: ChatInput status prop controls disabled state, button variant, and aria-live announcements
+- **[Phase 03, Plan 02]** Prompt auto-submit: SuggestedPrompts onPromptClick calls same handleSubmit as ChatInput (no two-step confirm)
 
 ---
 *Initialized: 2026-03-20*
