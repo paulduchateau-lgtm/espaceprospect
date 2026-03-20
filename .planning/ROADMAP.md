@@ -64,6 +64,12 @@
 
 **Goal:** Enable prospect spaces to persist across sessions and add the legal/trust elements required for credibility with MetLife stakeholders.
 **Requirements:** PERS-01, PERS-02, PERS-03, CONF-02, CONF-03, CONF-04
+**Plans:** 3 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Database schema + prospect CRUD module (prospects, conversations, dashboard_snapshots tables)
+- [ ] 05-02-PLAN.md — Prospect flow wiring + API routes + /dashboard/[prospectId] return page
+- [ ] 05-03-PLAN.md — Legal UI components (RGPD consent banner, disclaimer, trust signals)
 
 ### Success Criteria
 1. A prospect receives a UUID-based URL after their first interaction and can return to `/dashboard/[prospectId]` to see their saved conversation and dashboard
