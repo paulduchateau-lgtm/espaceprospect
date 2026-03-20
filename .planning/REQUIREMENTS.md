@@ -29,7 +29,7 @@ Requirements for the prototype pitch. Each maps to roadmap phases.
 
 - [x] **RAG-01**: Le contenu du site MetLife est scrapé et normalisé en markdown structuré
 - [x] **RAG-02**: Le contenu est découpé en chunks sémantiques par produit/risque avec métadonnées enrichies
-- [ ] **RAG-03**: Les chunks sont embarqués via Voyage AI (voyage-finance-2) et stockés avec recherche vectorielle dans SQLite/Turso
+- [x] **RAG-03**: Les chunks sont embarqués via Voyage AI (voyage-finance-2) et stockés avec recherche vectorielle dans SQLite/Turso
 - [ ] **RAG-04**: Les requêtes prospect sont embarquées et matchées par similarité cosinus avec les chunks pertinents
 - [ ] **RAG-05**: Le contexte RAG est injecté dans le prompt système de Claude pour gronder les réponses
 
@@ -104,7 +104,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | DASH-06 | 4 | Pending |
 | RAG-01 | 1 | Complete |
 | RAG-02 | 1 | Complete |
-| RAG-03 | 1 | Pending |
+| RAG-03 | 1 | Complete |
 | RAG-04 | 2 | Pending |
 | RAG-05 | 2 | Pending |
 | CONF-01 | 1 | Complete |
