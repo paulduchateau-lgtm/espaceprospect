@@ -87,10 +87,10 @@ export async function POST(req: Request) {
         try {
           const toolResults = await result.toolResults;
           for (const toolResult of toolResults) {
-            if (toolResult.toolName === 'generate_dashboard' && toolResult.result) {
+            if (toolResult.toolName === 'generate_dashboard' && toolResult.output) {
               controller.enqueue(
                 encoder.encode(
-                  `event: dashboard\ndata: ${JSON.stringify(toolResult.result)}\n\n`
+                  `event: dashboard\ndata: ${JSON.stringify(toolResult.output)}\n\n`
                 )
               );
             }
