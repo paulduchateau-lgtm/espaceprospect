@@ -58,3 +58,22 @@ export async function retrieveRelevantChunks(
     distance: row.distance as number,
   }));
 }
+
+/**
+ * Format retrieved RAG chunks into XML-tagged context for Claude's system prompt.
+ * Uses XML tags per Anthropic best practices for structured context injection.
+ */
+export function formatRAGContext(chunks: RetrievedChunk[]): string {
+  if (chunks.length === 0) {
+    return '<context>\nAucune source pertinente trouvee pour cette requete.\n</context>';
+  }
+
+  const sources = chunks.map((chunk, i) => {
+    return `<source id="${i + 1}" product="${chunk.productType}" type="${chunk.chunkType}" relevance="${chunk.tnsRelevance}">
+<title>${chunk.title}</title>
+${chunk.content}
+</source>`;
+  }).join('\n\n');
+
+  return sources;
+}
