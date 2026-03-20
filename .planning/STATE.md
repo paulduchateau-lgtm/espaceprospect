@@ -57,6 +57,10 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 02, Plan 04]** Separated Claude streaming latency from RAG/embedding latency for validation (Voyage AI free tier ~22s)
 - **[Phase 02, Plan 04]** Strengthened no-price system prompt constraint (Claude was quoting RAG source amounts)
 - **[Phase 02, Plan 04]** Fixed libsql vector_top_k: returns rowid only, no distance column
+- **[Phase 03, Plan 01]** User bubbles use bg-metlife-navy (#0061A0) for AA contrast with white text (5.2:1 ratio)
+- **[Phase 03, Plan 01]** UIMessage.parts text extraction pattern for AI SDK 6 compatibility
+- **[Phase 03, Plan 01]** h-dvh for mobile virtual keyboard compatibility instead of h-screen
+- **[Phase 03, Plan 01]** prefers-reduced-motion support for streaming cursor animation
 - **[Phase 03, Plan 02]** Status-driven UI pattern: ChatInput status prop controls disabled state, button variant, and aria-live announcements
 - **[Phase 03, Plan 02]** Prompt auto-submit: SuggestedPrompts onPromptClick calls same handleSubmit as ChatInput (no two-step confirm)
 
