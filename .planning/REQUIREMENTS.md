@@ -36,15 +36,15 @@ Requirements for the prototype pitch. Each maps to roadmap phases.
 ### Confiance & Légal
 
 - [x] **CONF-01**: L'interface respecte la charte graphique MetLife (couleurs, typographie, identité visuelle)
-- [ ] **CONF-02**: Un bandeau de consentement RGPD est affiché avant la première interaction
-- [ ] **CONF-03**: Un disclaimer précise que les recommandations sont indicatives et ne constituent pas un conseil en assurance
-- [ ] **CONF-04**: Des signaux de confiance sont visibles (ACPR, solidité financière, nombre d'assurés)
+- [x] **CONF-02**: Un bandeau de consentement RGPD est affiché avant la première interaction
+- [x] **CONF-03**: Un disclaimer précise que les recommandations sont indicatives et ne constituent pas un conseil en assurance
+- [x] **CONF-04**: Des signaux de confiance sont visibles (ACPR, solidité financière, nombre d'assurés)
 
 ### Persistance
 
-- [ ] **PERS-01**: Chaque prospect reçoit un UUID unique à la création de son espace
+- [x] **PERS-01**: Chaque prospect reçoit un UUID unique à la création de son espace
 - [ ] **PERS-02**: Le prospect peut revenir sur son espace via une URL dédiée (/dashboard/[prospectId])
-- [ ] **PERS-03**: L'historique de conversation et le dashboard sont sauvegardés en base
+- [x] **PERS-03**: L'historique de conversation et le dashboard sont sauvegardés en base
 
 ### Responsive & UX
 
@@ -108,12 +108,12 @@ Deferred to future release. Tracked but not in current roadmap.
 | RAG-04 | 2 | Complete |
 | RAG-05 | 2 | Complete |
 | CONF-01 | 1 | Complete |
-| CONF-02 | 5 | Pending |
-| CONF-03 | 5 | Pending |
-| CONF-04 | 5 | Pending |
-| PERS-01 | 5 | Pending |
+| CONF-02 | 5 | Complete |
+| CONF-03 | 5 | Complete |
+| CONF-04 | 5 | Complete |
+| PERS-01 | 5 | Complete |
 | PERS-02 | 5 | Pending |
-| PERS-03 | 5 | Pending |
+| PERS-03 | 5 | Complete |
 | UX-01 | 6 | Pending |
 | UX-02 | 6 | Pending |
 | UX-03 | 3 | Pending |

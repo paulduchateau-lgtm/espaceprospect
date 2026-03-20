@@ -3,25 +3,25 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-20T15:33:07.007Z"
+last_updated: "2026-03-20T18:33:45.061Z"
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 18
+  completed_plans: 17
 ---
 
 # Project State
 
 ## Current Phase
 
-Phase 4: Dashboard & Transition Animation (Complete, 4/4 plans done)
+Phase 5: Persistence & Legal Compliance (In Progress, 1/3 plans done)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-20)
 **Core value:** Un TNS qui arrive sur le site comprend en moins de 2 minutes comment MetLife peut l'aider, à travers une expérience conversationnelle simple et personnalisée.
-**Current focus:** Phase 04 complete — ready for Phase 05 (Persistence & Legal Compliance)
+**Current focus:** Phase 05 — Persistence & Legal Compliance
 
 ## Phase Status
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 | 2 | Core AI Loop | ● Complete (4/4) |
 | 3 | Conversational UI | ● Complete (4/4) |
 | 4 | Dashboard & Transition Animation | ● Complete (4/4) |
-| 5 | Persistence & Legal Compliance | ○ Pending |
+| 5 | Persistence & Legal Compliance | ◐ In Progress (1/3) |
 | 6 | Hardening & Demo Preparation | ○ Pending |
 
 ## Decisions Log
@@ -81,6 +81,12 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 04, Plan 04]** MobileCTA uses lg:hidden to defer to desktop AdvisorCTA at >= 1024px breakpoint
 - **[Phase 04, Plan 04]** 72px bottom padding (48px button + 24px padding) prevents mobile content overlap with fixed CTA
 - **[Phase 04, Plan 04]** Mobile card stagger 80ms vs desktop 120ms for faster perceived load on smaller viewports
+- **[Phase 05, Plan 01]** Raw SQL via client.execute() for prospect CRUD (consistent with Phase 1 vector search pattern)
+- **[Phase 05, Plan 01]** JSON.stringify for messages/dashboard storage in text columns (SQLite JSON mode)
+- **[Phase 05, Plan 01]** Consent recorded at prospect creation (consent_given=1, consent_at=now)
+- **[Phase 05, Plan 03]** usePathname-based dashboard route bypass to avoid redundant consent on /dashboard/[id]
+- **[Phase 05, Plan 03]** Hydration guard pattern: consented=null returns null during SSR, useEffect sets real value
+- **[Phase 05, Plan 03]** Global afterEach(cleanup) in tests to prevent DOM leakage between describe blocks
 
 ---
 *Initialized: 2026-03-20*
