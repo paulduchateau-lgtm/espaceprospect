@@ -35,7 +35,7 @@ Requirements for the prototype pitch. Each maps to roadmap phases.
 
 ### Confiance & Légal
 
-- [ ] **CONF-01**: L'interface respecte la charte graphique MetLife (couleurs, typographie, identité visuelle)
+- [x] **CONF-01**: L'interface respecte la charte graphique MetLife (couleurs, typographie, identité visuelle)
 - [ ] **CONF-02**: Un bandeau de consentement RGPD est affiché avant la première interaction
 - [ ] **CONF-03**: Un disclaimer précise que les recommandations sont indicatives et ne constituent pas un conseil en assurance
 - [ ] **CONF-04**: Des signaux de confiance sont visibles (ACPR, solidité financière, nombre d'assurés)
@@ -107,7 +107,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | RAG-03 | 1 | Pending |
 | RAG-04 | 2 | Pending |
 | RAG-05 | 2 | Pending |
-| CONF-01 | 1 | Pending |
+| CONF-01 | 1 | Complete |
 | CONF-02 | 5 | Pending |
 | CONF-03 | 5 | Pending |
 | CONF-04 | 5 | Pending |
