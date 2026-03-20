@@ -22,7 +22,7 @@ Requirements for the prototype pitch. Each maps to roadmap phases.
 - [x] **DASH-02**: Le dashboard affiche les produits MetLife recommandés avec explication de pertinence
 - [x] **DASH-03**: Le dashboard affiche les services partenaires (Caarl, Doado, Noctia) sous forme de cartes
 - [ ] **DASH-04**: Un CTA contact conseiller est visible à tout moment
-- [ ] **DASH-05**: La transition chat → dashboard est animée (chat shrink 1/3, dashboard slide-in avec reveal progressif des cartes)
+- [x] **DASH-05**: La transition chat → dashboard est animée (chat shrink 1/3, dashboard slide-in avec reveal progressif des cartes)
 - [x] **DASH-06**: Le dashboard affiche des ressources/articles curés pertinents au profil
 
 ### RAG
@@ -100,7 +100,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | DASH-02 | 4 | Complete |
 | DASH-03 | 4 | Complete |
 | DASH-04 | 4 | Pending |
-| DASH-05 | 4 | Pending |
+| DASH-05 | 4 | Complete |
 | DASH-06 | 4 | Complete |
 | RAG-01 | 1 | Complete |
 | RAG-02 | 1 | Complete |

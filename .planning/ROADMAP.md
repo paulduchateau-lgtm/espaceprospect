@@ -43,7 +43,7 @@
 3. When the API fails or Claude returns an error, the user sees a friendly French-language message instead of a technical error
 4. When a prospect describes an unusual or unrecognized TNS profile, a graceful fallback message recommends contacting a MetLife advisor
 
-## Phase 4: Dashboard & Transition Animation
+## Phase 4: Dashboard & Transition Animation -- Complete (4/4 plans done)
 
 **Goal:** Build the personalized dashboard and implement the animated chat-to-dashboard transition that constitutes the prototype's "wow moment."
 **Requirements:** DASH-01, DASH-02, DASH-03, DASH-04, DASH-05, DASH-06
@@ -51,7 +51,7 @@
 ### Plan Progress
 - [x] 04-01: Dashboard Card Components (RiskCard, ProductCard, PartnerCard, ResourceList, AdvisorCTA, Zod schemas, partner config)
 - [x] 04-02: Dashboard Layout & Data Flow (DashboardLayout, DashboardSkeleton, useChatWithDashboard, SSE dashboard events, animation variants)
-- [ ] 04-03: Transition Animation
+- [x] 04-03: Split-Panel Layout & Animated Transition (useMediaQuery, AnimatedDashboardLayout staggered reveal, ProspectPage wiring, animation tests)
 - [x] 04-04: Responsive & Polish (MobileTabBar, MobileCTA, SplitPanel mobile layout, AnimatedDashboardLayout mobile stagger, ProspectPage wiring)
 
 ### Success Criteria

@@ -3,25 +3,25 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-20T16:33:00Z"
+last_updated: "2026-03-20T15:33:07.007Z"
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 15
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State
 
 ## Current Phase
 
-Phase 4: Dashboard & Transition Animation (In Progress, 3/4 plans done)
+Phase 4: Dashboard & Transition Animation (Complete, 4/4 plans done)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-20)
 **Core value:** Un TNS qui arrive sur le site comprend en moins de 2 minutes comment MetLife peut l'aider, à travers une expérience conversationnelle simple et personnalisée.
-**Current focus:** Phase 04 — dashboard-transition
+**Current focus:** Phase 04 complete — ready for Phase 05 (Persistence & Legal Compliance)
 
 ## Phase Status
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 | 1 | Foundation & Data Acquisition | ● Complete (3/3) |
 | 2 | Core AI Loop | ● Complete (4/4) |
 | 3 | Conversational UI | ● Complete (4/4) |
-| 4 | Dashboard & Transition Animation | ◐ In Progress (3/4) |
+| 4 | Dashboard & Transition Animation | ● Complete (4/4) |
 | 5 | Persistence & Legal Compliance | ○ Pending |
 | 6 | Hardening & Demo Preparation | ○ Pending |
 
@@ -74,6 +74,9 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 04, Plan 02]** Wrapped AI SDK toUIMessageStream with custom ReadableStream to emit named SSE "dashboard" event while preserving useChat protocol
 - **[Phase 04, Plan 02]** Used toolResult.output (not .result) for AI SDK 6 TypedToolResult compatibility
 - **[Phase 04, Plan 02]** Phase state machine pattern: chatting -> analyzing -> dashboard for useChatWithDashboard hook
+- **[Phase 04, Plan 03]** Inline ChatPanel in page.tsx uses useChatWithDashboard ChatMessage type (not AI SDK UIMessage) for transition compatibility
+- **[Phase 04, Plan 03]** Message bubbles use max-w-[480px] to prevent text reflow during panel width transition
+- **[Phase 04, Plan 03]** AnimatedDashboardLayout enhanced with mobile prop for conditional card stagger and CTA visibility
 - **[Phase 04, Plan 04]** SplitPanel created independently from Plan 04-03 (parallel execution); includes both desktop split and mobile tab layout
 - **[Phase 04, Plan 04]** MobileCTA uses lg:hidden to defer to desktop AdvisorCTA at >= 1024px breakpoint
 - **[Phase 04, Plan 04]** 72px bottom padding (48px button + 24px padding) prevents mobile content overlap with fixed CTA
