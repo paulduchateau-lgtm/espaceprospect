@@ -81,6 +81,21 @@ export const dashboardSchema = z.object({
   profile: profileSchema.describe('Profil extrait de la conversation'),
 });
 
+/**
+ * Dashboard data schema for component-level validation (Phase 4).
+ * Differs from dashboardSchema: partners/resources default to [] when omitted.
+ */
+export const dashboardDataSchema = z.object({
+  risks: z.array(riskSchema),
+  products: z.array(productSchema),
+  partners: z.array(partnerSchema).optional().default([]),
+  resources: z.array(resourceSchema).optional().default([]),
+  profile: profileSchema,
+});
+
+export type DashboardDataInput = z.input<typeof dashboardDataSchema>;
+export type DashboardDataOutput = z.output<typeof dashboardDataSchema>;
+
 export type DashboardData = z.infer<typeof dashboardSchema>;
 export type Risk = z.infer<typeof riskSchema>;
 export type Product = z.infer<typeof productSchema>;
