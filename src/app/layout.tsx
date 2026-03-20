@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ConsentBanner } from '@/components/legal/ConsentBanner';
 import './globals.css';
 
 const inter = Inter({
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={inter.variable}>
       <body className="font-sans text-foreground bg-background antialiased">
-        {children}
+        <ConsentBanner>{children}</ConsentBanner>
       </body>
     </html>
   );

@@ -7,6 +7,8 @@ import { ProductCard } from "./ProductCard";
 import { PartnerCard } from "./PartnerCard";
 import { ResourceList } from "./ResourceList";
 import { AdvisorCTA } from "./AdvisorCTA";
+import { Disclaimer } from "@/components/legal/Disclaimer";
+import { TrustSignals } from "@/components/legal/TrustSignals";
 import {
   sectionContainerVariants,
   sectionVariants,
@@ -120,6 +122,14 @@ export function AnimatedDashboardLayout({
           <AdvisorCTA />
         </motion.section>
       )}
+
+      {/* Legal: Disclaimer and Trust Signals */}
+      <motion.section variants={sectionVariants}>
+        <div className="mt-6 space-y-4">
+          <Disclaimer />
+          <TrustSignals />
+        </div>
+      </motion.section>
     </motion.div>
   );
 }
