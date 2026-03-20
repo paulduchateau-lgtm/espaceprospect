@@ -13,7 +13,7 @@ Requirements for the prototype pitch. Each maps to roadmap phases.
 - [ ] **CONV-02**: Des exemples de prompts cliquables guident le prospect ("Je suis kiné libéral, 35 ans...")
 - [ ] **CONV-03**: La réponse IA s'affiche en streaming temps réel
 - [x] **CONV-04**: Claude analyse la situation et identifie les risques spécifiques au profil TNS
-- [ ] **CONV-05**: Claude matche les risques identifiés avec les produits MetLife pertinents
+- [x] **CONV-05**: Claude matche les risques identifiés avec les produits MetLife pertinents
 - [ ] **CONV-06**: Les messages d'erreur sont humanisés en français
 
 ### Dashboard
@@ -94,7 +94,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | CONV-02 | 3 | Pending |
 | CONV-03 | 3 | Pending |
 | CONV-04 | 2 | Complete |
-| CONV-05 | 2 | Pending |
+| CONV-05 | 2 | Complete |
 | CONV-06 | 3 | Pending |
 | DASH-01 | 4 | Pending |
 | DASH-02 | 4 | Pending |
