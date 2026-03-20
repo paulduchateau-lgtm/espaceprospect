@@ -26,7 +26,7 @@
 3. An off-catalog trap question (e.g., asking about a product MetLife does not offer) does not produce fabricated information — Claude redirects to an advisor
 4. The end-to-end latency from input to first streamed token is under 3 seconds
 
-## Phase 3: Conversational UI -- In Progress (2/4 plans done)
+## Phase 3: Conversational UI -- Complete (4/4 plans done)
 
 **Goal:** Build the chat interface that serves as the prospect's entry point — with streaming display, guided prompts, and humanized error handling.
 **Requirements:** CONV-01, CONV-02, CONV-03, CONV-06, UX-03
@@ -34,8 +34,8 @@
 ### Plan Progress
 - [x] 03-01: Chat shell components (ChatContainer, ChatHeader, MessageList, MessageBubble, StreamingText, LoadingDots)
 - [x] 03-02: ChatInput + SuggestedPrompts (auto-resize input, 4 TNS persona prompts, ChatContainer integration)
-- [ ] 03-03: useChat integration with streaming
-- [ ] 03-04: Error handling and fallbacks
+- [x] 03-03: useChat integration with streaming
+- [x] 03-04: Error handling + French messages + TNS fallback (chat-errors.ts, ChatErrorBanner, fallback CTA, hardened API route)
 
 ### Success Criteria
 1. A prospect can type a free-text description of their situation and see the AI response stream in real time with message bubbles

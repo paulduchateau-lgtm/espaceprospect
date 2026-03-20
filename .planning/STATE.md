@@ -3,25 +3,25 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-20T16:02:00.000Z"
+last_updated: "2026-03-20T17:00:00.000Z"
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 15
-  completed_plans: 9
+  completed_plans: 12
 ---
 
 # Project State
 
 ## Current Phase
 
-Phase 3: Conversational UI (In Progress, 2/4 plans done)
+Phase 3: Conversational UI (Complete, 4/4 plans done)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-20)
 **Core value:** Un TNS qui arrive sur le site comprend en moins de 2 minutes comment MetLife peut l'aider, à travers une expérience conversationnelle simple et personnalisée.
-**Current focus:** Phase 03 — conversational-ui (03-01 + 03-02 complete)
+**Current focus:** Phase 03 — conversational-ui (complete, all 4 plans done)
 
 ## Phase Status
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 |-------|------|--------|
 | 1 | Foundation & Data Acquisition | ● Complete (3/3) |
 | 2 | Core AI Loop | ● Complete (4/4) |
-| 3 | Conversational UI | ◐ In Progress (2/4) |
+| 3 | Conversational UI | ● Complete (4/4) |
 | 4 | Dashboard & Transition Animation | ○ Pending |
 | 5 | Persistence & Legal Compliance | ○ Pending |
 | 6 | Hardening & Demo Preparation | ○ Pending |
@@ -63,6 +63,9 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 03, Plan 01]** prefers-reduced-motion support for streaming cursor animation
 - **[Phase 03, Plan 02]** Status-driven UI pattern: ChatInput status prop controls disabled state, button variant, and aria-live announcements
 - **[Phase 03, Plan 02]** Prompt auto-submit: SuggestedPrompts onPromptClick calls same handleSubmit as ChatInput (no two-step confirm)
+- **[Phase 03, Plan 04]** Used buttonVariants() for anchor-styled buttons (base-ui Button lacks asChild support unlike Radix)
+- **[Phase 03, Plan 04]** Two-indicator threshold for TNS fallback detection prevents false positives on casual "conseiller" mentions
+- **[Phase 03, Plan 04]** Fallback CTA renders only after streaming completes (!isStreaming && !isLoading) to avoid premature display
 
 ---
 *Initialized: 2026-03-20*
