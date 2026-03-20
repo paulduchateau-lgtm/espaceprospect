@@ -82,12 +82,26 @@ export const dashboardSchema = z.object({
 });
 
 /**
+ * Client-side product schema for dashboard rendering.
+ * coverageType and sourceIds are optional (may not be present in SSE payload).
+ */
+export const clientProductSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  relevance: z.string(),
+  url: z.string().optional(),
+  coverageType: z.string().optional(),
+  sourceIds: z.array(z.number()).optional(),
+});
+
+/**
  * Dashboard data schema for component-level validation (Phase 4).
- * Differs from dashboardSchema: partners/resources default to [] when omitted.
+ * Differs from dashboardSchema: partners/resources default to [] when omitted,
+ * and product fields coverageType/sourceIds are optional.
  */
 export const dashboardDataSchema = z.object({
   risks: z.array(riskSchema),
-  products: z.array(productSchema),
+  products: z.array(clientProductSchema),
   partners: z.array(partnerSchema).optional().default([]),
   resources: z.array(resourceSchema).optional().default([]),
   profile: profileSchema,
