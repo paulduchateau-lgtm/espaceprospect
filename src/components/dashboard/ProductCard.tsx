@@ -9,7 +9,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
 import type { ProductRecommendation } from "@/lib/types";
 
 export function ProductCard({ product }: { product: ProductRecommendation }) {
@@ -34,7 +33,7 @@ export function ProductCard({ product }: { product: ProductRecommendation }) {
             href={product.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+            className={buttonVariants({ variant: "outline", size: "sm" })}
           >
             En savoir plus <ExternalLink className="ml-1 h-3 w-3" />
           </a>
