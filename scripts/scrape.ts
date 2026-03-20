@@ -135,13 +135,20 @@ const crawler = new PlaywrightCrawler({
   },
 });
 
-await crawler.addRequests(SEED_URLS);
-await crawler.run();
+async function main() {
+  await crawler.addRequests(SEED_URLS);
+  await crawler.run();
 
-// Write all results to a single JSON file for the normalize step
-const outputPath = join(OUTPUT_DIR, 'raw-pages.json');
-writeFileSync(outputPath, JSON.stringify(allResults, null, 2), 'utf-8');
+  // Write all results to a single JSON file for the normalize step
+  const outputPath = join(OUTPUT_DIR, 'raw-pages.json');
+  writeFileSync(outputPath, JSON.stringify(allResults, null, 2), 'utf-8');
 
-console.log(`\nScraping complete.`);
-console.log(`Total pages scraped: ${allResults.length}`);
-console.log(`Output: ${outputPath}`);
+  console.log(`\nScraping complete.`);
+  console.log(`Total pages scraped: ${allResults.length}`);
+  console.log(`Output: ${outputPath}`);
+}
+
+main().catch((err) => {
+  console.error('Scraping failed:', err);
+  process.exit(1);
+});
