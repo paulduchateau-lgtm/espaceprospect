@@ -9,7 +9,6 @@ export interface RetrievedChunk {
   tnsRelevance: string;
   guarantees: string[];
   chunkType: string;
-  distance: number;
 }
 
 function getClient() {
@@ -35,12 +34,10 @@ export async function retrieveRelevantChunks(
         content_chunks.product_type,
         content_chunks.tns_relevance,
         content_chunks.guarantees,
-        content_chunks.chunk_type,
-        vt.distance
+        content_chunks.chunk_type
       FROM vector_top_k('chunks_embedding_idx', vector32(?), ?)
         AS vt
-      JOIN content_chunks ON content_chunks.rowid = vt.id
-      ORDER BY vt.distance ASC
+      JOIN content_chunks ON content_chunks.rowid = vt.rowid
     `,
     args: [JSON.stringify(queryEmbedding), topK],
   });
@@ -55,7 +52,6 @@ export async function retrieveRelevantChunks(
     tnsRelevance: row.tns_relevance as string,
     guarantees: JSON.parse(row.guarantees as string),
     chunkType: row.chunk_type as string,
-    distance: row.distance as number,
   }));
 }
 
