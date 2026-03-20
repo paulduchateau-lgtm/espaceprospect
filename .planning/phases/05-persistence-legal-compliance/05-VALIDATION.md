@@ -42,9 +42,9 @@ created: 2026-03-20
 | 05-01-02 | 01 | 1 | PERS-03 | integration | `sqlite3 .data/metlife.db "SELECT * FROM prospects LIMIT 1"` | ❌ W0 | ⬜ pending |
 | 05-02-01 | 02 | 1 | PERS-02 | manual | Navigate to `/dashboard/[id]` | N/A | ⬜ pending |
 | 05-02-02 | 02 | 1 | PERS-02 | integration | `curl -s localhost:3000/dashboard/test-uuid` | ❌ W0 | ⬜ pending |
-| 05-03-01 | 03 | 2 | CONF-02 | manual | Check RGPD banner blocks interaction | N/A | ⬜ pending |
-| 05-03-02 | 03 | 2 | CONF-03 | grep | `grep -r "indicatif" src/` | N/A | ⬜ pending |
-| 05-03-03 | 03 | 2 | CONF-04 | grep | `grep -r "ACPR" src/` | N/A | ⬜ pending |
+| 05-03-01 | 03 | 2 | CONF-02 | unit | `npx vitest run tests/legal-components.test.tsx` | tests/legal-components.test.tsx | ⬜ pending |
+| 05-03-02 | 03 | 2 | CONF-03 | unit | `npx vitest run tests/legal-components.test.tsx` | tests/legal-components.test.tsx | ⬜ pending |
+| 05-03-03 | 03 | 2 | CONF-04 | unit | `npx vitest run tests/legal-components.test.tsx` | tests/legal-components.test.tsx | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
