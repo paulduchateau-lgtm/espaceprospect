@@ -1,9 +1,27 @@
 'use client';
 
+import { Phone } from 'lucide-react';
 import type { UIMessage } from 'ai';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { buttonVariants } from '@/components/ui/button';
 import { StreamingText } from './StreamingText';
 import { LoadingDots } from './LoadingDots';
+
+// Phrases that indicate Claude is redirecting to an advisor (UX-03 fallback)
+const FALLBACK_INDICATORS = [
+  'conseiller metlife',
+  'situation est spécifique',
+  'attention particulière',
+  'échangez directement',
+  'accompagner de manière personnalisée',
+] as const;
+
+function isFallbackResponse(text: string): boolean {
+  const lower = text.toLowerCase();
+  // Must contain at least 2 indicators to avoid false positives
+  const matchCount = FALLBACK_INDICATORS.filter((phrase) => lower.includes(phrase)).length;
+  return matchCount >= 2;
+}
 
 interface MessageBubbleProps {
   message: UIMessage;
@@ -49,6 +67,17 @@ export function MessageBubble({ message, isStreaming = false, isLoading = false 
         ) : (
           <div className="text-sm">
             <StreamingText content={textContent} isStreaming={isStreaming} />
+            {!isStreaming && !isLoading && isFallbackResponse(textContent) && (
+              <a
+                href="https://www.metlife.fr/contact/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonVariants({ variant: 'default', size: 'sm' }) + ' mt-3 gap-1.5'}
+              >
+                <Phone className="size-3.5" />
+                Contacter un conseiller MetLife
+              </a>
+            )}
           </div>
         )}
       </div>
