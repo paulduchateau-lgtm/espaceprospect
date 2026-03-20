@@ -64,7 +64,52 @@ export async function POST(req: Request) {
       },
     });
 
-    return result.toUIMessageStreamResponse();
+    // Create a custom response that includes both the AI SDK stream
+    // and a named SSE "dashboard" event for the useChatWithDashboard hook.
+    const uiStream = result.toUIMessageStream();
+    const encoder = new TextEncoder();
+
+    const dashboardStream = new ReadableStream({
+      async start(controller) {
+        // Pipe the AI SDK UI message stream through
+        const reader = uiStream.getReader();
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            controller.enqueue(value);
+          }
+        } finally {
+          reader.releaseLock();
+        }
+
+        // After the stream completes, extract dashboard tool result and emit as named SSE event
+        try {
+          const toolResults = await result.toolResults;
+          for (const toolResult of toolResults) {
+            if (toolResult.toolName === 'generate_dashboard' && toolResult.result) {
+              controller.enqueue(
+                encoder.encode(
+                  `event: dashboard\ndata: ${JSON.stringify(toolResult.result)}\n\n`
+                )
+              );
+            }
+          }
+        } catch (toolErr) {
+          console.error('[Dashboard SSE] Failed to extract tool results:', toolErr);
+        }
+
+        controller.close();
+      },
+    });
+
+    return new Response(dashboardStream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      },
+    });
   } catch (error) {
     console.error('[API Chat Error]', error);
 
