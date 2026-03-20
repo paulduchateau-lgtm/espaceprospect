@@ -14,7 +14,8 @@
     "seed:pipeline": "npx tsx scripts/scrape.ts && npx tsx scripts/normalize.ts && npx tsx scripts/chunk.ts",
     "seed": "npx tsx scripts/seed.ts",
     "seed:embed": "npx tsx scripts/embed.ts",
-    "seed:validate": "npx tsx scripts/validate.ts"
+    "seed:validate": "npx tsx scripts/validate.ts",
+    "validate:phase2": "npx tsx scripts/validate-phase2.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.58",
