@@ -3,32 +3,32 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-20T14:28:27.805Z"
+last_updated: "2026-03-20T14:48:26.486Z"
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 15
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
 
 ## Current Phase
 
-Phase 2: Core AI Loop (Plan 03 complete, Plan 04 next)
+Phase 2: Core AI Loop (Complete, 4/4 plans done)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-20)
 **Core value:** Un TNS qui arrive sur le site comprend en moins de 2 minutes comment MetLife peut l'aider, à travers une expérience conversationnelle simple et personnalisée.
-**Current focus:** Phase 02 — core-ai-loop
+**Current focus:** Phase 02 complete — ready for Phase 03
 
 ## Phase Status
 
 | Phase | Name | Status |
 |-------|------|--------|
 | 1 | Foundation & Data Acquisition | ● Complete (3/3) |
-| 2 | Core AI Loop | ◐ In Progress (3/4) |
+| 2 | Core AI Loop | ● Complete (4/4) |
 | 3 | Conversational UI | ○ Pending |
 | 4 | Dashboard & Transition Animation | ○ Pending |
 | 5 | Persistence & Legal Compliance | ○ Pending |
@@ -53,6 +53,10 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 02, Plan 01]** UIMessage.parts text extraction (AI SDK 6 removed .content property)
 - **[Phase 02, Plan 03]** Used inputSchema (not parameters) for AI SDK 6 Tool type compatibility
 - **[Phase 02, Plan 03]** Exported sub-schemas individually for Phase 4 dashboard component reuse
+- **[Phase 02, Plan 04]** Explicit zodSchema() wrapper for Zod v4 in Next.js bundler (auto-detection fails)
+- **[Phase 02, Plan 04]** Separated Claude streaming latency from RAG/embedding latency for validation (Voyage AI free tier ~22s)
+- **[Phase 02, Plan 04]** Strengthened no-price system prompt constraint (Claude was quoting RAG source amounts)
+- **[Phase 02, Plan 04]** Fixed libsql vector_top_k: returns rowid only, no distance column
 
 ---
 *Initialized: 2026-03-20*
