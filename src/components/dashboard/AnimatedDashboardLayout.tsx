@@ -12,13 +12,26 @@ import {
   sectionVariants,
   cardContainerVariants,
   cardVariants,
+  mobileCardContainerVariants,
 } from "@/lib/animation";
 
-export function AnimatedDashboardLayout({ data }: { data: DashboardData }) {
+interface AnimatedDashboardLayoutProps {
+  data: DashboardData;
+  mobile?: boolean;
+}
+
+export function AnimatedDashboardLayout({
+  data,
+  mobile = false,
+}: AnimatedDashboardLayoutProps) {
   const sortedRisks = [...data.risks].sort((a, b) => {
     const order = { high: 0, medium: 1, low: 2 };
     return order[a.severity] - order[b.severity];
   });
+
+  const activeCardContainerVariants = mobile
+    ? mobileCardContainerVariants
+    : cardContainerVariants;
 
   return (
     <motion.div
@@ -42,8 +55,8 @@ export function AnimatedDashboardLayout({ data }: { data: DashboardData }) {
       <motion.section variants={sectionVariants}>
         <h3 className="text-md font-semibold mb-3">Risques identifies</h3>
         <motion.div
-          className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2"
-          variants={cardContainerVariants}
+          className="grid gap-4 grid-cols-1 lg:grid-cols-2"
+          variants={activeCardContainerVariants}
           initial="hidden"
           animate="visible"
         >
@@ -61,8 +74,8 @@ export function AnimatedDashboardLayout({ data }: { data: DashboardData }) {
           Solutions MetLife recommandees
         </h3>
         <motion.div
-          className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2"
-          variants={cardContainerVariants}
+          className="grid gap-4 grid-cols-1 lg:grid-cols-2"
+          variants={activeCardContainerVariants}
           initial="hidden"
           animate="visible"
         >
@@ -79,8 +92,8 @@ export function AnimatedDashboardLayout({ data }: { data: DashboardData }) {
         <motion.section variants={sectionVariants}>
           <h3 className="text-md font-semibold mb-3">Services partenaires</h3>
           <motion.div
-            className="grid gap-4 sm:grid-cols-1 md:grid-cols-3"
-            variants={cardContainerVariants}
+            className="grid gap-4 grid-cols-1 md:grid-cols-3"
+            variants={activeCardContainerVariants}
             initial="hidden"
             animate="visible"
           >
@@ -101,10 +114,12 @@ export function AnimatedDashboardLayout({ data }: { data: DashboardData }) {
         </motion.section>
       )}
 
-      {/* CTA -- always visible, appears last in stagger */}
-      <motion.section variants={sectionVariants}>
-        <AdvisorCTA />
-      </motion.section>
+      {/* CTA -- desktop only (mobile uses fixed bottom bar) */}
+      {!mobile && (
+        <motion.section variants={sectionVariants}>
+          <AdvisorCTA />
+        </motion.section>
+      )}
     </motion.div>
   );
 }
