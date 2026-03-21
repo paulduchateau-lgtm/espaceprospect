@@ -60,16 +60,16 @@
 3. A "Contact a MetLife advisor" CTA is visible on the dashboard at all times
 4. The transition feels smooth and intentional — no layout jumps, no content flash, no jarring state changes
 
-## Phase 5: Persistence & Legal Compliance
+## Phase 5: Persistence & Legal Compliance -- Complete (3/3 plans done)
 
 **Goal:** Enable prospect spaces to persist across sessions and add the legal/trust elements required for credibility with MetLife stakeholders.
 **Requirements:** PERS-01, PERS-02, PERS-03, CONF-02, CONF-03, CONF-04
 **Plans:** 3 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Database schema + prospect CRUD module (prospects, conversations, dashboard_snapshots tables)
-- [ ] 05-02-PLAN.md — Prospect flow wiring + API routes + /dashboard/[prospectId] return page
-- [ ] 05-03-PLAN.md — Legal UI components (RGPD consent banner, disclaimer, trust signals)
+- [x] 05-01-PLAN.md — Database schema + prospect CRUD module (prospects, conversations, dashboard_snapshots tables)
+- [x] 05-02-PLAN.md — Prospect flow wiring + API routes + /dashboard/[prospectId] return page
+- [x] 05-03-PLAN.md — Legal UI components (RGPD consent banner, disclaimer, trust signals)
 
 ### Success Criteria
 1. A prospect receives a UUID-based URL after their first interaction and can return to `/dashboard/[prospectId]` to see their saved conversation and dashboard
@@ -81,6 +81,11 @@ Plans:
 
 **Goal:** Test against diverse TNS profiles, optimize mobile responsiveness, prepare fallback scenarios, and rehearse the demo until it is bulletproof.
 **Requirements:** UX-01, UX-02
+**Plans:** 2 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Mobile viewport fixes + Playwright E2E tests (h-dvh, URL banner overflow, chip truncation, tap targets)
+- [ ] 06-02-PLAN.md — Demo fallback system + performance timing (3 pre-cached responses, demo mode toggle, timing instrumentation)
 
 ### Success Criteria
 1. The conversational flow works correctly on mobile viewports (minimum 375px width) with no broken layouts
