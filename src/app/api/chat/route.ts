@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { streamText, convertToModelMessages, type UIMessage } from 'ai';
+import { streamText } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { retrieveRelevantChunks } from '@/lib/rag';
 import { formatRAGContext, buildSystemPrompt } from '@/lib/prompts';
@@ -29,87 +29,60 @@ const anthropic = createAnthropic({
 // Allow streaming responses up to 5 minutes
 export const maxDuration = 300;
 
+// Extract plain text from the last user message in a UIMessage[] array
+function extractUserText(messages: Array<{ role: string; parts?: Array<{ type: string; text?: string }> }>): string {
+  if (!Array.isArray(messages) || messages.length === 0) return '';
+  const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
+  if (!lastUserMsg?.parts) return '';
+  return lastUserMsg.parts
+    .filter((p) => p.type === 'text' && p.text)
+    .map((p) => p.text)
+    .join(' ');
+}
+
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json();
+  const body = await req.json();
 
-  // Extract last user message text from parts array
-  const lastUserMessage = messages.filter((m) => m.role === 'user').pop();
-  const userQuery =
-    lastUserMessage?.parts
-      ?.filter((p): p is { type: 'text'; text: string } => p.type === 'text')
-      .map((p) => p.text)
-      .join(' ') ?? '';
+  // Support both request formats:
+  // - Main page (useChatWithDashboard): { message: string }
+  // - /chat page (DefaultChatTransport): { id, messages: UIMessage[], trigger, messageId }
+  let messageText: string;
+  if (typeof body.message === 'string' && body.message.length > 0) {
+    messageText = body.message;
+  } else if (Array.isArray(body.messages)) {
+    messageText = extractUserText(body.messages);
+  } else {
+    messageText = '';
+  }
 
-  // RAG retrieval with graceful degradation:
-  // If Turso/Voyage fails, proceed with empty context (Claude will note lack of info)
+  if (!messageText) {
+    return new Response(
+      JSON.stringify({ error: 'No message provided' }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // RAG retrieval with graceful degradation
   let ragContext = '';
   try {
-    const chunks = await retrieveRelevantChunks(userQuery, 8);
+    const chunks = await retrieveRelevantChunks(messageText, 8);
     ragContext = formatRAGContext(chunks);
   } catch (error) {
     console.error('[RAG] Retrieval failed, proceeding without context:', error);
   }
 
-  // Convert UI messages to model format (async in AI SDK 6)
-  const modelMessages = await convertToModelMessages(messages);
-
   try {
-    // Stream Claude response with dashboard tool
     const result = streamText({
       model: anthropic('claude-sonnet-4-20250514'),
       system: buildSystemPrompt(ragContext),
-      messages: modelMessages,
+      messages: [{ role: 'user' as const, content: messageText }],
       tools: {
         generate_dashboard: dashboardTool,
       },
     });
 
-    // Create a custom response that includes both the AI SDK stream
-    // and a named SSE "dashboard" event for the useChatWithDashboard hook.
-    const uiStream = result.toUIMessageStream();
-    const encoder = new TextEncoder();
-
-    const dashboardStream = new ReadableStream({
-      async start(controller) {
-        // Pipe the AI SDK UI message stream through
-        const reader = uiStream.getReader();
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            controller.enqueue(value);
-          }
-        } finally {
-          reader.releaseLock();
-        }
-
-        // After the stream completes, extract dashboard tool result and emit as named SSE event
-        try {
-          const toolResults = await result.toolResults;
-          for (const toolResult of toolResults) {
-            if (toolResult.toolName === 'generate_dashboard' && toolResult.output) {
-              controller.enqueue(
-                encoder.encode(
-                  `event: dashboard\ndata: ${JSON.stringify(toolResult.output)}\n\n`
-                )
-              );
-            }
-          }
-        } catch (toolErr) {
-          console.error('[Dashboard SSE] Failed to extract tool results:', toolErr);
-        }
-
-        controller.close();
-      },
-    });
-
-    return new Response(dashboardStream, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        Connection: 'keep-alive',
-      },
-    });
+    // Return SSE UIMessage stream — DefaultChatTransport parses this via EventSourceParserStream
+    return result.toUIMessageStreamResponse();
   } catch (error) {
     console.error('[API Chat Error]', error);
 

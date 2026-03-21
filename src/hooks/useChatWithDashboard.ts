@@ -106,10 +106,18 @@ export function useChatWithDashboard() {
               continue;
             }
 
-            // Tool invocation result (dashboard generation)
-            if (chunk.type === "tool-result" && chunk.toolName === "generate_dashboard") {
+            // Tool output (dashboard generation) — UIMessage stream protocol:
+            // "tool-output-available" has .output but NO .toolName (only toolCallId)
+            // "tool-input-available" has .input AND .toolName
+            // We match tool-output-available by type only (single tool in this app),
+            // or tool-input-available by toolName as fallback.
+            if (
+              chunk.type === "tool-output-available" ||
+              (chunk.type === "tool-input-available" && chunk.toolName === "generate_dashboard")
+            ) {
               try {
-                const parsed = dashboardDataSchema.safeParse(chunk.result);
+                const toolData = chunk.output ?? chunk.input;
+                const parsed = dashboardDataSchema.safeParse(toolData);
                 if (parsed.success) {
                   const dashData = parsed.data as DashboardData;
                   setDashboardData(dashData);
