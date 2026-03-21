@@ -1,0 +1,67 @@
+{
+  "userMessage": "Je suis infirmiere liberale, 28 ans, debut d'activite",
+  "assistantMessage": "En tant qu'infirmiere liberale en debut d'activite, vous faites face a des enjeux de protection specifiques a votre profession et a votre etape de carriere. A 28 ans, vous avez l'avantage de pouvoir mettre en place une couverture prevoyance a des conditions tarifaires avantageuses. Le risque principal pour les infirmieres liberales est l'arret de travail : les contraintes physiques de votre metier (deplacement, manutention de patients, horaires etendus) augmentent significativement ce risque.\n\nEn debut d'activite, vos cotisations sociales sont calculees sur une base forfaitaire, ce qui signifie que vos indemnites journalieres en cas d'arret seront tres faibles les premieres annees. Une prevoyance incapacite complementaire est donc particulierement importante a ce stade pour eviter toute interruption de revenus qui pourrait fragiliser votre installation. La construction d'une protection solide des le depart est un investissement dans la perennite de votre activite.\n\nMetLife propose des contrats de prevoyance incapacite adaptes aux jeunes professionnels de sante avec des garanties evolutives. Notre contrat Super Novaterm offre egalement une protection deces a des conditions accessibles pour les jeunes actifs. Je vous recommande d'echanger avec un conseiller MetLife pour affiner ces recommandations.",
+  "dashboard": {
+    "risks": [
+      {
+        "id": "arret-travail",
+        "label": "Arret de travail prolonge",
+        "severity": "high",
+        "description": "Les contraintes physiques du metier d'infirmiere liberale (deplacement, manutention) augmentent significativement le risque d'arret de travail."
+      },
+      {
+        "id": "invalidite",
+        "label": "Invalidite professionnelle",
+        "severity": "medium",
+        "description": "Une invalidite pourrait compromettre votre carriere alors meme que vous venez de vous installer en liberal."
+      },
+      {
+        "id": "deces",
+        "label": "Deces premature",
+        "severity": "low",
+        "description": "A 28 ans le risque est statistiquement faible, mais une couverture minimale reste recommandee pour proteger vos proches."
+      }
+    ],
+    "products": [
+      {
+        "id": "prevoyance-incapacite",
+        "name": "Prevoyance Incapacite",
+        "relevance": "Indemnites journalieres complementaires essentielles en debut d'activite, quand les indemnites de base sont calculees sur une base forfaitaire faible.",
+        "coverageType": "incapacite"
+      },
+      {
+        "id": "super-novaterm",
+        "name": "Super Novaterm",
+        "relevance": "Protection deces accessible pour les jeunes professionnels avec capital ajustable au fil de l'evolution de votre situation.",
+        "coverageType": "deces"
+      }
+    ],
+    "partners": [
+      {
+        "id": "doado",
+        "relevance": "Prevention sante et bien-etre au travail pour les professionnels de sante soumis a des contraintes physiques quotidiennes."
+      },
+      {
+        "id": "caarl",
+        "relevance": "Accompagnement a l'installation et gestion administrative pour les infirmieres liberales en debut d'activite."
+      }
+    ],
+    "resources": [
+      {
+        "title": "S'installer en liberal : guide prevoyance",
+        "url": "https://www.metlife.fr/guides/installation-liberal-prevoyance",
+        "type": "guide"
+      },
+      {
+        "title": "Les risques professionnels des infirmieres liberales",
+        "url": "https://www.metlife.fr/articles/risques-infirmiere-liberale",
+        "type": "article"
+      }
+    ],
+    "profile": {
+      "profession": "Infirmiere liberale",
+      "sector": "Sante",
+      "concerns": ["Debut d'activite", "Protection des revenus", "Cotisations sociales"]
+    }
+  }
+}

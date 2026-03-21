@@ -1,0 +1,67 @@
+{
+  "userMessage": "Je suis architecte independant, 45 ans, marie avec 2 enfants",
+  "assistantMessage": "En tant qu'architecte independant avec une famille a charge, votre situation necessite une attention particuliere en matiere de protection. A 45 ans, avec un conjoint et deux enfants qui dependent de vos revenus, le risque de deces premature constitue votre preoccupation majeure. Un capital deces adapte garantit la securite financiere de votre famille et la continuite de leur niveau de vie en cas de disparition.\n\nVotre activite d'architecte independant vous expose egalement aux risques d'arret de travail prolonge. En cas de maladie ou d'accident, l'absence de revenus peut impacter directement votre famille et la perennite de votre cabinet. Les indemnites de la Securite sociale pour les TNS etant limitees, une prevoyance incapacite complementaire est indispensable pour maintenir vos revenus pendant une periode d'inactivite.\n\nMetLife propose des solutions adaptees a votre profil familial. Le contrat Super Novaterm offre un capital deces modulable en fonction de l'evolution de votre situation familiale, avec des options de rente education pour vos enfants. Notre prevoyance incapacite complete votre couverture avec des indemnites journalieres des le premier jour d'arret. Je vous recommande d'echanger avec un conseiller MetLife pour affiner ces recommandations.",
+  "dashboard": {
+    "risks": [
+      {
+        "id": "deces-premature",
+        "label": "Deces premature",
+        "severity": "high",
+        "description": "Avec un conjoint et deux enfants a charge, la protection de votre famille en cas de disparition est une priorite absolue."
+      },
+      {
+        "id": "arret-travail",
+        "label": "Arret de travail prolonge",
+        "severity": "high",
+        "description": "En tant qu'independant, un arret de travail prolonge impacte directement les revenus de toute votre famille."
+      },
+      {
+        "id": "invalidite",
+        "label": "Invalidite",
+        "severity": "medium",
+        "description": "Une invalidite permanente compromettrait votre capacite a exercer et a subvenir aux besoins de votre famille."
+      }
+    ],
+    "products": [
+      {
+        "id": "super-novaterm",
+        "name": "Super Novaterm",
+        "relevance": "Capital deces modulable avec options de rente education pour vos enfants, adapte a votre situation familiale.",
+        "coverageType": "deces"
+      },
+      {
+        "id": "prevoyance-incapacite",
+        "name": "Prevoyance Incapacite",
+        "relevance": "Indemnites journalieres garantissant le maintien de vos revenus familiaux en cas d'arret de travail.",
+        "coverageType": "incapacite"
+      }
+    ],
+    "partners": [
+      {
+        "id": "noctia",
+        "relevance": "Protection juridique et accompagnement pour les architectes independants face aux litiges professionnels."
+      },
+      {
+        "id": "caarl",
+        "relevance": "Gestion comptable et administrative optimisee pour perenniser votre activite d'architecte."
+      }
+    ],
+    "resources": [
+      {
+        "title": "Proteger sa famille quand on est TNS",
+        "url": "https://www.metlife.fr/articles/protection-famille-tns",
+        "type": "article"
+      },
+      {
+        "title": "Guide capital deces pour independants",
+        "url": "https://www.metlife.fr/guides/capital-deces-independants",
+        "type": "guide"
+      }
+    ],
+    "profile": {
+      "profession": "Architecte independant",
+      "sector": "Construction",
+      "concerns": ["Protection familiale", "Capital deces", "Perennite de l'activite"]
+    }
+  }
+}
