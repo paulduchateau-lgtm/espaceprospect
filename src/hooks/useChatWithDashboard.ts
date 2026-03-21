@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { dashboardDataSchema } from "@/lib/schemas";
 import type { DashboardData, ChatMessage } from "@/lib/types";
+import { isDemoMode, matchDemoProfile, getDemoResponse } from "@/lib/demo-fallback";
 
 export type Phase = "chatting" | "analyzing" | "dashboard";
 
@@ -18,6 +19,7 @@ export function useChatWithDashboard() {
   const [prospectUrl, setProspectUrl] = useState<string | null>(null);
 
   const sendMessage = useCallback(async (content: string) => {
+    const t0 = performance.now();
     setIsStreaming(true);
     setError(null);
 
@@ -44,6 +46,34 @@ export function useChatWithDashboard() {
       },
     ]);
 
+    // Demo mode: use pre-cached response instead of API
+    if (isDemoMode()) {
+      const profileKey = matchDemoProfile(content);
+      if (profileKey) {
+        const demo = getDemoResponse(profileKey);
+        if (demo) {
+          // Simulate natural streaming with progressive reveal
+          const words = demo.assistantMessage.split(' ');
+          let accumulated = '';
+          for (let i = 0; i < words.length; i++) {
+            accumulated += (i > 0 ? ' ' : '') + words[i];
+            const current = accumulated;
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === assistantId ? { ...msg, content: current } : msg
+              )
+            );
+            await new Promise((r) => setTimeout(r, 30)); // ~30ms per word for natural feel
+          }
+          setDashboardData(demo.dashboard as DashboardData);
+          setPhase('dashboard');
+          setIsStreaming(false);
+          console.log(`[Perf] Demo flow: ${(performance.now() - t0).toFixed(0)}ms`);
+          return; // Skip API call entirely
+        }
+      }
+    }
+
     // Create prospect on first message
     let currentProspectId = prospectId;
     if (!currentProspectId) {
@@ -66,6 +96,8 @@ export function useChatWithDashboard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: content }),
       });
+
+      console.log(`[Perf] API response start: ${(performance.now() - t0).toFixed(0)}ms`);
 
       if (!response.ok) {
         throw new Error(`Erreur serveur: ${response.status}`);
@@ -122,6 +154,7 @@ export function useChatWithDashboard() {
                   const dashData = parsed.data as DashboardData;
                   setDashboardData(dashData);
                   setPhase("dashboard");
+                  console.log(`[Perf] Dashboard ready: ${(performance.now() - t0).toFixed(0)}ms`);
 
                   // Save prospect data non-blocking
                   if (currentProspectId) {
@@ -182,6 +215,7 @@ export function useChatWithDashboard() {
         )
       );
     } finally {
+      console.log(`[Perf] Total flow: ${(performance.now() - t0).toFixed(0)}ms`);
       setIsStreaming(false);
     }
   }, [prospectId]);
