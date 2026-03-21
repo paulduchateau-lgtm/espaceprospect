@@ -55,7 +55,7 @@ export function SplitPanel({
           {phase === "analyzing" && (
             <motion.div
               key="dashboard-skeleton"
-              className="flex-1 overflow-y-auto bg-muted/30"
+              className="flex-1 overflow-y-auto bg-[#F2F2F2]"
               initial={{ opacity: 0, x: 300 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 300 }}
@@ -67,7 +67,7 @@ export function SplitPanel({
           {phase === "dashboard" && dashboardPanel && (
             <motion.div
               key="dashboard-content"
-              className="flex-1 overflow-y-auto bg-muted/30"
+              className="flex-1 overflow-y-auto bg-[#F2F2F2]"
               initial={{ opacity: 0, x: 300 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 300 }}

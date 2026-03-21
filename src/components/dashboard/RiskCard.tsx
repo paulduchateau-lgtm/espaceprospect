@@ -36,10 +36,15 @@ export function RiskCard({ risk }: { risk: Risk }) {
   return (
     <Card
       data-testid="risk-card"
-      className="border-l-4"
-      style={{ borderLeftColor: config.borderColor }}
+      className="border-l-4 rounded-xl p-0 shadow-sm"
+      style={{
+        borderLeftColor: config.borderColor,
+        borderRadius: "12px",
+        border: "1px solid #D9D9D6",
+        borderLeft: `4px solid ${config.borderColor}`,
+      }}
     >
-      <CardHeader>
+      <CardHeader className="px-5 pt-5 pb-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <config.Icon className="h-5 w-5" />
@@ -50,7 +55,7 @@ export function RiskCard({ risk }: { risk: Risk }) {
           </Badge>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-5 py-4">
         <CardDescription className="text-sm leading-relaxed">
           {risk.description}
         </CardDescription>

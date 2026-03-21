@@ -9,17 +9,23 @@
   --color-metlife-blue: #0090DA;
   --color-metlife-navy: #0061A0;
   --color-metlife-green: #A4CE4E;
-  --color-metlife-dark: #333333;
+  --color-metlife-dark: #1A1A1A;
   --color-metlife-white: #FFFFFF;
+  --color-metlife-gray: #D9D9D6;
+  --color-metlife-light-gray: #F2F2F2;
+  --color-metlife-med-gray: #A7A8AA;
+  --color-metlife-dark-gray: #75787B;
+  --color-metlife-teal: #00ACA0;
+  --color-metlife-berry: #DB0A5B;
 
   /* Semantic aliases */
   --color-primary: #0090DA;
   --color-primary-dark: #0061A0;
   --color-accent: #A4CE4E;
-  --color-foreground: #333333;
+  --color-foreground: #1A1A1A;
   --color-background: #FFFFFF;
-  --color-muted: #F5F7FA;
-  --color-border: #E2E8F0;
+  --color-muted: #F2F2F2;
+  --color-border: #D9D9D6;
 
   /* Typography */
   --font-sans: 'MetLife Circular', 'Inter', system-ui, sans-serif;
@@ -65,67 +71,62 @@
 }
 
 :root {
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+  /* Core shadcn variables — MetLife values */
+  --background: #FFFFFF;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  --primary: #0090DA;
+  --primary-foreground: #FFFFFF;
+  --secondary: #A4CE4E;
+  --secondary-foreground: #1A1A1A;
+  --muted: #F2F2F2;
+  --muted-foreground: #75787B;
+  --accent: #A4CE4E;
+  --accent-foreground: #1A1A1A;
+  --destructive: #D32F2F;
+  --destructive-foreground: #FFFFFF;
+  --border: #D9D9D6;
+  --input: #D9D9D6;
+  --ring: #0090DA;
+  --radius: 0.375rem;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Chart colors */
+  --chart-1: #0090DA;
+  --chart-2: #A4CE4E;
+  --chart-3: #0061A0;
+  --chart-4: #00ACA0;
+  --chart-5: #A7A8AA;
+
+  /* Sidebar */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1A1A1A;
+  --sidebar-primary: #0090DA;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F2F2F2;
+  --sidebar-accent-foreground: #1A1A1A;
+  --sidebar-border: #D9D9D6;
+  --sidebar-ring: #0090DA;
+
+  /* MetLife AI Chat tokens */
+  --ml-chat-bg: #F2F2F2;
+  --ml-chat-bubble-user-bg: #0061A0;
+  --ml-chat-bubble-user-text: #FFFFFF;
+  --ml-chat-bubble-bot-bg: #FFFFFF;
+  --ml-chat-bubble-bot-text: #1A1A1A;
+  --ml-chat-bubble-bot-border: #D9D9D6;
+  --ml-chat-avatar-size: 32px;
+  --ml-chat-input-bg: #F2F2F2;
+  --ml-chat-input-radius: 12px;
+  --ml-chat-send-bg-active: #0090DA;
+  --ml-chat-send-bg-empty: #D9D9D6;
+  --ml-chat-suggestion-border: #D9D9D6;
+
+  /* MetLife tints */
+  --ml-blue-tint: rgba(0, 144, 218, 0.06);
+  --ml-green-tint: rgba(164, 206, 78, 0.08);
 }
 
 @layer base {
@@ -157,8 +158,31 @@
   animation: blink 1s infinite;
 }
 
+/* Loading dots pulse animation */
+@keyframes dot-pulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+.dot-pulse span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #75787B;
+  animation: dot-pulse 1.4s ease-in-out infinite both;
+}
+
+.dot-pulse span:nth-child(1) { animation-delay: 0s; }
+.dot-pulse span:nth-child(2) { animation-delay: 0.2s; }
+.dot-pulse span:nth-child(3) { animation-delay: 0.4s; }
+
 @media (prefers-reduced-motion: reduce) {
   .streaming-cursor::after {
+    animation: none;
+    opacity: 1;
+  }
+  .dot-pulse span {
     animation: none;
     opacity: 1;
   }
