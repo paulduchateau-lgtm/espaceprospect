@@ -90,6 +90,9 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 06, Plan 01]** Removed max-w-[200px] from suggestion chips entirely (flex-wrap handles overflow)
 - **[Phase 06, Plan 01]** Used min(75%, 480px) for message bubble max-width (responsive + capped)
 - **[Phase 06, Plan 01]** Static source verification via fs.readFileSync in vitest (validates CSS patterns without runtime)
+- **[Phase 06, Plan 02]** Static JSON imports for demo responses (no dynamic loading or service workers)
+- **[Phase 06, Plan 02]** 30ms per-word simulated streaming for natural feel in demo mode
+- **[Phase 06, Plan 02]** Performance timing uses performance.now() with [Perf] console log prefix
 
 ---
 *Initialized: 2026-03-20*
