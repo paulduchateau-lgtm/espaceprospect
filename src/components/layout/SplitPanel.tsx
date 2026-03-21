@@ -34,7 +34,7 @@ export function SplitPanel({
   // Desktop: side-by-side split with animation
   if (isDesktop) {
     return (
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex h-dvh overflow-hidden">
         {/* Chat panel -- animates width change via layout prop */}
         <motion.div
           layout
@@ -83,7 +83,7 @@ export function SplitPanel({
 
   // Mobile/Tablet: full-screen swap with tab navigation
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-dvh flex flex-col overflow-hidden">
       {/* Tab bar -- only visible after dashboard exists */}
       {phase === "dashboard" && (
         <MobileTabBar activeTab={mobileTab} onTabChange={setMobileTab} />

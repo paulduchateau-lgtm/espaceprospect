@@ -128,14 +128,14 @@ function ChatPanel({
 
       {/* Prospect URL banner */}
       {prospectUrl && (
-        <div className="bg-[#A4CE4E]/10 text-sm px-4 py-2 border-b border-[#D9D9D6] flex items-center gap-2">
+        <div className="bg-[#A4CE4E]/10 text-sm px-4 py-2 border-b border-[#D9D9D6] flex items-center gap-2 min-w-0">
           <LinkIcon className="h-3.5 w-3.5 text-[#A4CE4E] shrink-0" />
           <span className="text-[#75787B] shrink-0">
             Votre espace est sauvegarde. Retrouvez-le a tout moment :
           </span>
           <a
             href={prospectUrl}
-            className="font-medium text-[#0090DA] truncate hover:underline"
+            className="flex-1 min-w-0 font-medium text-[#0090DA] truncate hover:underline"
           >
             {prospectUrl}
           </a>
@@ -220,7 +220,7 @@ function ChatPanel({
             >
               {isUser ? <UserAvatar /> : <BotAvatar />}
 
-              <div className="flex flex-col" style={{ maxWidth: "75%" }}>
+              <div className="flex flex-col" style={{ maxWidth: "min(75%, 480px)" }}>
                 {isLastAssistant ? (
                   <LoadingDots />
                 ) : (
@@ -256,7 +256,7 @@ function ChatPanel({
               key={prompt}
               type="button"
               onClick={() => handlePromptClick(prompt)}
-              className="text-xs font-medium text-[#0090DA] bg-white hover:bg-[#F2F2F2] transition-colors truncate max-w-[200px]"
+              className="text-xs font-medium text-[#0090DA] bg-white hover:bg-[#F2F2F2] transition-colors"
               style={{
                 padding: "6px 14px",
                 borderRadius: 99,
@@ -295,8 +295,8 @@ function ChatPanel({
               disabled={isStreaming || !hasInput}
               className="flex items-center justify-center rounded-[10px] transition-colors shrink-0"
               style={{
-                width: 36,
-                height: 36,
+                width: 44,
+                height: 44,
                 background: hasInput && !isStreaming ? "#0090DA" : "#D9D9D6",
                 border: "none",
                 cursor: hasInput && !isStreaming ? "pointer" : "default",
