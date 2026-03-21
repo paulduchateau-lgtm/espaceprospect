@@ -3,25 +3,25 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-20T18:33:45.061Z"
+last_updated: "2026-03-21T20:41:12.043Z"
 progress:
   total_phases: 6
-  completed_phases: 4
-  total_plans: 18
-  completed_plans: 17
+  completed_phases: 5
+  total_plans: 20
+  completed_plans: 19
 ---
 
 # Project State
 
 ## Current Phase
 
-Phase 5: Persistence & Legal Compliance (In Progress, 1/3 plans done)
+Phase 6: Hardening & Demo Preparation (Pending)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-03-20)
 **Core value:** Un TNS qui arrive sur le site comprend en moins de 2 minutes comment MetLife peut l'aider, à travers une expérience conversationnelle simple et personnalisée.
-**Current focus:** Phase 05 — Persistence & Legal Compliance
+**Current focus:** Phase 06 — hardening-demo-preparation
 
 ## Phase Status
 
@@ -31,8 +31,8 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 | 2 | Core AI Loop | ● Complete (4/4) |
 | 3 | Conversational UI | ● Complete (4/4) |
 | 4 | Dashboard & Transition Animation | ● Complete (4/4) |
-| 5 | Persistence & Legal Compliance | ◐ In Progress (1/3) |
-| 6 | Hardening & Demo Preparation | ○ Pending |
+| 5 | Persistence & Legal Compliance | ● Complete (3/3) |
+| 6 | Hardening & Demo Preparation | ● Complete (2/2) |
 
 ## Decisions Log
 
@@ -87,6 +87,9 @@ See: .planning/PROJECT.md (updated 2026-03-20)
 - **[Phase 05, Plan 03]** usePathname-based dashboard route bypass to avoid redundant consent on /dashboard/[id]
 - **[Phase 05, Plan 03]** Hydration guard pattern: consented=null returns null during SSR, useEffect sets real value
 - **[Phase 05, Plan 03]** Global afterEach(cleanup) in tests to prevent DOM leakage between describe blocks
+- **[Phase 06, Plan 01]** Removed max-w-[200px] from suggestion chips entirely (flex-wrap handles overflow)
+- **[Phase 06, Plan 01]** Used min(75%, 480px) for message bubble max-width (responsive + capped)
+- **[Phase 06, Plan 01]** Static source verification via fs.readFileSync in vitest (validates CSS patterns without runtime)
 
 ---
 *Initialized: 2026-03-20*

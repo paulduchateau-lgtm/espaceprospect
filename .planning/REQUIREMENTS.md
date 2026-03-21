@@ -48,8 +48,8 @@ Requirements for the prototype pitch. Each maps to roadmap phases.
 
 ### Responsive & UX
 
-- [ ] **UX-01**: L'expérience fonctionne sur mobile (au minimum le flow conversationnel)
-- [ ] **UX-02**: Le temps entre la saisie et l'affichage du dashboard est inférieur à 90 secondes
+- [x] **UX-01**: L'expérience fonctionne sur mobile (au minimum le flow conversationnel)
+- [x] **UX-02**: Le temps entre la saisie et l'affichage du dashboard est inférieur à 90 secondes
 - [ ] **UX-03**: Un fallback gracieux s'affiche pour les profils TNS non reconnus ("Votre situation est spécifique, je vous recommande d'échanger avec un conseiller MetLife")
 
 ## v2 Requirements
@@ -114,8 +114,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | PERS-01 | 5 | Complete |
 | PERS-02 | 5 | Pending |
 | PERS-03 | 5 | Complete |
-| UX-01 | 6 | Pending |
-| UX-02 | 6 | Pending |
+| UX-01 | 6 | Complete |
+| UX-02 | 6 | Complete |
 | UX-03 | 3 | Pending |
 
 **Coverage:**
