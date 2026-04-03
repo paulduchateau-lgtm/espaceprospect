@@ -55,6 +55,7 @@ export const scrapeLog = sqliteTable('scrape_log', {
 
 export const prospects = sqliteTable('prospects', {
   id: text('id').primaryKey(),
+  code: text('code'),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
   consentGiven: integer('consent_given').notNull().default(0),
