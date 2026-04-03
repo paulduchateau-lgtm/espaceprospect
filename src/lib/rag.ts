@@ -61,7 +61,7 @@ export async function retrieveRelevantChunks(
  */
 export function formatRAGContext(chunks: RetrievedChunk[]): string {
   if (chunks.length === 0) {
-    return '<context>\nAucune source pertinente trouvee pour cette requete.\n</context>';
+    return '<context>\nNo relevant sources found for this query.\n</context>';
   }
 
   const sources = chunks.map((chunk, i) => {

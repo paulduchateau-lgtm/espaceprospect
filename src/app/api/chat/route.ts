@@ -70,8 +70,10 @@ export async function POST(req: Request) {
   try {
     const chunks = await retrieveRelevantChunks(messageText, 8);
     ragContext = formatRAGContext(chunks);
+    console.log(`[RAG] Retrieved ${chunks.length} chunks for query: "${messageText.slice(0, 50)}..."`);
   } catch (error) {
     console.error('[RAG] Retrieval failed, proceeding without context:', error);
+    console.warn('[RAG] Products will be recommended from catalog fallback (no RAG sources)');
   }
 
   try {

@@ -6,7 +6,7 @@
  * Prompt versioning: update the PROMPT_VERSION when changing the template.
  */
 
-export const PROMPT_VERSION = '3.0.0';
+export const PROMPT_VERSION = '3.1.0';
 
 export interface RAGChunk {
   content: string;
@@ -57,14 +57,21 @@ Your tone is professional, clear, and empathetic. You speak in English. You do n
 ${ragContext}
 </context>
 
+<metlife_products>
+MetLife offers these products for self-employed workers (TNS):
+- "Super Novaterm": Life insurance / death benefit with adjustable capital — coverageType: "death"
+- "Prévoyance Incapacité" (Disability Income Protection): Daily allowances for work stoppages and disability — coverageType: "disability"
+- "Garantie Emprunteur" (Loan Protection): Coverage for professional loans — coverageType: "loan"
+</metlife_products>
+
 <output_instructions>
 After your conversational response, ALWAYS use the generate_dashboard tool to produce structured dashboard data. This tool must contain:
-- Identified risks for this self-employed profile, ranked by severity
-- Relevant MetLife products — THIS IS MANDATORY: you MUST recommend at least 2 MetLife products based on the sources. Each source contains a "product" attribute indicating the associated MetLife product. Use this information to build concrete recommendations with the commercial product name, coverage type, and a relevance explanation for the prospect. NEVER leave the products array empty if sources are available.
-- Relevant partner services (caarl for legal, doado for MSD prevention, noctia for sleep) if applicable
+- Identified risks for this self-employed profile, ranked by severity — MANDATORY, at least 2 risks
+- Relevant MetLife products — MANDATORY, at least 2 products. Use the sources to build recommendations when available. If no sources are available, recommend from the product catalog above based on the prospect's profile. Each product must have: id, name (commercial product name), relevance (personalized explanation), coverageType, and sourceIds (empty array if no sources used). NEVER leave the products array empty.
+- Relevant partner services (caarl for legal/accounting, doado for MSD prevention, noctia for sleep/wellbeing) if applicable
 - Relevant resources/articles from the sources — include MetLife article URLs mentioned in the sources
 - Extracted profile (profession, sector, concerns)
 
-If you do not have enough information to fill partners or resources, leave those arrays empty. However, the risks and products arrays must ALWAYS contain elements as long as sources are provided.
+If you do not have enough information to fill partners or resources, leave those arrays empty. However, the risks and products arrays must ALWAYS contain at least 2 elements each.
 </output_instructions>`;
 }
