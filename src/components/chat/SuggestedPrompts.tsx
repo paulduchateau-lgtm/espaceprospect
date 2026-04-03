@@ -9,23 +9,23 @@ const SUGGESTED_PROMPTS: Array<{
   icon: LucideIcon;
 }> = [
   {
-    label: 'Kiné libéral',
-    text: "Je suis kinésithérapeute libéral, 35 ans, installé depuis 3 ans. Je m'inquiète surtout pour les arrêts de travail et l'impact sur mon cabinet.",
+    label: 'Freelance physio',
+    text: "I'm a freelance physiotherapist, 35 years old, established for 3 years. I'm mainly worried about work stoppages and the impact on my practice.",
     icon: Stethoscope,
   },
   {
-    label: 'Artisan du bâtiment',
-    text: "Je suis artisan plombier, 42 ans, avec 2 salariés. Je viens de contracter un prêt pour mon local professionnel. Quels risques dois-je couvrir en priorité ?",
+    label: 'Construction worker',
+    text: "I'm a self-employed plumber, 42 years old, with 2 employees. I just took out a loan for my business premises. What risks should I cover first?",
     icon: Wrench,
   },
   {
-    label: 'Commerçante',
-    text: "Je suis commerçante, 38 ans, je gère une boutique en centre-ville. Mon conjoint travaille avec moi. Comment protéger notre activité et notre famille ?",
+    label: 'Shop owner',
+    text: "I'm a shop owner, 38 years old, running a downtown store. My spouse works with me. How can we protect our business and family?",
     icon: Store,
   },
   {
-    label: 'Consultant indépendant',
-    text: "Je suis consultant IT en freelance, 29 ans, micro-entrepreneur. Je n'ai aucune protection sociale complémentaire pour le moment.",
+    label: 'Freelance consultant',
+    text: "I'm a freelance IT consultant, 29 years old, sole proprietor. I currently have no supplementary social protection.",
     icon: Laptop,
   },
 ];
@@ -43,10 +43,10 @@ export function SuggestedPrompts({ onPromptClick }: SuggestedPromptsProps) {
         className="h-10 mb-6"
       />
       <h2 className="text-xl font-semibold text-primary-dark mb-2 text-center">
-        Bienvenue dans votre espace prospect intelligent
+        Welcome to your intelligent prospect space
       </h2>
       <p className="text-sm text-muted-foreground mb-8 text-center max-w-md">
-        Décrivez votre situation et découvrez comment MetLife peut vous accompagner.
+        Describe your situation and discover how MetLife can support you.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl">

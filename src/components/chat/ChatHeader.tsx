@@ -37,7 +37,7 @@ export function ChatHeader() {
         </h1>
         <div className="flex items-center gap-1.5">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#A4CE4E]" />
-          <span className="text-[11px] text-[#A4CE4E] font-medium">En ligne</span>
+          <span className="text-[11px] text-[#A4CE4E] font-medium">Online</span>
         </div>
       </div>
     </header>

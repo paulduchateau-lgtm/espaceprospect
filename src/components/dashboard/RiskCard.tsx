@@ -12,19 +12,19 @@ import type { Risk } from "@/lib/types";
 const severityConfig = {
   high: {
     color: "bg-red-100 text-red-800 border-red-200",
-    label: "Risque eleve",
+    label: "High risk",
     Icon: ShieldAlert,
     borderColor: "#ef4444",
   },
   medium: {
     color: "bg-amber-100 text-amber-800 border-amber-200",
-    label: "Risque modere",
+    label: "Moderate risk",
     Icon: Shield,
     borderColor: "#f59e0b",
   },
   low: {
     color: "bg-green-100 text-green-800 border-green-200",
-    label: "Risque faible",
+    label: "Low risk",
     Icon: ShieldCheck,
     borderColor: "#22c55e",
   },

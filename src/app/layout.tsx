@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'MetLife - Espace Prospect Intelligent',
+  title: 'MetLife - Intelligent Prospect Space',
   description:
-    'Découvrez comment MetLife peut protéger votre activité de travailleur non salarié.',
+    'Discover how MetLife can protect your self-employed business activity.',
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={inter.variable}>
+    <html lang="en" className={inter.variable}>
       <body className="font-sans text-foreground bg-background antialiased">
         {children}
       </body>

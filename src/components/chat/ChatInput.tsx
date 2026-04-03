@@ -57,7 +57,7 @@ export const ChatInput = forwardRef<HTMLTextAreaElement, ChatInputProps>(
       <div className="sticky bottom-0 bg-background border-t border-border p-3 shrink-0">
         <form
           role="form"
-          aria-label="Envoyer un message"
+          aria-label="Send a message"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
@@ -69,15 +69,15 @@ export const ChatInput = forwardRef<HTMLTextAreaElement, ChatInputProps>(
             value={input}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
-            placeholder="Décrivez votre situation (métier, âge, préoccupations)..."
-            aria-label="Décrivez votre situation"
+            placeholder="Describe your situation (profession, age, concerns)..."
+            aria-label="Describe your situation"
             aria-describedby="chat-input-help"
             disabled={isProcessing || disabled}
             rows={1}
             className="flex-1 min-h-[48px] max-h-[160px] resize-none rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <span id="chat-input-help" className="sr-only">
-            Appuyez sur Entrée pour envoyer, Maj+Entrée pour un retour à la ligne
+            Press Enter to send, Shift+Enter for a new line
           </span>
 
           {status === 'streaming' ? (
@@ -86,7 +86,7 @@ export const ChatInput = forwardRef<HTMLTextAreaElement, ChatInputProps>(
               size="icon"
               variant="outline"
               onClick={onStop}
-              aria-label="Arrêter la génération"
+              aria-label="Stop generation"
               className="size-[48px] shrink-0"
             >
               <Square className="size-4" />
@@ -96,7 +96,7 @@ export const ChatInput = forwardRef<HTMLTextAreaElement, ChatInputProps>(
               type="submit"
               size="icon"
               disabled={!canSend}
-              aria-label="Envoyer le message"
+              aria-label="Send message"
               className="size-[48px] shrink-0 bg-primary hover:bg-primary-dark"
             >
               <SendHorizonal className="size-4" />

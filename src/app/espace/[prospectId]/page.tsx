@@ -41,14 +41,14 @@ function ProspectCodeBadge({ code }: { code: string }) {
   };
   return (
     <div className="flex items-center gap-2 bg-white/15 px-3 py-2 rounded-lg">
-      <span className="text-xs text-white/70">Code d&apos;accès</span>
+      <span className="text-xs text-white/70">Access code</span>
       <span className="font-mono text-base font-bold text-white tracking-widest">
         {code}
       </span>
       <button
         onClick={copy}
         className="flex items-center justify-center w-6 h-6 rounded hover:bg-white/20 transition-colors"
-        aria-label="Copier le code"
+        aria-label="Copy code"
       >
         {copied ? (
           <Check className="h-3.5 w-3.5 text-[#A4CE4E]" />
@@ -73,7 +73,7 @@ function DashboardHeader({ profession }: { profession: string }) {
             className="flex items-center gap-2 text-sm text-[#75787B] hover:text-[#1A1A1A] transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">metlife.fr</span>
+            <span className="hidden sm:inline">metlife.com</span>
           </a>
           <div className="w-px h-5 bg-[#D9D9D6]" />
           <img src="/metlife-logo.png" alt="MetLife" className="h-7" />
@@ -88,7 +88,7 @@ function DashboardHeader({ profession }: { profession: string }) {
             style={{ background: "#A4CE4E", color: "#1A1A1A" }}
           >
             <Phone className="h-4 w-4" />
-            <span className="hidden sm:inline">Contacter un conseiller</span>
+            <span className="hidden sm:inline">Contact an advisor</span>
           </button>
         </div>
       </div>
@@ -105,7 +105,7 @@ function ProfileBar({ data, code }: { data: DashboardData; code: string | null }
       <div className="max-w-[1100px] mx-auto px-6 py-8">
         <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
           <div>
-            <p className="text-sm text-white/70 mb-1">Votre espace personnalisé</p>
+            <p className="text-sm text-white/70 mb-1">Your personalized space</p>
             <h1 className="text-2xl font-bold">{data.profile.profession}</h1>
           </div>
           {code && <ProspectCodeBadge code={code} />}
@@ -137,7 +137,7 @@ const severityConfig = {
     color: "text-red-600",
     bg: "bg-red-50",
     border: "border-red-200",
-    label: "Risque élevé",
+    label: "High risk",
     Icon: ShieldAlert,
     dotColor: "bg-red-500",
   },
@@ -145,7 +145,7 @@ const severityConfig = {
     color: "text-amber-600",
     bg: "bg-amber-50",
     border: "border-amber-200",
-    label: "Risque modéré",
+    label: "Moderate risk",
     Icon: Shield,
     dotColor: "bg-amber-500",
   },
@@ -153,7 +153,7 @@ const severityConfig = {
     color: "text-green-600",
     bg: "bg-green-50",
     border: "border-green-200",
-    label: "Risque faible",
+    label: "Low risk",
     Icon: ShieldCheck,
     dotColor: "bg-green-500",
   },
@@ -239,7 +239,7 @@ function ProductsList({ products }: { products: ProductRecommendation[] }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-sm font-medium text-[#0090DA] hover:underline"
             >
-              En savoir plus
+              Learn more
               <ExternalLink className="h-3 w-3" />
             </a>
           )}
@@ -342,18 +342,18 @@ function AdvisorSection() {
     >
       <Phone className="h-8 w-8 text-[#0090DA] mx-auto mb-3" />
       <h3 className="text-lg font-semibold text-[#1A1A1A] mb-1">
-        Vous souhaitez aller plus loin ?
+        Want to go further?
       </h3>
       <p className="text-sm text-[#75787B] mb-4">
-        Un conseiller MetLife spécialisé TNS peut affiner ces recommandations et
-        vous proposer un devis personnalisé.
+        A MetLife advisor specializing in self-employed workers can refine these recommendations and
+        offer you a personalized quote.
       </p>
       <button
         className="inline-flex items-center gap-2 font-semibold text-sm px-6 py-3 rounded-md transition-colors hover:brightness-95"
         style={{ background: "#A4CE4E", color: "#1A1A1A" }}
       >
         <Phone className="h-4 w-4" />
-        Prendre rendez-vous
+        Book an appointment
       </button>
     </div>
   );
@@ -380,7 +380,7 @@ function DashboardContent({ data, code }: { data: DashboardData; code: string | 
               <div className="flex items-center gap-2 mb-4">
                 <AlertTriangle className="h-5 w-5 text-[#75787B]" />
                 <h2 className="text-lg font-bold text-[#1A1A1A]">
-                  Risques identifiés
+                  Identified risks
                 </h2>
               </div>
               <div className="bg-white rounded-xl border border-[#E5E5E5] p-5">
@@ -397,7 +397,7 @@ function DashboardContent({ data, code }: { data: DashboardData; code: string | 
               <div className="flex items-center gap-2 mb-4">
                 <CheckCircle2 className="h-5 w-5 text-[#0090DA]" />
                 <h2 className="text-lg font-bold text-[#1A1A1A]">
-                  Solutions MetLife recommandées
+                  Recommended MetLife solutions
                 </h2>
               </div>
               <ProductsList products={data.products} />
@@ -413,7 +413,7 @@ function DashboardContent({ data, code }: { data: DashboardData; code: string | 
                 <div className="flex items-center gap-2 mb-4">
                   <BookOpen className="h-5 w-5 text-[#75787B]" />
                   <h2 className="text-lg font-bold text-[#1A1A1A]">
-                    Ressources utiles
+                    Useful resources
                   </h2>
                 </div>
                 <ResourcesList resources={data.resources} />
@@ -431,7 +431,7 @@ function DashboardContent({ data, code }: { data: DashboardData; code: string | 
                 transition={{ delay: 0.3 }}
               >
                 <h3 className="text-sm font-bold text-[#1A1A1A] mb-3 uppercase tracking-wide">
-                  Services partenaires
+                  Partner services
                 </h3>
                 <div className="bg-white rounded-xl border border-[#E5E5E5] p-4">
                   <PartnersList partnerRecs={data.partners} />
@@ -576,16 +576,16 @@ export default function EspacePage({
   if (loadState === "not-found") {
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4 px-6">
-        <h1 className="text-xl font-semibold">Espace introuvable</h1>
+        <h1 className="text-xl font-semibold">Space not found</h1>
         <p className="text-sm text-[#75787B] text-center">
-          Cet espace n&apos;existe pas ou a été supprimé.
+          This space does not exist or has been deleted.
         </p>
         <a
           href="/"
           className="inline-flex items-center gap-1 text-sm font-medium text-[#0090DA] hover:underline"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          Retour au site MetLife
+          Back to MetLife site
         </a>
       </div>
     );
@@ -594,16 +594,16 @@ export default function EspacePage({
   if (loadState === "error" || !dashboardData) {
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4 px-6">
-        <h1 className="text-xl font-semibold">Erreur de chargement</h1>
+        <h1 className="text-xl font-semibold">Loading error</h1>
         <p className="text-sm text-[#75787B] text-center">
-          Impossible de charger votre espace. Veuillez réessayer.
+          Unable to load your space. Please try again.
         </p>
         <a
           href="/"
           className="inline-flex items-center gap-1 text-sm font-medium text-[#0090DA] hover:underline"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          Retour au site MetLife
+          Back to MetLife site
         </a>
       </div>
     );

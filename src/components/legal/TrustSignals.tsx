@@ -3,18 +3,18 @@ import { Shield, TrendingUp, Users } from 'lucide-react'
 const TRUST_DATA = [
   {
     icon: Shield,
-    label: 'Regulee par l\'ACPR',
-    detail: 'Autorite de Controle Prudentiel et de Resolution',
+    label: 'ACPR Regulated',
+    detail: 'Prudential Supervision and Resolution Authority',
   },
   {
     icon: TrendingUp,
-    label: 'Solidite financiere',
-    detail: 'Notation A1 (Moody\'s) - Groupe MetLife, Inc.',
+    label: 'Financial strength',
+    detail: 'A1 rating (Moody\'s) - MetLife, Inc. Group',
   },
   {
     icon: Users,
-    label: 'Confiance',
-    detail: 'Plus de 100 millions d\'assures dans le monde',
+    label: 'Trust',
+    detail: 'Over 100 million policyholders worldwide',
   },
 ] as const
 

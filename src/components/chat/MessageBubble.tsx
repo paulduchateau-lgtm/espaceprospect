@@ -9,11 +9,11 @@ import { LoadingDots } from './LoadingDots';
 
 // Phrases that indicate Claude is redirecting to an advisor (UX-03 fallback)
 const FALLBACK_INDICATORS = [
-  'conseiller metlife',
-  'situation est spécifique',
-  'attention particulière',
-  'échangez directement',
-  'accompagner de manière personnalisée',
+  'metlife advisor',
+  'situation is specific',
+  'special attention',
+  'speak directly',
+  'personalized support',
 ] as const;
 
 function isFallbackResponse(text: string): boolean {
@@ -41,7 +41,7 @@ export function MessageBubble({ message, isStreaming = false, isLoading = false 
   return (
     <article
       role="article"
-      aria-label={isUser ? 'Votre message' : "Réponse de l'assistant"}
+      aria-label={isUser ? 'Your message' : "Assistant's response"}
       className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'} mb-4`}
     >
       {/* Avatar — assistant only */}
@@ -75,7 +75,7 @@ export function MessageBubble({ message, isStreaming = false, isLoading = false 
                 className={buttonVariants({ variant: 'default', size: 'sm' }) + ' mt-3 gap-1.5'}
               >
                 <Phone className="size-3.5" />
-                Contacter un conseiller MetLife
+                Contact a MetLife advisor
               </a>
             )}
           </div>

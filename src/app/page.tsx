@@ -23,16 +23,16 @@ function SiteHeader() {
           <img src="/metlife-logo.png" alt="MetLife" className="h-8" />
           <nav className="hidden md:flex items-center gap-6">
             <span className="text-sm font-medium text-[#1A1A1A] cursor-default">
-              Particuliers
+              Individuals
             </span>
             <span className="text-sm font-medium text-[#0090DA] cursor-default">
-              Travailleurs Non Salariés
+              Self-Employed Workers
             </span>
             <span className="text-sm font-medium text-[#1A1A1A] cursor-default">
-              Entreprises
+              Businesses
             </span>
             <span className="text-sm font-medium text-[#1A1A1A] cursor-default">
-              À propos
+              About
             </span>
           </nav>
         </div>
@@ -45,7 +45,7 @@ function SiteHeader() {
             className="text-sm font-semibold px-4 py-2 rounded-md transition-colors"
             style={{ background: "#0090DA", color: "#FFFFFF" }}
           >
-            Mon espace
+            My space
           </button>
         </div>
       </div>
@@ -62,11 +62,11 @@ function HeroSection({ onOpenChat }: { onOpenChat: () => void }) {
       <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-28">
         <div className="max-w-2xl">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
-            Protégez votre activité de travailleur non salarié
+            Protect your self-employed business activity
           </h1>
           <p className="text-lg md:text-xl text-white/85 mb-8 leading-relaxed">
-            Prévoyance, incapacité, invalidité, décès : des solutions adaptées à
-            votre situation professionnelle et familiale.
+            Income protection, disability, invalidity, death: solutions tailored to
+            your professional and family situation.
           </p>
           <div className="flex flex-wrap gap-4">
             <button
@@ -74,11 +74,11 @@ function HeroSection({ onOpenChat }: { onOpenChat: () => void }) {
               className="flex items-center gap-2 font-semibold text-sm px-6 py-3 rounded-md transition-colors hover:brightness-95"
               style={{ background: "#A4CE4E", color: "#1A1A1A" }}
             >
-              Découvrir mes solutions
+              Discover my solutions
               <ChevronRight className="h-4 w-4" />
             </button>
             <button className="flex items-center gap-2 font-semibold text-sm px-6 py-3 rounded-md border-2 border-white/40 text-white hover:bg-white/10 transition-colors">
-              Être rappelé
+              Request a callback
             </button>
           </div>
         </div>
@@ -96,20 +96,20 @@ function NewFeatureBanner({ onOpenChat }: { onOpenChat: () => void }) {
       <div className="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#A4CE4E] text-[#1A1A1A]">
-            Nouveau
+            New
           </span>
           <p className="text-sm text-[#1A1A1A]">
             <span className="font-semibold">
-              Découvrez comment MetLife peut vous accompagner
+              Discover how MetLife can support you
             </span>{" "}
-            grâce à un espace personnalisé propulsé par l&apos;IA
+            with a personalized AI-powered space
           </p>
         </div>
         <button
           onClick={onOpenChat}
           className="text-sm font-semibold text-[#0090DA] hover:underline flex items-center gap-1 shrink-0"
         >
-          Essayer maintenant
+          Try it now
           <ChevronRight className="h-3.5 w-3.5" />
         </button>
       </div>
@@ -122,12 +122,12 @@ function NewFeatureBanner({ onOpenChat }: { onOpenChat: () => void }) {
 // ──────────────────────────────────────────────
 function TrustStrip() {
   const items = [
-    { icon: Shield, label: "Régulée ACPR", detail: "Autorité de contrôle" },
-    { icon: TrendingUp, label: "Notation A1", detail: "Moody's" },
+    { icon: Shield, label: "ACPR Regulated", detail: "Supervisory authority" },
+    { icon: TrendingUp, label: "A1 Rating", detail: "Moody's" },
     {
       icon: Users,
-      label: "100M+ d'assurés",
-      detail: "Dans le monde",
+      label: "100M+ policyholders",
+      detail: "Worldwide",
     },
   ];
   return (
@@ -159,30 +159,30 @@ function ProductsSection() {
     {
       title: "Super Novaterm",
       description:
-        "Assurance décès avec un capital modulable pour protéger votre famille et votre activité professionnelle.",
-      type: "Décès",
+        "Life insurance with adjustable capital to protect your family and professional activity.",
+      type: "Death",
     },
     {
-      title: "Prévoyance Incapacité",
+      title: "Disability Coverage",
       description:
-        "Indemnités journalières en cas d'arrêt de travail pour maintenir vos revenus de TNS.",
-      type: "Incapacité",
+        "Daily allowances in case of work stoppage to maintain your self-employed income.",
+      type: "Disability",
     },
     {
-      title: "Garantie Invalidité",
+      title: "Invalidity Guarantee",
       description:
-        "Capital et rentes en cas d'invalidité pour sécuriser votre avenir et celui de vos proches.",
-      type: "Invalidité",
+        "Capital and annuities in case of invalidity to secure your future and that of your loved ones.",
+      type: "Invalidity",
     },
   ];
   return (
     <section className="bg-[#F2F2F2]">
       <div className="max-w-[1200px] mx-auto px-6 py-16">
         <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">
-          Nos solutions pour les TNS
+          Our solutions for the self-employed
         </h2>
         <p className="text-[#75787B] mb-8">
-          Des garanties conçues pour les travailleurs non salariés
+          Coverage designed for self-employed workers
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {products.map((p) => (
@@ -200,7 +200,7 @@ function ProductsSection() {
                 {p.description}
               </p>
               <span className="inline-flex items-center gap-1 text-sm font-medium text-[#0090DA] mt-4 hover:underline">
-                En savoir plus <ChevronRight className="h-3.5 w-3.5" />
+                Learn more <ChevronRight className="h-3.5 w-3.5" />
               </span>
             </div>
           ))}
@@ -225,18 +225,18 @@ function SiteFooter() {
               className="h-6 brightness-0 invert opacity-60 mb-2"
             />
             <p className="text-xs">
-              MetLife, Inc. - Assureur de rang mondial depuis 1868
+              MetLife, Inc. - World-class insurer since 1868
             </p>
           </div>
           <div className="flex flex-wrap gap-6 text-xs">
             <span className="hover:text-white cursor-pointer">
-              Mentions légales
+              Legal notices
             </span>
             <span className="hover:text-white cursor-pointer">
-              Politique de confidentialité
+              Privacy policy
             </span>
             <span className="hover:text-white cursor-pointer">
-              Gestion des cookies
+              Cookie settings
             </span>
             <span className="hover:text-white cursor-pointer">Contact</span>
           </div>
@@ -250,9 +250,9 @@ function SiteFooter() {
 // Embedded Chat Widget (framed)
 // ──────────────────────────────────────────────
 const EXAMPLE_PROMPTS = [
-  "Je suis kinésithérapeute libéral, 35 ans, je viens d'ouvrir mon cabinet",
-  "Je suis architecte indépendant, 45 ans, marié avec 2 enfants",
-  "Je suis infirmière libérale, 28 ans, début d'activité",
+  "I'm a freelance physiotherapist, 35 years old, just opened my practice",
+  "I'm a self-employed architect, 45 years old, married with 2 children",
+  "I'm a freelance nurse, 28 years old, just starting out",
 ];
 
 function SendIcon({ color = "currentColor" }: { color?: string }) {
@@ -333,7 +333,7 @@ function LoadingDots() {
     <div
       className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-[14px_14px_14px_4px] border border-[#D9D9D6]"
       style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.05)" }}
-      aria-label="L'assistant rédige une réponse"
+      aria-label="The assistant is composing a response"
     >
       <span className="dot-pulse flex gap-1">
         <span />
@@ -358,17 +358,17 @@ function CodeAccessForm() {
     try {
       const res = await fetch(`/api/prospect/by-code/${normalized}`);
       if (res.status === 404) {
-        setError("Code introuvable. Vérifiez et réessayez.");
+        setError("Code not found. Please check and try again.");
         return;
       }
       if (!res.ok) {
-        setError("Erreur serveur. Réessayez.");
+        setError("Server error. Please try again.");
         return;
       }
       const data = await res.json();
       window.location.href = `/espace/${data.id}`;
     } catch {
-      setError("Erreur réseau. Réessayez.");
+      setError("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -377,7 +377,7 @@ function CodeAccessForm() {
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <p className="text-xs text-[#75787B] text-center mb-2">
-        Déjà un espace ? Saisissez votre code
+        Already have a space? Enter your code
       </p>
       <div className="flex gap-2">
         <input
@@ -398,7 +398,7 @@ function CodeAccessForm() {
             color: code.length === 6 && !loading ? "#FFFFFF" : "#A7A8AA",
           }}
         >
-          {loading ? "..." : "Accéder"}
+          {loading ? "..." : "Access"}
         </button>
       </div>
       {error && <p className="text-xs text-red-500 text-center mt-1.5">{error}</p>}
@@ -481,14 +481,14 @@ function ChatWidget({
               </p>
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#A4CE4E]" />
-                <span className="text-[10px] text-white/75">En ligne</span>
+                <span className="text-[10px] text-white/75">Online</span>
               </div>
             </div>
           </div>
           <button
             onClick={onClose}
             className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-white/15 transition-colors"
-            aria-label="Fermer"
+            aria-label="Close"
           >
             <X className="h-4 w-4 text-white" />
           </button>
@@ -504,11 +504,11 @@ function ChatWidget({
               <BotAvatar size={44} />
               <div className="text-center space-y-1.5">
                 <p className="text-sm font-semibold text-[#1A1A1A]">
-                  Bonjour ! Comment puis-je vous aider ?
+                  Hello! How can I help you?
                 </p>
                 <p className="text-xs text-[#75787B] max-w-[280px]">
-                  Décrivez votre situation et recevez des recommandations
-                  personnalisées.
+                  Describe your situation and receive personalized
+                  recommendations.
                 </p>
               </div>
               <div className="flex flex-col gap-2 w-full">
@@ -587,7 +587,7 @@ function ChatWidget({
                 className="flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hover:brightness-95"
                 style={{ background: "#A4CE4E", color: "#1A1A1A" }}
               >
-                Aller vers mon espace personnalisé
+                Go to my personalized space
                 <ChevronRight className="h-4 w-4" />
               </a>
             </div>
@@ -611,7 +611,7 @@ function ChatWidget({
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Décrivez votre situation..."
+                placeholder="Describe your situation..."
                 disabled={isStreaming || phase === "dashboard"}
                 className="flex-1 bg-transparent border-none outline-none text-[13px] text-[#1A1A1A] placeholder:text-[#A7A8AA] py-1"
               />
@@ -628,7 +628,7 @@ function ChatWidget({
                   cursor:
                     hasInput && !isStreaming ? "pointer" : "default",
                 }}
-                aria-label="Envoyer"
+                aria-label="Send"
               >
                 <SendIcon
                   color={hasInput && !isStreaming ? "#FFFFFF" : "#A7A8AA"}
@@ -640,7 +640,7 @@ function ChatWidget({
             className="text-center mt-1.5"
             style={{ fontSize: 9, color: "#A7A8AA" }}
           >
-            MetLife AI peut produire des informations inexactes.
+            MetLife AI may produce inaccurate information.
           </p>
         </div>
       </div>
@@ -665,7 +665,7 @@ function ChatTrigger({ onClick }: { onClick: () => void }) {
         border: "none",
         cursor: "pointer",
       }}
-      aria-label="Ouvrir l'assistant MetLife"
+      aria-label="Open MetLife assistant"
     >
       <MessageCircle className="h-6 w-6 text-white" />
     </button>

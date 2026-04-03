@@ -55,7 +55,7 @@ export function ProductCard({ product }: { product: ProductRecommendation }) {
             rel="noopener noreferrer"
             className={buttonVariants({ variant: "outline", size: "sm" })}
           >
-            En savoir plus <ExternalLink className="ml-1 h-3 w-3" />
+            Learn more <ExternalLink className="ml-1 h-3 w-3" />
           </a>
         </CardFooter>
       )}

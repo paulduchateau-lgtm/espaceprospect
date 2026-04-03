@@ -1,67 +1,67 @@
 {
-  "userMessage": "Je suis infirmiere liberale, 28 ans, debut d'activite",
-  "assistantMessage": "En tant qu'infirmiere liberale en debut d'activite, vous faites face a des enjeux de protection specifiques a votre profession et a votre etape de carriere. A 28 ans, vous avez l'avantage de pouvoir mettre en place une couverture prevoyance a des conditions tarifaires avantageuses. Le risque principal pour les infirmieres liberales est l'arret de travail : les contraintes physiques de votre metier (deplacement, manutention de patients, horaires etendus) augmentent significativement ce risque.\n\nEn debut d'activite, vos cotisations sociales sont calculees sur une base forfaitaire, ce qui signifie que vos indemnites journalieres en cas d'arret seront tres faibles les premieres annees. Une prevoyance incapacite complementaire est donc particulierement importante a ce stade pour eviter toute interruption de revenus qui pourrait fragiliser votre installation. La construction d'une protection solide des le depart est un investissement dans la perennite de votre activite.\n\nMetLife propose des contrats de prevoyance incapacite adaptes aux jeunes professionnels de sante avec des garanties evolutives. Notre contrat Super Novaterm offre egalement une protection deces a des conditions accessibles pour les jeunes actifs. Je vous recommande d'echanger avec un conseiller MetLife pour affiner ces recommandations.",
+  "userMessage": "I'm a freelance nurse, 28 years old, just starting my practice",
+  "assistantMessage": "As a freelance nurse just starting your practice, you face protection challenges specific to your profession and career stage. At 28, you have the advantage of being able to set up income protection coverage at favorable rates. The primary risk for freelance nurses is work stoppage: the physical demands of your job (travel, patient handling, extended hours) significantly increase this risk.\n\nAt the start of your practice, your social contributions are calculated on a flat-rate basis, which means your daily allowances in case of absence will be very low in the first few years. Supplementary disability income coverage is therefore particularly important at this stage to avoid any interruption of income that could undermine your setup. Building solid protection from the start is an investment in the sustainability of your practice.\n\nMetLife offers disability income contracts tailored to young healthcare professionals with scalable guarantees. Our Super Novaterm contract also provides death protection at accessible terms for young professionals. I recommend speaking with a MetLife advisor to refine these recommendations.",
   "dashboard": {
     "risks": [
       {
-        "id": "arret-travail",
-        "label": "Arret de travail prolonge",
+        "id": "work-stoppage",
+        "label": "Prolonged work stoppage",
         "severity": "high",
-        "description": "Les contraintes physiques du metier d'infirmiere liberale (deplacement, manutention) augmentent significativement le risque d'arret de travail."
+        "description": "The physical demands of freelance nursing (travel, patient handling) significantly increase the risk of work stoppage."
       },
       {
-        "id": "invalidite",
-        "label": "Invalidite professionnelle",
+        "id": "professional-disability",
+        "label": "Professional disability",
         "severity": "medium",
-        "description": "Une invalidite pourrait compromettre votre carriere alors meme que vous venez de vous installer en liberal."
+        "description": "A disability could compromise your career just as you are establishing yourself as a freelance practitioner."
       },
       {
-        "id": "deces",
-        "label": "Deces premature",
+        "id": "premature-death",
+        "label": "Premature death",
         "severity": "low",
-        "description": "A 28 ans le risque est statistiquement faible, mais une couverture minimale reste recommandee pour proteger vos proches."
+        "description": "At 28 the risk is statistically low, but minimum coverage is still recommended to protect your loved ones."
       }
     ],
     "products": [
       {
-        "id": "prevoyance-incapacite",
-        "name": "Prevoyance Incapacite",
-        "relevance": "Indemnites journalieres complementaires essentielles en debut d'activite, quand les indemnites de base sont calculees sur une base forfaitaire faible.",
-        "coverageType": "incapacite"
+        "id": "disability-income",
+        "name": "Disability Income Protection",
+        "relevance": "Supplementary daily allowances essential at the start of your practice, when base allowances are calculated on a low flat-rate basis.",
+        "coverageType": "disability"
       },
       {
         "id": "super-novaterm",
         "name": "Super Novaterm",
-        "relevance": "Protection deces accessible pour les jeunes professionnels avec capital ajustable au fil de l'evolution de votre situation.",
-        "coverageType": "deces"
+        "relevance": "Accessible death protection for young professionals with adjustable capital as your situation evolves.",
+        "coverageType": "death"
       }
     ],
     "partners": [
       {
         "id": "doado",
-        "relevance": "Prevention sante et bien-etre au travail pour les professionnels de sante soumis a des contraintes physiques quotidiennes."
+        "relevance": "Health prevention and workplace wellness for healthcare professionals subject to daily physical demands."
       },
       {
         "id": "caarl",
-        "relevance": "Accompagnement a l'installation et gestion administrative pour les infirmieres liberales en debut d'activite."
+        "relevance": "Setup assistance and administrative management for freelance nurses starting their practice."
       }
     ],
     "resources": [
       {
-        "title": "S'installer en liberal : guide prevoyance",
+        "title": "Starting a freelance practice: income protection guide",
         "url": "https://www.metlife.fr/guides/installation-liberal-prevoyance",
         "type": "guide"
       },
       {
-        "title": "Les risques professionnels des infirmieres liberales",
+        "title": "Occupational risks for freelance nurses",
         "url": "https://www.metlife.fr/articles/risques-infirmiere-liberale",
         "type": "article"
       }
     ],
     "profile": {
-      "profession": "Infirmiere liberale",
-      "sector": "Sante",
-      "concerns": ["Debut d'activite", "Protection des revenus", "Cotisations sociales"]
+      "profession": "Freelance nurse",
+      "sector": "Healthcare",
+      "concerns": ["Early-career practice", "Income protection", "Social contributions"]
     }
   }
 }

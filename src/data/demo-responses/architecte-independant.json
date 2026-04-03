@@ -1,67 +1,67 @@
 {
-  "userMessage": "Je suis architecte independant, 45 ans, marie avec 2 enfants",
-  "assistantMessage": "En tant qu'architecte independant avec une famille a charge, votre situation necessite une attention particuliere en matiere de protection. A 45 ans, avec un conjoint et deux enfants qui dependent de vos revenus, le risque de deces premature constitue votre preoccupation majeure. Un capital deces adapte garantit la securite financiere de votre famille et la continuite de leur niveau de vie en cas de disparition.\n\nVotre activite d'architecte independant vous expose egalement aux risques d'arret de travail prolonge. En cas de maladie ou d'accident, l'absence de revenus peut impacter directement votre famille et la perennite de votre cabinet. Les indemnites de la Securite sociale pour les TNS etant limitees, une prevoyance incapacite complementaire est indispensable pour maintenir vos revenus pendant une periode d'inactivite.\n\nMetLife propose des solutions adaptees a votre profil familial. Le contrat Super Novaterm offre un capital deces modulable en fonction de l'evolution de votre situation familiale, avec des options de rente education pour vos enfants. Notre prevoyance incapacite complete votre couverture avec des indemnites journalieres des le premier jour d'arret. Je vous recommande d'echanger avec un conseiller MetLife pour affiner ces recommandations.",
+  "userMessage": "I'm a freelance architect, 45 years old, married with 2 children",
+  "assistantMessage": "As a freelance architect with a family to support, your situation requires particular attention when it comes to protection. At 45, with a spouse and two children depending on your income, the risk of premature death is your primary concern. An adequate death benefit guarantees your family's financial security and the continuity of their standard of living in case of your passing.\n\nYour freelance architecture practice also exposes you to the risk of prolonged work stoppage. In case of illness or accident, the loss of income can directly impact your family and the sustainability of your firm. Since Social Security benefits for self-employed professionals are limited, supplementary disability income coverage is essential to maintain your earnings during a period of inactivity.\n\nMetLife offers solutions tailored to your family profile. The Super Novaterm contract provides adjustable death benefit capital that evolves with your family situation, with education annuity options for your children. Our disability income coverage complements your protection with daily allowances from the first day of absence. I recommend speaking with a MetLife advisor to refine these recommendations.",
   "dashboard": {
     "risks": [
       {
-        "id": "deces-premature",
-        "label": "Deces premature",
+        "id": "premature-death",
+        "label": "Premature death",
         "severity": "high",
-        "description": "Avec un conjoint et deux enfants a charge, la protection de votre famille en cas de disparition est une priorite absolue."
+        "description": "With a spouse and two dependent children, protecting your family in case of death is an absolute priority."
       },
       {
-        "id": "arret-travail",
-        "label": "Arret de travail prolonge",
+        "id": "work-stoppage",
+        "label": "Prolonged work stoppage",
         "severity": "high",
-        "description": "En tant qu'independant, un arret de travail prolonge impacte directement les revenus de toute votre famille."
+        "description": "As a freelancer, a prolonged work stoppage directly impacts your entire family's income."
       },
       {
-        "id": "invalidite",
-        "label": "Invalidite",
+        "id": "disability",
+        "label": "Disability",
         "severity": "medium",
-        "description": "Une invalidite permanente compromettrait votre capacite a exercer et a subvenir aux besoins de votre famille."
+        "description": "A permanent disability would compromise your ability to practice and provide for your family's needs."
       }
     ],
     "products": [
       {
         "id": "super-novaterm",
         "name": "Super Novaterm",
-        "relevance": "Capital deces modulable avec options de rente education pour vos enfants, adapte a votre situation familiale.",
-        "coverageType": "deces"
+        "relevance": "Adjustable death benefit capital with education annuity options for your children, tailored to your family situation.",
+        "coverageType": "death"
       },
       {
-        "id": "prevoyance-incapacite",
-        "name": "Prevoyance Incapacite",
-        "relevance": "Indemnites journalieres garantissant le maintien de vos revenus familiaux en cas d'arret de travail.",
-        "coverageType": "incapacite"
+        "id": "disability-income",
+        "name": "Disability Income Protection",
+        "relevance": "Daily allowances ensuring the maintenance of your family income in case of work stoppage.",
+        "coverageType": "disability"
       }
     ],
     "partners": [
       {
         "id": "noctia",
-        "relevance": "Protection juridique et accompagnement pour les architectes independants face aux litiges professionnels."
+        "relevance": "Legal protection and support for freelance architects facing professional disputes."
       },
       {
         "id": "caarl",
-        "relevance": "Gestion comptable et administrative optimisee pour perenniser votre activite d'architecte."
+        "relevance": "Optimized accounting and administrative management to sustain your architecture practice."
       }
     ],
     "resources": [
       {
-        "title": "Proteger sa famille quand on est TNS",
+        "title": "Protecting your family as a self-employed professional",
         "url": "https://www.metlife.fr/articles/protection-famille-tns",
         "type": "article"
       },
       {
-        "title": "Guide capital deces pour independants",
+        "title": "Death benefit guide for freelancers",
         "url": "https://www.metlife.fr/guides/capital-deces-independants",
         "type": "guide"
       }
     ],
     "profile": {
-      "profession": "Architecte independant",
+      "profession": "Freelance architect",
       "sector": "Construction",
-      "concerns": ["Protection familiale", "Capital deces", "Perennite de l'activite"]
+      "concerns": ["Family protection", "Death benefit", "Business sustainability"]
     }
   }
 }

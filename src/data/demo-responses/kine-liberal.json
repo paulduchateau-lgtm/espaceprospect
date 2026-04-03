@@ -1,67 +1,67 @@
 {
-  "userMessage": "Je suis kinesitherapeute liberal, 35 ans, je viens d'ouvrir mon cabinet",
-  "assistantMessage": "En tant que kinesitherapeute liberal en debut d'activite, vous etes particulierement expose a certains risques specifiques a votre profession. Les gestes repetitifs et les postures de travail inherents a votre metier vous exposent aux troubles musculo-squelettiques (TMS), qui representent la premiere cause d'arret de travail prolonge chez les kinesitherapeutes. Sans revenus de remplacement adaptes, un arret de travail peut rapidement compromettre la viabilite de votre cabinet.\n\nVotre situation de debut d'activite renforce l'importance d'une couverture prevoyance solide. En tant que TNS, vos indemnites journalieres de la Securite sociale sont limitees et soumises a un delai de carence. Une assurance prevoyance incapacite vous garantit des indemnites complementaires des le premier jour d'arret, preservant ainsi vos revenus pendant votre convalescence. Par ailleurs, une assurance deces avec capital ajustable protege vos proches en cas de disparition prematuree.\n\nMetLife propose des solutions specifiquement concues pour les professionnels de sante independants comme vous. Notre contrat Super Novaterm offre une protection deces flexible, tandis que notre prevoyance incapacite couvre les arrets de travail et l'invalidite professionnelle. Je vous recommande d'echanger avec un conseiller MetLife pour affiner ces recommandations.",
+  "userMessage": "I'm a freelance physiotherapist, 35 years old, I just opened my practice",
+  "assistantMessage": "As a freelance physiotherapist just starting your practice, you are particularly exposed to certain risks specific to your profession. The repetitive movements and working postures inherent to your job expose you to musculoskeletal disorders (MSDs), which are the leading cause of prolonged sick leave among physiotherapists. Without adequate income replacement, a work stoppage can quickly jeopardize the viability of your practice.\n\nYour early-career situation reinforces the importance of solid income protection coverage. As a self-employed professional, your Social Security daily allowances are limited and subject to a waiting period. Disability income insurance guarantees you supplementary allowances from the first day of absence, thus preserving your income during recovery. Additionally, life insurance with adjustable capital protects your loved ones in the event of premature death.\n\nMetLife offers solutions specifically designed for independent healthcare professionals like you. Our Super Novaterm contract provides flexible death protection, while our disability income coverage covers work stoppages and professional disability. I recommend speaking with a MetLife advisor to refine these recommendations.",
   "dashboard": {
     "risks": [
       {
-        "id": "arret-travail",
-        "label": "Arret de travail prolonge",
+        "id": "work-stoppage",
+        "label": "Prolonged work stoppage",
         "severity": "high",
-        "description": "Sans revenus de remplacement, un arret maladie peut compromettre votre cabinet en debut d'activite. Les kinesitherapeutes sont particulierement exposes aux arrets prolonges."
+        "description": "Without income replacement, a sick leave can jeopardize your practice in its early stages. Physiotherapists are particularly exposed to prolonged work stoppages."
       },
       {
-        "id": "invalidite-professionnelle",
-        "label": "Invalidite professionnelle",
+        "id": "professional-disability",
+        "label": "Professional disability",
         "severity": "high",
-        "description": "Les TMS sont frequents chez les kinesitherapeutes — une invalidite peut mettre fin a votre activite et a vos revenus de facon permanente."
+        "description": "MSDs are common among physiotherapists — a disability can permanently end your practice and your income."
       },
       {
-        "id": "deces-premature",
-        "label": "Deces premature",
+        "id": "premature-death",
+        "label": "Premature death",
         "severity": "medium",
-        "description": "Proteger vos proches en cas de disparition est essentiel, surtout en debut de carriere avec des engagements financiers lies au cabinet."
+        "description": "Protecting your loved ones in case of death is essential, especially early in your career with financial commitments related to your practice."
       }
     ],
     "products": [
       {
         "id": "super-novaterm",
         "name": "Super Novaterm",
-        "relevance": "Assurance deces adaptee aux TNS avec capital ajustable selon votre situation familiale et vos engagements professionnels.",
-        "coverageType": "deces"
+        "relevance": "Life insurance tailored for self-employed professionals with adjustable capital based on your family situation and professional commitments.",
+        "coverageType": "death"
       },
       {
-        "id": "prevoyance-incapacite",
-        "name": "Prevoyance Incapacite",
-        "relevance": "Indemnites journalieres en cas d'arret de travail, essentielles pour un kinesitherapeute liberal dont les revenus dependent directement de son activite.",
-        "coverageType": "incapacite"
+        "id": "disability-income",
+        "name": "Disability Income Protection",
+        "relevance": "Daily allowances in case of work stoppage, essential for a freelance physiotherapist whose income depends directly on their activity.",
+        "coverageType": "disability"
       }
     ],
     "partners": [
       {
         "id": "doado",
-        "relevance": "Prevention des TMS pour les professionnels de sante pratiquant des gestes repetitifs au quotidien."
+        "relevance": "MSD prevention for healthcare professionals performing repetitive movements on a daily basis."
       },
       {
         "id": "caarl",
-        "relevance": "Accompagnement en gestion administrative et comptable pour les professionnels de sante en debut d'activite."
+        "relevance": "Administrative and accounting support for healthcare professionals starting their practice."
       }
     ],
     "resources": [
       {
-        "title": "Guide prevoyance TNS : proteger ses revenus",
+        "title": "Self-employed income protection guide",
         "url": "https://www.metlife.fr/prevoyance-tns",
         "type": "guide"
       },
       {
-        "title": "Les risques specifiques des kinesitherapeutes liberaux",
+        "title": "Specific risks for freelance physiotherapists",
         "url": "https://www.metlife.fr/articles/risques-kine",
         "type": "article"
       }
     ],
     "profile": {
-      "profession": "Kinesitherapeute liberal",
-      "sector": "Sante",
-      "concerns": ["Protection des revenus", "Risque TMS", "Debut d'activite"]
+      "profession": "Freelance physiotherapist",
+      "sector": "Healthcare",
+      "concerns": ["Income protection", "MSD risk", "Early-career practice"]
     }
   }
 }

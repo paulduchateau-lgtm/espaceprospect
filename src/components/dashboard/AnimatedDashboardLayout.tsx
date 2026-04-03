@@ -46,16 +46,16 @@ export function AnimatedDashboardLayout({
       {/* Profile summary */}
       <motion.section variants={sectionVariants}>
         <h2 className="text-lg font-semibold mb-1">
-          Votre profil : {data.profile.profession}
+          Your profile: {data.profile.profession}
         </h2>
         <p className="text-sm text-muted-foreground">
-          Secteur : {data.profile.sector}
+          Sector: {data.profile.sector}
         </p>
       </motion.section>
 
       {/* Risk cards with stagger */}
       <motion.section variants={sectionVariants}>
-        <h3 className="text-md font-semibold mb-3">Risques identifies</h3>
+        <h3 className="text-md font-semibold mb-3">Identified risks</h3>
         <motion.div
           className="grid gap-4 grid-cols-1 lg:grid-cols-2"
           variants={activeCardContainerVariants}
@@ -73,7 +73,7 @@ export function AnimatedDashboardLayout({
       {/* Product cards with stagger */}
       <motion.section variants={sectionVariants}>
         <h3 className="text-md font-semibold mb-3">
-          Solutions MetLife recommandees
+          Recommended MetLife solutions
         </h3>
         <motion.div
           className="grid gap-4 grid-cols-1 lg:grid-cols-2"
@@ -92,7 +92,7 @@ export function AnimatedDashboardLayout({
       {/* Partner cards with stagger */}
       {data.partners.length > 0 && (
         <motion.section variants={sectionVariants}>
-          <h3 className="text-md font-semibold mb-3">Services partenaires</h3>
+          <h3 className="text-md font-semibold mb-3">Partner services</h3>
           <motion.div
             className="grid gap-4 grid-cols-1 md:grid-cols-3"
             variants={activeCardContainerVariants}
@@ -111,7 +111,7 @@ export function AnimatedDashboardLayout({
       {/* Resources */}
       {data.resources.length > 0 && (
         <motion.section variants={sectionVariants}>
-          <h3 className="text-md font-semibold mb-3">Ressources utiles</h3>
+          <h3 className="text-md font-semibold mb-3">Useful resources</h3>
           <ResourceList resources={data.resources} />
         </motion.section>
       )}

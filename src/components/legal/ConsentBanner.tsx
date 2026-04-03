@@ -34,7 +34,7 @@ export function ConsentBanner({ children }: { children: React.ReactNode }) {
         className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4"
         role="dialog"
         aria-modal="true"
-        aria-label="Consentement RGPD"
+        aria-label="GDPR Consent"
       >
         <div
           className="w-full max-w-lg bg-white p-6 shadow-lg"
@@ -60,12 +60,12 @@ export function ConsentBanner({ children }: { children: React.ReactNode }) {
             </div>
             <div>
               <h2 className="font-semibold text-lg text-[#1A1A1A]">
-                Protection de vos données
+                Protecting your data
               </h2>
               <p className="text-sm text-[#75787B] mt-1">
-                Nous utilisons vos informations uniquement pour personnaliser nos
-                recommandations de prévoyance. Vos données sont traitées conformément
-                au RGPD et ne sont jamais partagées avec des tiers sans votre accord.
+                We use your information solely to personalize our
+                insurance recommendations. Your data is processed in accordance
+                with GDPR and is never shared with third parties without your consent.
               </p>
             </div>
           </div>
@@ -83,7 +83,7 @@ export function ConsentBanner({ children }: { children: React.ReactNode }) {
                 cursor: "pointer",
               }}
             >
-              J&apos;accepte
+              I accept
             </button>
           </div>
         </div>

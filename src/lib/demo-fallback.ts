@@ -24,9 +24,9 @@ export function isDemoMode(): boolean {
 
 export function matchDemoProfile(userInput: string): string | null {
   const input = userInput.toLowerCase();
-  if (input.includes('kine') || input.includes('kiné')) return 'kine-liberal';
-  if (input.includes('architecte')) return 'architecte-independant';
-  if (input.includes('infirmi')) return 'infirmiere-liberale';
+  if (input.includes('kine') || input.includes('kiné') || input.includes('physiotherapist')) return 'kine-liberal';
+  if (input.includes('architecte') || input.includes('architect')) return 'architecte-independant';
+  if (input.includes('infirmi') || input.includes('nurse')) return 'infirmiere-liberale';
   return null;
 }
 

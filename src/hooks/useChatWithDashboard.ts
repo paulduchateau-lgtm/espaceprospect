@@ -96,7 +96,7 @@ export function useChatWithDashboard() {
       console.log(`[Perf] API response start: ${(performance.now() - t0).toFixed(0)}ms`);
 
       if (!response.ok) {
-        throw new Error(`Erreur serveur: ${response.status}`);
+        throw new Error(`Server error: ${response.status}`);
       }
 
       const reader = response.body!.getReader();
@@ -172,7 +172,7 @@ export function useChatWithDashboard() {
                   }
                 } else {
                   console.error("Invalid dashboard data from AI:", parsed.error);
-                  setError("Les données du dashboard n'ont pas pu être validées.");
+                  setError("Dashboard data could not be validated.");
                 }
               } catch (parseErr) {
                 console.error("Failed to parse dashboard data:", parseErr);
@@ -196,7 +196,7 @@ export function useChatWithDashboard() {
       }
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Une erreur inattendue est survenue.";
+        err instanceof Error ? err.message : "An unexpected error occurred.";
       setError(errorMessage);
       // Update assistant message with error fallback
       setMessages((prev) =>
@@ -205,7 +205,7 @@ export function useChatWithDashboard() {
             ? {
                 ...msg,
                 content:
-                  "Désolée, une erreur est survenue. Veuillez réessayer ou contacter un conseiller MetLife.",
+                  "Sorry, an error occurred. Please try again or contact a MetLife advisor.",
               }
             : msg
         )

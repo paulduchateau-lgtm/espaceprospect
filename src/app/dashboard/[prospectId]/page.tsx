@@ -25,7 +25,7 @@ function ReadOnlyChatPanel({
       {/* Shareable URL banner */}
       <div className="bg-metlife-green/10 text-sm px-4 py-2 border-b border-border flex items-center gap-2">
         <LinkIcon className="h-3.5 w-3.5 text-metlife-green shrink-0" />
-        <span className="text-muted-foreground">Votre espace personnel :</span>
+        <span className="text-muted-foreground">Your personal space:</span>
         <span className="font-medium truncate">{prospectUrl}</span>
       </div>
 
@@ -92,15 +92,15 @@ export default function ProspectDashboardPage({
   if (loadState === 'not-found') {
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4">
-        <h1 className="text-xl font-semibold">Espace prospect introuvable</h1>
+        <h1 className="text-xl font-semibold">Prospect space not found</h1>
         <p className="text-sm text-muted-foreground">
-          Cet espace n&apos;existe pas ou a ete supprime.
+          This space does not exist or has been deleted.
         </p>
         <a
           href="/"
           className="text-sm text-primary underline hover:text-primary/80"
         >
-          Retour a l&apos;accueil
+          Back to home
         </a>
       </div>
     );
@@ -109,15 +109,15 @@ export default function ProspectDashboardPage({
   if (loadState === 'error') {
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4">
-        <h1 className="text-xl font-semibold">Erreur de chargement</h1>
+        <h1 className="text-xl font-semibold">Loading error</h1>
         <p className="text-sm text-muted-foreground">
-          Impossible de charger votre espace prospect. Veuillez reessayer.
+          Unable to load your prospect space. Please try again.
         </p>
         <a
           href="/"
           className="text-sm text-primary underline hover:text-primary/80"
         >
-          Retour a l&apos;accueil
+          Back to home
         </a>
       </div>
     );
