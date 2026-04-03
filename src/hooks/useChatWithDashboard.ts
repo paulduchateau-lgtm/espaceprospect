@@ -16,6 +16,7 @@ export function useChatWithDashboard() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [prospectId, setProspectId] = useState<string | null>(null);
+  const [prospectCode, setProspectCode] = useState<string | null>(null);
   const [prospectUrl, setProspectUrl] = useState<string | null>(null);
 
   const sendMessage = useCallback(async (content: string) => {
@@ -52,19 +53,13 @@ export function useChatWithDashboard() {
       if (profileKey) {
         const demo = getDemoResponse(profileKey);
         if (demo) {
-          // Simulate natural streaming with progressive reveal
-          const words = demo.assistantMessage.split(' ');
-          let accumulated = '';
-          for (let i = 0; i < words.length; i++) {
-            accumulated += (i > 0 ? ' ' : '') + words[i];
-            const current = accumulated;
-            setMessages((prev) =>
-              prev.map((msg) =>
-                msg.id === assistantId ? { ...msg, content: current } : msg
-              )
-            );
-            await new Promise((r) => setTimeout(r, 30)); // ~30ms per word for natural feel
-          }
+          // Brief pause then show full response (avoids slow word-by-word setState loop)
+          await new Promise((r) => setTimeout(r, 1200));
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === assistantId ? { ...msg, content: demo.assistantMessage } : msg
+            )
+          );
           setDashboardData(demo.dashboard as DashboardData);
           setPhase('dashboard');
           setIsStreaming(false);
@@ -80,10 +75,11 @@ export function useChatWithDashboard() {
       try {
         const prospectRes = await fetch("/api/prospect", { method: "POST" });
         if (prospectRes.ok) {
-          const { id } = await prospectRes.json();
+          const { id, code } = await prospectRes.json();
           currentProspectId = id;
           setProspectId(id);
-          setProspectUrl(`${window.location.origin}/dashboard/${id}`);
+          setProspectCode(code ?? null);
+          setProspectUrl(`${window.location.origin}/espace/${id}`);
         }
       } catch (err) {
         console.error("[Prospect] Creation failed:", err);
@@ -176,7 +172,7 @@ export function useChatWithDashboard() {
                   }
                 } else {
                   console.error("Invalid dashboard data from AI:", parsed.error);
-                  setError("Les donnees du dashboard n'ont pas pu etre validees.");
+                  setError("Les données du dashboard n'ont pas pu être validées.");
                 }
               } catch (parseErr) {
                 console.error("Failed to parse dashboard data:", parseErr);
@@ -209,7 +205,7 @@ export function useChatWithDashboard() {
             ? {
                 ...msg,
                 content:
-                  "Desolee, une erreur est survenue. Veuillez reessayer ou contacter un conseiller MetLife.",
+                  "Désolée, une erreur est survenue. Veuillez réessayer ou contacter un conseiller MetLife.",
               }
             : msg
         )
@@ -225,6 +221,7 @@ export function useChatWithDashboard() {
     setDashboardData(null);
     setPhase("chatting");
     setError(null);
+    setProspectCode(null);
   }, []);
 
   return {
@@ -234,6 +231,7 @@ export function useChatWithDashboard() {
     isStreaming,
     error,
     prospectId,
+    prospectCode,
     prospectUrl,
     sendMessage,
     resetConversation,

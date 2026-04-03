@@ -18,11 +18,11 @@ export function ConsentBanner({ children }: { children: React.ReactNode }) {
     setConsented(true)
   }
 
-  // Dashboard routes bypass consent (already given during initial interaction)
-  if (pathname.startsWith('/dashboard/')) return <>{children}</>
+  // Dashboard/espace routes bypass consent (already given during initial interaction)
+  if (pathname.startsWith('/dashboard/') || pathname.startsWith('/espace/')) return <>{children}</>
 
-  // SSR/hydration guard -- render nothing until client-side check
-  if (consented === null) return null
+  // SSR/hydration guard -- show children while checking (avoids flash)
+  if (consented === null) return <>{children}</>
   if (consented) return <>{children}</>
 
   return (
@@ -60,12 +60,12 @@ export function ConsentBanner({ children }: { children: React.ReactNode }) {
             </div>
             <div>
               <h2 className="font-semibold text-lg text-[#1A1A1A]">
-                Protection de vos donnees
+                Protection de vos données
               </h2>
               <p className="text-sm text-[#75787B] mt-1">
                 Nous utilisons vos informations uniquement pour personnaliser nos
-                recommandations de prevoyance. Vos donnees sont traitees conformement
-                au RGPD et ne sont jamais partagees avec des tiers sans votre accord.
+                recommandations de prévoyance. Vos données sont traitées conformément
+                au RGPD et ne sont jamais partagées avec des tiers sans votre accord.
               </p>
             </div>
           </div>

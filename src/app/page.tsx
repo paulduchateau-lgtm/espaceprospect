@@ -1,81 +1,339 @@
 "use client";
 
-import { useState } from "react";
-import { SplitPanel } from "@/components/layout/SplitPanel";
-import { AnimatedDashboardLayout } from "@/components/dashboard/AnimatedDashboardLayout";
+import { useState, useRef, useEffect } from "react";
 import { useChatWithDashboard } from "@/hooks/useChatWithDashboard";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { ChatHeader } from "@/components/chat/ChatHeader";
-import { Link as LinkIcon, Copy, Check } from "lucide-react";
+import {
+  MessageCircle,
+  X,
+  ChevronRight,
+  Shield,
+  Users,
+  TrendingUp,
+  Phone,
+} from "lucide-react";
 
+// ──────────────────────────────────────────────
+// Simulated metlife.fr site header
+// ──────────────────────────────────────────────
+function SiteHeader() {
+  return (
+    <header className="bg-white border-b border-[#D9D9D6] sticky top-0 z-40">
+      <div className="max-w-[1200px] mx-auto flex items-center justify-between h-16 px-6">
+        <div className="flex items-center gap-8">
+          <img src="/metlife-logo.png" alt="MetLife" className="h-8" />
+          <nav className="hidden md:flex items-center gap-6">
+            <span className="text-sm font-medium text-[#1A1A1A] cursor-default">
+              Particuliers
+            </span>
+            <span className="text-sm font-medium text-[#0090DA] cursor-default">
+              Travailleurs Non Salariés
+            </span>
+            <span className="text-sm font-medium text-[#1A1A1A] cursor-default">
+              Entreprises
+            </span>
+            <span className="text-sm font-medium text-[#1A1A1A] cursor-default">
+              À propos
+            </span>
+          </nav>
+        </div>
+        <div className="flex items-center gap-4">
+          <button className="hidden sm:flex items-center gap-2 text-sm font-medium text-[#0090DA] hover:underline">
+            <Phone className="h-4 w-4" />
+            01 45 67 89 00
+          </button>
+          <button
+            className="text-sm font-semibold px-4 py-2 rounded-md transition-colors"
+            style={{ background: "#0090DA", color: "#FFFFFF" }}
+          >
+            Mon espace
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+// ──────────────────────────────────────────────
+// Hero section
+// ──────────────────────────────────────────────
+function HeroSection({ onOpenChat }: { onOpenChat: () => void }) {
+  return (
+    <section className="bg-gradient-to-br from-[#0061A0] to-[#0090DA] text-white">
+      <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-28">
+        <div className="max-w-2xl">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+            Protégez votre activité de travailleur non salarié
+          </h1>
+          <p className="text-lg md:text-xl text-white/85 mb-8 leading-relaxed">
+            Prévoyance, incapacité, invalidité, décès : des solutions adaptées à
+            votre situation professionnelle et familiale.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <button
+              onClick={onOpenChat}
+              className="flex items-center gap-2 font-semibold text-sm px-6 py-3 rounded-md transition-colors hover:brightness-95"
+              style={{ background: "#A4CE4E", color: "#1A1A1A" }}
+            >
+              Découvrir mes solutions
+              <ChevronRight className="h-4 w-4" />
+            </button>
+            <button className="flex items-center gap-2 font-semibold text-sm px-6 py-3 rounded-md border-2 border-white/40 text-white hover:bg-white/10 transition-colors">
+              Être rappelé
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ──────────────────────────────────────────────
+// "Nouveau" CTA banner
+// ──────────────────────────────────────────────
+function NewFeatureBanner({ onOpenChat }: { onOpenChat: () => void }) {
+  return (
+    <section className="bg-[#A4CE4E]/10 border-b border-[#A4CE4E]/20">
+      <div className="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#A4CE4E] text-[#1A1A1A]">
+            Nouveau
+          </span>
+          <p className="text-sm text-[#1A1A1A]">
+            <span className="font-semibold">
+              Découvrez comment MetLife peut vous accompagner
+            </span>{" "}
+            grâce à un espace personnalisé propulsé par l&apos;IA
+          </p>
+        </div>
+        <button
+          onClick={onOpenChat}
+          className="text-sm font-semibold text-[#0090DA] hover:underline flex items-center gap-1 shrink-0"
+        >
+          Essayer maintenant
+          <ChevronRight className="h-3.5 w-3.5" />
+        </button>
+      </div>
+    </section>
+  );
+}
+
+// ──────────────────────────────────────────────
+// Trust signals strip
+// ──────────────────────────────────────────────
+function TrustStrip() {
+  const items = [
+    { icon: Shield, label: "Régulée ACPR", detail: "Autorité de contrôle" },
+    { icon: TrendingUp, label: "Notation A1", detail: "Moody's" },
+    {
+      icon: Users,
+      label: "100M+ d'assurés",
+      detail: "Dans le monde",
+    },
+  ];
+  return (
+    <section className="border-b border-[#D9D9D6] bg-white">
+      <div className="max-w-[1200px] mx-auto px-6 py-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {items.map((item) => (
+          <div key={item.label} className="flex items-center gap-3">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#0090DA]/7">
+              <item.icon className="h-5 w-5 text-[#0090DA]" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-[#1A1A1A]">
+                {item.label}
+              </p>
+              <p className="text-xs text-[#75787B]">{item.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ──────────────────────────────────────────────
+// Product cards section (simulated site content)
+// ──────────────────────────────────────────────
+function ProductsSection() {
+  const products = [
+    {
+      title: "Super Novaterm",
+      description:
+        "Assurance décès avec un capital modulable pour protéger votre famille et votre activité professionnelle.",
+      type: "Décès",
+    },
+    {
+      title: "Prévoyance Incapacité",
+      description:
+        "Indemnités journalières en cas d'arrêt de travail pour maintenir vos revenus de TNS.",
+      type: "Incapacité",
+    },
+    {
+      title: "Garantie Invalidité",
+      description:
+        "Capital et rentes en cas d'invalidité pour sécuriser votre avenir et celui de vos proches.",
+      type: "Invalidité",
+    },
+  ];
+  return (
+    <section className="bg-[#F2F2F2]">
+      <div className="max-w-[1200px] mx-auto px-6 py-16">
+        <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">
+          Nos solutions pour les TNS
+        </h2>
+        <p className="text-[#75787B] mb-8">
+          Des garanties conçues pour les travailleurs non salariés
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {products.map((p) => (
+            <div
+              key={p.title}
+              className="bg-white rounded-xl p-6 border border-[#D9D9D6] hover:shadow-md transition-shadow cursor-pointer"
+            >
+              <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-[#0090DA]/8 text-[#0090DA] mb-4">
+                {p.type}
+              </span>
+              <h3 className="text-lg font-semibold text-[#1A1A1A] mb-2">
+                {p.title}
+              </h3>
+              <p className="text-sm text-[#75787B] leading-relaxed">
+                {p.description}
+              </p>
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-[#0090DA] mt-4 hover:underline">
+                En savoir plus <ChevronRight className="h-3.5 w-3.5" />
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ──────────────────────────────────────────────
+// Site footer
+// ──────────────────────────────────────────────
+function SiteFooter() {
+  return (
+    <footer className="bg-[#1A1A1A] text-white/60">
+      <div className="max-w-[1200px] mx-auto px-6 py-10">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div>
+            <img
+              src="/metlife-logo.png"
+              alt="MetLife"
+              className="h-6 brightness-0 invert opacity-60 mb-2"
+            />
+            <p className="text-xs">
+              MetLife, Inc. - Assureur de rang mondial depuis 1868
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-6 text-xs">
+            <span className="hover:text-white cursor-pointer">
+              Mentions légales
+            </span>
+            <span className="hover:text-white cursor-pointer">
+              Politique de confidentialité
+            </span>
+            <span className="hover:text-white cursor-pointer">
+              Gestion des cookies
+            </span>
+            <span className="hover:text-white cursor-pointer">Contact</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ──────────────────────────────────────────────
+// Embedded Chat Widget (framed)
+// ──────────────────────────────────────────────
 const EXAMPLE_PROMPTS = [
-  "Je suis kinesitherapeute liberal, 35 ans, je viens d'ouvrir mon cabinet",
-  "Je suis architecte independant, 45 ans, marie avec 2 enfants",
-  "Je suis infirmiere liberale, 28 ans, debut d'activite",
+  "Je suis kinésithérapeute libéral, 35 ans, je viens d'ouvrir mon cabinet",
+  "Je suis architecte indépendant, 45 ans, marié avec 2 enfants",
+  "Je suis infirmière libérale, 28 ans, début d'activité",
 ];
 
-// Send icon SVG
 function SendIcon({ color = "currentColor" }: { color?: string }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="22" y1="2" x2="11" y2="13"/>
-      <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="22" y1="2" x2="11" y2="13" />
+      <polygon points="22 2 15 22 11 13 2 9 22 2" />
     </svg>
   );
 }
 
-// Bot avatar
-function BotAvatar() {
+function BotAvatar({ size = 32 }: { size?: number }) {
   return (
     <div
       className="shrink-0 flex items-center justify-center rounded-full"
       style={{
-        width: 32,
-        height: 32,
+        width: size,
+        height: size,
         background: "linear-gradient(135deg, #0090DA, #A4CE4E)",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
       }}
       aria-hidden="true"
     >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="11" width="18" height="10" rx="2"/>
-        <circle cx="12" cy="5" r="2"/>
-        <line x1="12" y1="7" x2="12" y2="11"/>
-        <line x1="8" y1="16" x2="8" y2="16.01"/>
-        <line x1="16" y1="16" x2="16" y2="16.01"/>
+      <svg
+        width={size * 0.5}
+        height={size * 0.5}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="3" y="11" width="18" height="10" rx="2" />
+        <circle cx="12" cy="5" r="2" />
+        <line x1="12" y1="7" x2="12" y2="11" />
+        <line x1="8" y1="16" x2="8" y2="16.01" />
+        <line x1="16" y1="16" x2="16" y2="16.01" />
       </svg>
     </div>
   );
 }
 
-// User avatar
 function UserAvatar() {
   return (
     <div
       className="shrink-0 flex items-center justify-center rounded-full"
-      style={{
-        width: 32,
-        height: 32,
-        background: "#0061A0",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-      }}
+      style={{ width: 28, height: 28, background: "#0061A0" }}
       aria-hidden="true"
     >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
       </svg>
     </div>
   );
 }
 
-// Loading dots indicator
 function LoadingDots() {
   return (
     <div
-      className="flex items-center justify-start gap-1.5 px-4 py-3 bg-white rounded-[18px_18px_18px_4px] border border-[#D9D9D6]"
-      style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.07)" }}
-      aria-label="L'assistant redige une reponse"
+      className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-[14px_14px_14px_4px] border border-[#D9D9D6]"
+      style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.05)" }}
+      aria-label="L'assistant rédige une réponse"
     >
       <span className="dot-pulse flex gap-1">
         <span />
@@ -86,27 +344,99 @@ function LoadingDots() {
   );
 }
 
-function ChatPanel({
-  messages,
-  isStreaming,
-  sendMessage,
-  prospectUrl,
-}: {
-  messages: ReturnType<typeof useChatWithDashboard>["messages"];
-  isStreaming: boolean;
-  sendMessage: (content: string) => void;
-  prospectUrl: string | null;
-}) {
-  const [input, setInput] = useState("");
-  const [copied, setCopied] = useState(false);
+function CodeAccessForm() {
+  const [code, setCode] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleCopy = () => {
-    if (!prospectUrl) return;
-    navigator.clipboard.writeText(prospectUrl).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }).catch(console.error);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const normalized = code.trim().toUpperCase();
+    if (normalized.length !== 6) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/prospect/by-code/${normalized}`);
+      if (res.status === 404) {
+        setError("Code introuvable. Vérifiez et réessayez.");
+        return;
+      }
+      if (!res.ok) {
+        setError("Erreur serveur. Réessayez.");
+        return;
+      }
+      const data = await res.json();
+      window.location.href = `/espace/${data.id}`;
+    } catch {
+      setError("Erreur réseau. Réessayez.");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  return (
+    <form onSubmit={handleSubmit} className="w-full">
+      <p className="text-xs text-[#75787B] text-center mb-2">
+        Déjà un espace ? Saisissez votre code
+      </p>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={code}
+          onChange={(e) => setCode(e.target.value.toUpperCase().replace(/[^A-Z2-9]/g, "").slice(0, 6))}
+          placeholder="ex. A3K9PX"
+          maxLength={6}
+          className="flex-1 text-center font-mono text-sm font-bold tracking-widest bg-white border border-[#E5E5E5] rounded-lg px-3 py-2 outline-none focus:border-[#0090DA] transition-colors"
+          style={{ letterSpacing: "0.2em" }}
+        />
+        <button
+          type="submit"
+          disabled={code.length !== 6 || loading}
+          className="shrink-0 text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+          style={{
+            background: code.length === 6 && !loading ? "#0090DA" : "#D9D9D6",
+            color: code.length === 6 && !loading ? "#FFFFFF" : "#A7A8AA",
+          }}
+        >
+          {loading ? "..." : "Accéder"}
+        </button>
+      </div>
+      {error && <p className="text-xs text-red-500 text-center mt-1.5">{error}</p>}
+    </form>
+  );
+}
+
+function ChatWidget({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const {
+    messages,
+    isStreaming,
+    sendMessage,
+    phase,
+    dashboardData,
+    prospectId,
+  } = useChatWithDashboard();
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll on new messages
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Prepare espace URL when dashboard is ready
+  const espaceUrl = (() => {
+    if (phase !== "dashboard" || !dashboardData) return null;
+    if (prospectId) return `/espace/${prospectId}`;
+    // Demo mode: store in sessionStorage for the espace page to read
+    sessionStorage.setItem("demo-dashboard", JSON.stringify(dashboardData));
+    return "/espace/demo";
+  })();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,221 +452,249 @@ function ChatPanel({
 
   const hasInput = input.trim().length > 0;
 
+  if (!isOpen) return null;
+
   return (
-    <div className="flex flex-col h-full bg-white">
-      <ChatHeader />
-
-      {/* Prospect URL banner */}
-      {prospectUrl && (
-        <div className="bg-[#A4CE4E]/10 text-sm px-4 py-2 border-b border-[#D9D9D6] flex items-center gap-2 min-w-0">
-          <LinkIcon className="h-3.5 w-3.5 text-[#A4CE4E] shrink-0" />
-          <span className="text-[#75787B] shrink-0">
-            Votre espace est sauvegarde. Retrouvez-le a tout moment :
-          </span>
-          <a
-            href={prospectUrl}
-            className="flex-1 min-w-0 font-medium text-[#0090DA] truncate hover:underline"
-          >
-            {prospectUrl}
-          </a>
-          <button
-            type="button"
-            onClick={handleCopy}
-            className="shrink-0 p-1 rounded hover:bg-[#F2F2F2] transition-colors"
-            aria-label="Copier le lien"
-          >
-            {copied ? (
-              <Check className="h-3.5 w-3.5 text-[#A4CE4E]" />
-            ) : (
-              <Copy className="h-3.5 w-3.5 text-[#75787B]" />
-            )}
-          </button>
-        </div>
-      )}
-
-      {/* Messages area */}
-      <div className="flex-1 overflow-y-auto p-5 space-y-5" style={{ background: "var(--ml-chat-bg)" }}>
-        {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full space-y-6">
-            {/* Welcome bot avatar */}
-            <div
-              className="flex items-center justify-center rounded-2xl"
-              style={{
-                width: 56,
-                height: 56,
-                background: "linear-gradient(135deg, #0090DA, #A4CE4E)",
-                boxShadow: "0 4px 16px rgba(0,144,218,0.25)",
-              }}
-            >
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="11" width="18" height="10" rx="2"/>
-                <circle cx="12" cy="5" r="2"/>
-                <line x1="12" y1="7" x2="12" y2="11"/>
-                <line x1="8" y1="16" x2="8" y2="16.01"/>
-                <line x1="16" y1="16" x2="16" y2="16.01"/>
-              </svg>
-            </div>
-            <div className="text-center space-y-2">
-              <h2 className="text-lg font-semibold text-[#1A1A1A]">
-                Decouvrez comment MetLife peut proteger votre activite
-              </h2>
-              <p className="text-sm text-[#75787B] max-w-md">
-                Decrivez votre situation de travailleur non salarie et recevez des
-                recommandations personnalisees.
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col" style={{ width: 400, height: 560, maxHeight: "calc(100dvh - 100px)", maxWidth: "calc(100vw - 32px)" }}>
+      {/* Widget frame */}
+      <div
+        className="flex flex-col h-full bg-white overflow-hidden"
+        style={{
+          borderRadius: 16,
+          boxShadow: "0 8px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08)",
+          border: "1px solid #D9D9D6",
+        }}
+      >
+        {/* Widget header */}
+        <div
+          className="flex items-center justify-between px-4 shrink-0"
+          style={{
+            height: 56,
+            background: "linear-gradient(135deg, #0061A0, #0090DA)",
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <BotAvatar size={32} />
+            <div>
+              <p className="text-sm font-semibold text-white">
+                Assistant MetLife
               </p>
-            </div>
-            {/* Example prompt chips */}
-            <div className="flex flex-col gap-2 w-full max-w-md">
-              {EXAMPLE_PROMPTS.map((prompt) => (
-                <button
-                  key={prompt}
-                  type="button"
-                  onClick={() => handlePromptClick(prompt)}
-                  className="text-left text-xs px-4 py-2.5 font-medium text-[#0090DA] bg-white hover:bg-[#F2F2F2] transition-colors"
-                  style={{
-                    borderRadius: 99,
-                    border: "1px solid #D9D9D6",
-                  }}
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {messages.map((msg, index) => {
-          const isUser = msg.role === "user";
-          const isLastAssistant =
-            !isUser &&
-            index === messages.length - 1 &&
-            isStreaming &&
-            !msg.content;
-
-          return (
-            <div
-              key={msg.id}
-              className={`flex items-end gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}
-            >
-              {isUser ? <UserAvatar /> : <BotAvatar />}
-
-              <div className="flex flex-col" style={{ maxWidth: "min(75%, 480px)" }}>
-                {isLastAssistant ? (
-                  <LoadingDots />
-                ) : (
-                  <div
-                    className="text-sm whitespace-pre-wrap"
-                    style={{
-                      padding: "14px 18px",
-                      borderRadius: isUser ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
-                      background: isUser ? "#0061A0" : "#FFFFFF",
-                      color: isUser ? "#FFFFFF" : "#1A1A1A",
-                      lineHeight: 1.65,
-                      border: isUser ? "none" : "1px solid #D9D9D6",
-                      boxShadow: isUser ? "none" : "0 1px 3px rgba(0,0,0,0.07)",
-                    }}
-                  >
-                    {msg.content}
-                    {msg.role === "assistant" && isStreaming && index === messages.length - 1 && msg.content && (
-                      <span className="streaming-cursor" />
-                    )}
-                  </div>
-                )}
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#A4CE4E]" />
+                <span className="text-[10px] text-white/75">En ligne</span>
               </div>
             </div>
-          );
-        })}
-      </div>
-
-      {/* Suggestion chips */}
-      {messages.length > 0 && !isStreaming && (
-        <div className="px-4 pt-3 pb-0 bg-white flex gap-2 flex-wrap">
-          {EXAMPLE_PROMPTS.slice(0, 3).map((prompt) => (
-            <button
-              key={prompt}
-              type="button"
-              onClick={() => handlePromptClick(prompt)}
-              className="text-xs font-medium text-[#0090DA] bg-white hover:bg-[#F2F2F2] transition-colors"
-              style={{
-                padding: "6px 14px",
-                borderRadius: 99,
-                border: "1px solid #D9D9D6",
-              }}
-            >
-              {prompt}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Input area */}
-      <div className="px-4 pt-3 pb-3 bg-white border-t border-[#F2F2F2]">
-        <form onSubmit={handleSubmit}>
-          <div
-            className="flex items-end gap-2"
-            style={{
-              background: "#F2F2F2",
-              borderRadius: 12,
-              padding: "8px 12px",
-              border: "1px solid #D9D9D6",
-            }}
-          >
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Decrivez votre situation..."
-              disabled={isStreaming}
-              className="flex-1 bg-transparent border-none outline-none text-sm text-[#1A1A1A] placeholder:text-[#A7A8AA] py-1.5"
-              style={{ lineHeight: 1.4 }}
-            />
-            <button
-              type="submit"
-              disabled={isStreaming || !hasInput}
-              className="flex items-center justify-center rounded-[10px] transition-colors shrink-0"
-              style={{
-                width: 44,
-                height: 44,
-                background: hasInput && !isStreaming ? "#0090DA" : "#D9D9D6",
-                border: "none",
-                cursor: hasInput && !isStreaming ? "pointer" : "default",
-              }}
-              aria-label="Envoyer"
-            >
-              <SendIcon color={hasInput && !isStreaming ? "#FFFFFF" : "#A7A8AA"} />
-            </button>
           </div>
-        </form>
-        {/* Disclaimer */}
-        <p className="text-center mt-2" style={{ fontSize: 10, color: "#A7A8AA", lineHeight: 1.4 }}>
-          MetLife AI peut produire des informations inexactes. Verifiez les details importants avec votre conseiller.
-        </p>
+          <button
+            onClick={onClose}
+            className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-white/15 transition-colors"
+            aria-label="Fermer"
+          >
+            <X className="h-4 w-4 text-white" />
+          </button>
+        </div>
+
+        {/* Messages area */}
+        <div
+          className="flex-1 overflow-y-auto px-4 py-4 space-y-4"
+          style={{ background: "#F7F7F7" }}
+        >
+          {messages.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-full space-y-4 py-4">
+              <BotAvatar size={44} />
+              <div className="text-center space-y-1.5">
+                <p className="text-sm font-semibold text-[#1A1A1A]">
+                  Bonjour ! Comment puis-je vous aider ?
+                </p>
+                <p className="text-xs text-[#75787B] max-w-[280px]">
+                  Décrivez votre situation et recevez des recommandations
+                  personnalisées.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 w-full">
+                {EXAMPLE_PROMPTS.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={() => handlePromptClick(prompt)}
+                    className="text-left text-xs px-3 py-2 text-[#0090DA] bg-white hover:bg-[#F2F2F2] transition-colors"
+                    style={{
+                      borderRadius: 10,
+                      border: "1px solid #E5E5E5",
+                    }}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+              <div className="w-full border-t border-[#E5E5E5] pt-3">
+                <CodeAccessForm />
+              </div>
+            </div>
+          )}
+
+          {messages.map((msg, index) => {
+            const isUser = msg.role === "user";
+            const isLastAssistant =
+              !isUser &&
+              index === messages.length - 1 &&
+              isStreaming &&
+              !msg.content;
+
+            return (
+              <div
+                key={msg.id}
+                className={`flex items-end gap-2 ${isUser ? "flex-row-reverse" : "flex-row"}`}
+              >
+                {isUser ? <UserAvatar /> : <BotAvatar size={28} />}
+                <div style={{ maxWidth: "75%" }}>
+                  {isLastAssistant ? (
+                    <LoadingDots />
+                  ) : (
+                    <div
+                      className="text-[13px] whitespace-pre-wrap"
+                      style={{
+                        padding: "10px 14px",
+                        borderRadius: isUser
+                          ? "14px 14px 4px 14px"
+                          : "14px 14px 14px 4px",
+                        background: isUser ? "#0061A0" : "#FFFFFF",
+                        color: isUser ? "#FFFFFF" : "#1A1A1A",
+                        lineHeight: 1.6,
+                        border: isUser ? "none" : "1px solid #E5E5E5",
+                        boxShadow: isUser
+                          ? "none"
+                          : "0 1px 2px rgba(0,0,0,0.04)",
+                      }}
+                    >
+                      {msg.content}
+                      {msg.role === "assistant" &&
+                        isStreaming &&
+                        index === messages.length - 1 &&
+                        msg.content && <span className="streaming-cursor" />}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+
+          {/* CTA to navigate to espace */}
+          {espaceUrl && (
+            <div className="flex justify-center py-3">
+              <a
+                href={espaceUrl}
+                className="flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hover:brightness-95"
+                style={{ background: "#A4CE4E", color: "#1A1A1A" }}
+              >
+                Aller vers mon espace personnalisé
+                <ChevronRight className="h-4 w-4" />
+              </a>
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input area */}
+        <div className="px-3 pt-2 pb-3 bg-white border-t border-[#F2F2F2]">
+          <form onSubmit={handleSubmit}>
+            <div
+              className="flex items-center gap-2"
+              style={{
+                background: "#F2F2F2",
+                borderRadius: 10,
+                padding: "6px 10px",
+              }}
+            >
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Décrivez votre situation..."
+                disabled={isStreaming || phase === "dashboard"}
+                className="flex-1 bg-transparent border-none outline-none text-[13px] text-[#1A1A1A] placeholder:text-[#A7A8AA] py-1"
+              />
+              <button
+                type="submit"
+                disabled={isStreaming || !hasInput || phase === "dashboard"}
+                className="flex items-center justify-center rounded-lg shrink-0 transition-colors"
+                style={{
+                  width: 36,
+                  height: 36,
+                  background:
+                    hasInput && !isStreaming ? "#0090DA" : "#D9D9D6",
+                  border: "none",
+                  cursor:
+                    hasInput && !isStreaming ? "pointer" : "default",
+                }}
+                aria-label="Envoyer"
+              >
+                <SendIcon
+                  color={hasInput && !isStreaming ? "#FFFFFF" : "#A7A8AA"}
+                />
+              </button>
+            </div>
+          </form>
+          <p
+            className="text-center mt-1.5"
+            style={{ fontSize: 9, color: "#A7A8AA" }}
+          >
+            MetLife AI peut produire des informations inexactes.
+          </p>
+        </div>
       </div>
     </div>
   );
 }
 
-export default function ProspectPage() {
-  const { dashboardData, phase, messages, isStreaming, sendMessage, prospectUrl } =
-    useChatWithDashboard();
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
+// ──────────────────────────────────────────────
+// Floating chat trigger button
+// ──────────────────────────────────────────────
+function ChatTrigger({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="fixed bottom-6 right-6 z-50 flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
+      style={{
+        width: 60,
+        height: 60,
+        borderRadius: "50%",
+        background: "linear-gradient(135deg, #0090DA, #0061A0)",
+        boxShadow: "0 4px 20px rgba(0,97,160,0.35)",
+        border: "none",
+        cursor: "pointer",
+      }}
+      aria-label="Ouvrir l'assistant MetLife"
+    >
+      <MessageCircle className="h-6 w-6 text-white" />
+    </button>
+  );
+}
+
+// ──────────────────────────────────────────────
+// Main page component
+// ──────────────────────────────────────────────
+export default function MetLifeLandingPage() {
+  const [chatOpen, setChatOpen] = useState(false);
+
+  const openChat = () => setChatOpen(true);
 
   return (
-    <SplitPanel
-      phase={phase}
-      chatPanel={
-        <ChatPanel
-          messages={messages}
-          isStreaming={isStreaming}
-          sendMessage={sendMessage}
-          prospectUrl={prospectUrl}
-        />
-      }
-      dashboardPanel={
-        dashboardData ? (
-          <AnimatedDashboardLayout data={dashboardData} mobile={!isDesktop} />
-        ) : null
-      }
-    />
+    <div className="min-h-screen bg-white">
+      <SiteHeader />
+      <NewFeatureBanner onOpenChat={openChat} />
+      <HeroSection onOpenChat={openChat} />
+      <TrustStrip />
+      <ProductsSection />
+      <SiteFooter />
+
+      {/* Chat widget */}
+      {chatOpen ? (
+        <ChatWidget isOpen={chatOpen} onClose={() => setChatOpen(false)} />
+      ) : (
+        <ChatTrigger onClick={openChat} />
+      )}
+    </div>
   );
 }
