@@ -241,6 +241,11 @@ function SiteFooter() {
             <span className="hover:text-white cursor-pointer">Contact</span>
           </div>
         </div>
+        <div className="mt-8 pt-6 border-t border-white/10">
+          <p className="text-[11px] leading-relaxed text-white/40">
+            This website is solely the property of LITE OPS SAS, and was made as a demonstrator for the confidential project opportunities shared between METLIFE FRANCE and LITE OPS SAS. The content is strictly confidential and should not be shared without explicit consent from LITE OPS SAS.
+          </p>
+        </div>
       </div>
     </footer>
   );
