@@ -21,10 +21,13 @@ function loadApiKey(): string {
   throw new Error('ANTHROPIC_API_KEY not configured');
 }
 
-const anthropic = createAnthropic({
-  apiKey: loadApiKey(),
-  baseURL: 'https://api.anthropic.com/v1',
-});
+// Lazy init — evaluated at request time, not at build/import time
+function getAnthropic() {
+  return createAnthropic({
+    apiKey: loadApiKey(),
+    baseURL: 'https://api.anthropic.com/v1',
+  });
+}
 
 // Allow streaming responses up to 5 minutes
 export const maxDuration = 300;
@@ -73,7 +76,7 @@ export async function POST(req: Request) {
 
   try {
     const result = streamText({
-      model: anthropic('claude-sonnet-4-20250514'),
+      model: getAnthropic()('claude-sonnet-4-20250514'),
       system: buildSystemPrompt(ragContext),
       messages: [{ role: 'user' as const, content: messageText }],
       tools: {
