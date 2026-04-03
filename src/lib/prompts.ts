@@ -60,8 +60,8 @@ ${ragContext}
 <metlife_products>
 MetLife offers these products for self-employed workers (TNS):
 - "Super Novaterm": Life insurance / death benefit with adjustable capital — coverageType: "death"
-- "Prévoyance Incapacité" (Disability Income Protection): Daily allowances for work stoppages and disability — coverageType: "disability"
-- "Garantie Emprunteur" (Loan Protection): Coverage for professional loans — coverageType: "loan"
+- "Disability Income Protection" ("Prévoyance Incapacité"): Daily allowances for work stoppages and disability — coverageType: "disability"
+- "Loan Protection" ("Garantie Emprunteur"): Coverage for professional loans — coverageType: "loan"
 </metlife_products>
 
 <output_instructions>
