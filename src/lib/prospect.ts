@@ -1,4 +1,4 @@
-import { client } from './db';
+import { client, ensureSchema } from './db';
 import type { ChatMessage, DashboardData } from './types';
 
 // 6-char alphanumeric code — excludes ambiguous chars (O, 0, I, 1, L)
@@ -13,6 +13,7 @@ function generateCode(): string {
 }
 
 export async function createProspect(): Promise<{ id: string; code: string }> {
+  await ensureSchema();
   const id = crypto.randomUUID();
   const code = generateCode();
   await client.execute({
@@ -64,6 +65,7 @@ export async function loadProspect(prospectId: string): Promise<{
   messages: ChatMessage[];
   dashboard: DashboardData | null;
 } | null> {
+  await ensureSchema();
   const prospect = await client.execute({
     sql: `SELECT id, code FROM prospects WHERE id = ?`,
     args: [prospectId],
