@@ -1,27 +1,21 @@
 import { readFileSync } from 'node:fs';
 import { streamText } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
-import { retrieveRelevantChunks } from '@/lib/rag';
-import { formatRAGContext, buildSystemPrompt } from '@/lib/prompts';
+import { getSailorClient } from '@/lib/sailor-client';
+import { formatSailorChunksAsRAG, buildSystemPrompt } from '@/lib/prompts';
 import { dashboardTool } from '@/lib/schemas';
 
-// Read API key: shell env may have ANTHROPIC_API_KEY="" (empty) due to Claude
-// Code runtime, preventing Next.js .env.local from overriding it.
 function loadApiKey(): string {
   const envKey = process.env.ANTHROPIC_API_KEY;
   if (envKey && envKey.length > 0) return envKey;
-
   try {
     const content = readFileSync('.env.local', 'utf8');
     const match = content.match(/^ANTHROPIC_API_KEY=(.+)$/m);
     if (match?.[1]) return match[1].trim();
-  } catch {
-    // .env.local not found
-  }
+  } catch { /* .env.local not found */ }
   throw new Error('ANTHROPIC_API_KEY not configured');
 }
 
-// Lazy init — evaluated at request time, not at build/import time
 function getAnthropic() {
   return createAnthropic({
     apiKey: loadApiKey(),
@@ -29,10 +23,8 @@ function getAnthropic() {
   });
 }
 
-// Allow streaming responses up to 5 minutes
 export const maxDuration = 300;
 
-// Extract plain text from the last user message in a UIMessage[] array
 function extractUserText(messages: Array<{ role: string; parts?: Array<{ type: string; text?: string }> }>): string {
   if (!Array.isArray(messages) || messages.length === 0) return '';
   const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
@@ -46,9 +38,6 @@ function extractUserText(messages: Array<{ role: string; parts?: Array<{ type: s
 export async function POST(req: Request) {
   const body = await req.json();
 
-  // Support both request formats:
-  // - Main page (useChatWithDashboard): { message: string }
-  // - /chat page (DefaultChatTransport): { id, messages: UIMessage[], trigger, messageId }
   let messageText: string;
   if (typeof body.message === 'string' && body.message.length > 0) {
     messageText = body.message;
@@ -65,15 +54,20 @@ export async function POST(req: Request) {
     );
   }
 
-  // RAG retrieval with graceful degradation
+  // ── RAG retrieval via Sailor-api (replaces Turso vector search) ──
   let ragContext = '';
   try {
-    const chunks = await retrieveRelevantChunks(messageText, 8);
-    ragContext = formatRAGContext(chunks);
-    console.log(`[RAG] Retrieved ${chunks.length} chunks for query: "${messageText.slice(0, 50)}..."`);
+    const sailor = getSailorClient();
+    const { chunks } = await sailor.retrieveChunks({
+      query: messageText,
+      top_k: 8,
+      strategy: 'hybrid',
+    });
+    ragContext = formatSailorChunksAsRAG(chunks);
+    console.log(`[RAG] Sailor-api returned ${chunks.length} chunks`);
   } catch (error) {
-    console.error('[RAG] Retrieval failed, proceeding without context:', error);
-    console.warn('[RAG] Products will be recommended from catalog fallback (no RAG sources)');
+    // Graceful degradation: proceed without RAG context
+    console.error('[RAG] Sailor-api retrieval failed, proceeding without context:', error);
   }
 
   try {
@@ -81,12 +75,9 @@ export async function POST(req: Request) {
       model: getAnthropic()('claude-sonnet-4-20250514'),
       system: buildSystemPrompt(ragContext),
       messages: [{ role: 'user' as const, content: messageText }],
-      tools: {
-        generate_dashboard: dashboardTool,
-      },
+      tools: { generate_dashboard: dashboardTool },
     });
 
-    // Return SSE UIMessage stream — DefaultChatTransport parses this via EventSourceParserStream
     return result.toUIMessageStreamResponse();
   } catch (error) {
     console.error('[API Chat Error]', error);
@@ -96,24 +87,15 @@ export async function POST(req: Request) {
 
     if (error instanceof Error) {
       errorMessage = error.message;
-
-      if (errorMessage.includes('rate') || errorMessage.includes('429')) {
-        status = 429;
-      } else if (errorMessage.includes('401') || errorMessage.includes('authentication')) {
-        status = 401;
-      } else if (errorMessage.includes('403')) {
-        status = 403;
-      } else if (errorMessage.includes('overloaded') || errorMessage.includes('529')) {
-        status = 529;
-      }
+      if (errorMessage.includes('rate') || errorMessage.includes('429')) status = 429;
+      else if (errorMessage.includes('401') || errorMessage.includes('authentication')) status = 401;
+      else if (errorMessage.includes('403')) status = 403;
+      else if (errorMessage.includes('overloaded') || errorMessage.includes('529')) status = 529;
     }
 
     return new Response(
       JSON.stringify({ error: errorMessage }),
-      {
-        status,
-        headers: { 'Content-Type': 'application/json' },
-      }
+      { status, headers: { 'Content-Type': 'application/json' } }
     );
   }
 }

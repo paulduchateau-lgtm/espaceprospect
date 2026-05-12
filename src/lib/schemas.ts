@@ -10,75 +10,75 @@ import { tool, zodSchema } from 'ai';
  */
 
 export const riskSchema = z.object({
-  id: z.string().describe("Unique risk identifier, e.g. 'work-stoppage'"),
+  id: z.string().describe("Identifiant unique du risque, ex: 'arret-travail'"),
   label: z
     .string()
-    .describe("Risk name in English, e.g. 'Extended work stoppage'"),
-  severity: z.enum(['high', 'medium', 'low']).describe('Severity level for this self-employed profile'),
+    .describe("Nom du risque en français, ex: 'Arrêt de travail prolongé'"),
+  severity: z.enum(['high', 'medium', 'low']).describe('Niveau de sévérité pour ce profil TNS'),
   description: z
     .string()
-    .describe('Personalized risk explanation for this profile'),
+    .describe('Explication personnalisée du risque pour ce profil'),
 });
 
 export const productSchema = z.object({
-  id: z.string().describe("Product identifier, e.g. 'super-novaterm'"),
-  name: z.string().describe('Commercial MetLife product name'),
+  id: z.string().describe("Identifiant produit, ex: 'super-novaterm'"),
+  name: z.string().describe('Nom commercial du produit MetLife'),
   relevance: z
     .string()
     .describe(
-      'Explanation of why this product is relevant for this prospect'
+      'Explication de pourquoi ce produit est pertinent pour ce prospect'
     ),
   coverageType: z
     .string()
     .describe(
-      'Coverage type: income protection, loan, death, disability, invalidity'
+      'Type de couverture: prévoyance, emprunteur, décès, incapacité, invalidité'
     ),
   sourceIds: z
     .array(z.number())
-    .describe('RAG source IDs used for this recommendation'),
+    .describe('IDs des sources RAG utilisées pour cette recommandation'),
 });
 
 export const partnerSchema = z.object({
   id: z
     .enum(['caarl', 'doado', 'noctia'])
-    .describe('Partner service identifier'),
+    .describe('Identifiant du service partenaire'),
   relevance: z
     .string()
-    .describe('Why this service is relevant for this prospect'),
+    .describe('Pourquoi ce service est pertinent pour ce prospect'),
 });
 
 export const resourceSchema = z.object({
-  title: z.string().describe('Resource title'),
-  url: z.string().describe('URL to the MetLife page'),
+  title: z.string().describe('Titre de la ressource'),
+  url: z.string().describe('URL vers la page MetLife'),
   type: z
     .enum(['article', 'guide', 'tool', 'faq'])
-    .describe('Resource type'),
+    .describe('Type de ressource'),
 });
 
 export const profileSchema = z.object({
-  profession: z.string().describe('Prospect profession'),
-  sector: z.string().describe('Business sector'),
+  profession: z.string().describe('Profession du prospect'),
+  sector: z.string().describe("Secteur d'activité"),
   concerns: z
     .array(z.string())
-    .describe('Main identified concerns'),
+    .describe('Préoccupations principales identifiées'),
 });
 
 export const dashboardSchema = z.object({
   risks: z
     .array(riskSchema)
-    .describe('Identified risks for the self-employed prospect profile'),
+    .describe('Risques identifiés pour le profil TNS du prospect'),
   products: z
     .array(productSchema)
-    .describe('Recommended MetLife products'),
+    .describe('Produits MetLife recommandés'),
   partners: z
     .array(partnerSchema)
     .optional()
-    .describe('Relevant partner services'),
+    .describe('Services partenaires pertinents'),
   resources: z
     .array(resourceSchema)
     .optional()
-    .describe('Relevant resources and articles'),
-  profile: profileSchema.describe('Profile extracted from conversation'),
+    .describe('Ressources et articles pertinents'),
+  profile: profileSchema.describe('Profil extrait de la conversation'),
 });
 
 /**

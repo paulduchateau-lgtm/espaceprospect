@@ -54,7 +54,7 @@ export function ChatContainer() {
 
       {status === 'submitted' && (
         <div aria-live="assertive" role="status" className="sr-only">
-          The assistant is analyzing your situation...
+          L&apos;assistant analyse votre situation...
         </div>
       )}
 

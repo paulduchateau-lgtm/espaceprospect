@@ -1,5 +1,5 @@
 {
-  "name": "metlife-prospect",
+  "name": "metlife-sailor",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,14 +8,7 @@
     "start": "next start",
     "test": "vitest run --reporter=verbose",
     "test:coverage": "vitest run --reporter=verbose --coverage",
-    "seed:scrape": "npx tsx scripts/scrape.ts",
-    "seed:normalize": "npx tsx scripts/normalize.ts",
-    "seed:chunk": "npx tsx scripts/chunk.ts",
-    "seed:pipeline": "npx tsx scripts/scrape.ts && npx tsx scripts/normalize.ts && npx tsx scripts/chunk.ts",
-    "seed": "npx tsx scripts/seed.ts",
-    "seed:embed": "npx tsx scripts/embed.ts",
-    "seed:validate": "npx tsx scripts/validate.ts",
-    "validate:phase2": "npx tsx scripts/validate-phase2.ts"
+    "seed:sailor": "npx tsx scripts/seed-metlife-data.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.58",
@@ -39,7 +32,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.8",
-    "@crawlee/playwright": "^3.16.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -48,10 +40,8 @@
     "@types/react-dom": "^19",
     "@vitest/coverage-v8": "^4.1.0",
     "babel-plugin-react-compiler": "1.0.0",
-    "crawlee": "^3.16.0",
     "drizzle-kit": "^0.31.10",
     "jsdom": "^29.0.1",
-    "playwright": "^1.58.2",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",

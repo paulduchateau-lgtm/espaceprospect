@@ -2,10 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "metlife-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3000
+      "name": "sailor-metlife",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "cd /Users/paulduchateau/projects/liteops/metlife-sailor && npx next dev --port $PORT"],
+      "port": 3000,
+      "autoPort": true
     }
   ]
 }

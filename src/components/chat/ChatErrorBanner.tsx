@@ -3,7 +3,7 @@
 import { AlertCircle, Phone, RotateCcw } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { mapErrorToUserMessage } from '@/lib/chat-errors';
+import { mapErrorToFrench } from '@/lib/chat-errors';
 
 interface ChatErrorBannerProps {
   error: Error;
@@ -11,7 +11,7 @@ interface ChatErrorBannerProps {
 }
 
 export function ChatErrorBanner({ error, onRetry }: ChatErrorBannerProps) {
-  const chatError = mapErrorToUserMessage(error);
+  const chatError = mapErrorToFrench(error);
 
   return (
     <div className="px-4 pb-2 shrink-0">
@@ -28,7 +28,7 @@ export function ChatErrorBanner({ error, onRetry }: ChatErrorBannerProps) {
               className="gap-1.5"
             >
               <RotateCcw className="size-3.5" />
-              Retry
+              Réessayer
             </Button>
           )}
           {chatError.action === 'contact' && (
@@ -39,7 +39,7 @@ export function ChatErrorBanner({ error, onRetry }: ChatErrorBannerProps) {
               className={buttonVariants({ variant: 'outline', size: 'sm' }) + ' gap-1.5'}
             >
               <Phone className="size-3.5" />
-              Contact an advisor
+              Contacter un conseiller
             </a>
           )}
         </div>

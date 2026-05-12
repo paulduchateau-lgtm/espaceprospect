@@ -1,25 +1,25 @@
 export const partners = {
   caarl: {
     name: "Caarl",
-    tagline: "Legal assistance for self-employed",
+    tagline: "Assistance juridique pour TNS",
     description:
-      "Legal protection and administrative support for self-employed workers.",
+      "Protection juridique et accompagnement administratif pour les travailleurs non salariés.",
     icon: "Scale" as const,
     url: "#",
   },
   doado: {
     name: "Doado",
-    tagline: "MSD prevention",
+    tagline: "Prévention des TMS",
     description:
-      "Personalized musculoskeletal disorder prevention program tailored to your activity.",
+      "Programme personnalisé de prévention des troubles musculo-squelettiques adapté à votre activité.",
     icon: "Activity" as const,
     url: "#",
   },
   noctia: {
     name: "Noctia",
-    tagline: "Sleep management",
+    tagline: "Gestion du sommeil",
     description:
-      "Diagnosis and support to improve sleep quality and reduce stress.",
+      "Diagnostic et accompagnement pour améliorer la qualité du sommeil et réduire le stress.",
     icon: "Moon" as const,
     url: "#",
   },

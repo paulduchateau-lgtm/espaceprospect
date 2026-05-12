@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useState, useCallback, useRef } from "react";
 import { motion } from "motion/react";
 import {
   ShieldAlert,
@@ -23,12 +23,19 @@ import {
   AlertTriangle,
   Copy,
   Check,
+  ClipboardList,
+  GitCompare,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { DashboardData, Risk, ProductRecommendation, PartnerRecommendation, Resource } from "@/lib/types";
+import type { ExtractedContract, ComparisonResult } from "@/lib/guarantee-types";
 import { partners } from "@/config/partners";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { TrustSignals } from "@/components/legal/TrustSignals";
+import { DocumentUpload, type DocumentUploadHandle } from "@/components/dashboard/DocumentUpload";
+import { ComparisonTable } from "@/components/dashboard/ComparisonTable";
+import { WhatsAppCTA } from "@/components/dashboard/WhatsAppCTA";
+import { EspaceChat } from "@/components/dashboard/EspaceChat";
 
 type LoadState = "loading" | "loaded" | "not-found" | "error";
 
@@ -41,14 +48,14 @@ function ProspectCodeBadge({ code }: { code: string }) {
   };
   return (
     <div className="flex items-center gap-2 bg-white/15 px-3 py-2 rounded-lg">
-      <span className="text-xs text-white/70">Access code</span>
+      <span className="text-xs text-white/70">Code d&apos;accès</span>
       <span className="font-mono text-base font-bold text-white tracking-widest">
         {code}
       </span>
       <button
         onClick={copy}
         className="flex items-center justify-center w-6 h-6 rounded hover:bg-white/20 transition-colors"
-        aria-label="Copy code"
+        aria-label="Copier le code"
       >
         {copied ? (
           <Check className="h-3.5 w-3.5 text-[#A4CE4E]" />
@@ -73,7 +80,7 @@ function DashboardHeader({ profession }: { profession: string }) {
             className="flex items-center gap-2 text-sm text-[#75787B] hover:text-[#1A1A1A] transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">metlife.com</span>
+            <span className="hidden sm:inline">metlife.fr</span>
           </a>
           <div className="w-px h-5 bg-[#D9D9D6]" />
           <img src="/metlife-logo.png" alt="MetLife" className="h-7" />
@@ -88,7 +95,7 @@ function DashboardHeader({ profession }: { profession: string }) {
             style={{ background: "#A4CE4E", color: "#1A1A1A" }}
           >
             <Phone className="h-4 w-4" />
-            <span className="hidden sm:inline">Contact an advisor</span>
+            <span className="hidden sm:inline">Contacter un conseiller</span>
           </button>
         </div>
       </div>
@@ -105,7 +112,7 @@ function ProfileBar({ data, code }: { data: DashboardData; code: string | null }
       <div className="max-w-[1100px] mx-auto px-6 py-8">
         <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
           <div>
-            <p className="text-sm text-white/70 mb-1">Your personalized space</p>
+            <p className="text-sm text-white/70 mb-1">Votre espace personnalisé</p>
             <h1 className="text-2xl font-bold">{data.profile.profession}</h1>
           </div>
           {code && <ProspectCodeBadge code={code} />}
@@ -137,7 +144,7 @@ const severityConfig = {
     color: "text-red-600",
     bg: "bg-red-50",
     border: "border-red-200",
-    label: "High risk",
+    label: "Risque élevé",
     Icon: ShieldAlert,
     dotColor: "bg-red-500",
   },
@@ -145,7 +152,7 @@ const severityConfig = {
     color: "text-amber-600",
     bg: "bg-amber-50",
     border: "border-amber-200",
-    label: "Moderate risk",
+    label: "Risque modéré",
     Icon: Shield,
     dotColor: "bg-amber-500",
   },
@@ -153,7 +160,7 @@ const severityConfig = {
     color: "text-green-600",
     bg: "bg-green-50",
     border: "border-green-200",
-    label: "Low risk",
+    label: "Risque faible",
     Icon: ShieldCheck,
     dotColor: "bg-green-500",
   },
@@ -239,7 +246,7 @@ function ProductsList({ products }: { products: ProductRecommendation[] }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-sm font-medium text-[#0090DA] hover:underline"
             >
-              Learn more
+              En savoir plus
               <ExternalLink className="h-3 w-3" />
             </a>
           )}
@@ -342,18 +349,18 @@ function AdvisorSection() {
     >
       <Phone className="h-8 w-8 text-[#0090DA] mx-auto mb-3" />
       <h3 className="text-lg font-semibold text-[#1A1A1A] mb-1">
-        Want to go further?
+        Vous souhaitez aller plus loin ?
       </h3>
       <p className="text-sm text-[#75787B] mb-4">
-        A MetLife advisor specializing in self-employed workers can refine these recommendations and
-        offer you a personalized quote.
+        Un conseiller MetLife spécialisé TNS peut affiner ces recommandations et
+        vous proposer un devis personnalisé.
       </p>
       <button
         className="inline-flex items-center gap-2 font-semibold text-sm px-6 py-3 rounded-md transition-colors hover:brightness-95"
         style={{ background: "#A4CE4E", color: "#1A1A1A" }}
       >
         <Phone className="h-4 w-4" />
-        Book an appointment
+        Prendre rendez-vous
       </button>
     </div>
   );
@@ -362,105 +369,184 @@ function AdvisorSection() {
 // ──────────────────────────────────────────────
 // Dashboard content
 // ──────────────────────────────────────────────
-function DashboardContent({ data, code }: { data: DashboardData; code: string | null }) {
+type EspaceTab = "dossier" | "analyse"
+
+function TabBar({ active, onChange, hasAnalysis }: { active: EspaceTab; onChange: (t: EspaceTab) => void; hasAnalysis: boolean }) {
+  return (
+    <div className="border-b border-[#E5E5E5] bg-white sticky top-16 z-20">
+      <div className="max-w-[1200px] mx-auto px-6 flex gap-1">
+        <button
+          onClick={() => onChange("dossier")}
+          className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+            active === "dossier"
+              ? "border-[#0090DA] text-[#0090DA]"
+              : "border-transparent text-[#75787B] hover:text-[#1A1A1A]"
+          }`}
+        >
+          <ClipboardList className="h-4 w-4" />
+          Mon dossier
+        </button>
+        <button
+          onClick={() => onChange("analyse")}
+          className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+            active === "analyse"
+              ? "border-[#0090DA] text-[#0090DA]"
+              : "border-transparent text-[#75787B] hover:text-[#1A1A1A]"
+          }`}
+        >
+          <GitCompare className="h-4 w-4" />
+          Analyse contrat
+          {hasAnalysis && (
+            <span className="flex items-center justify-center w-2 h-2 rounded-full bg-[#A4CE4E]" />
+          )}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function DashboardContent({ data, code, prospectId, initialMessages }: { data: DashboardData; code: string | null; prospectId: string; initialMessages: Array<{ id: string; role: 'user' | 'assistant'; content: string }> }) {
+  const [activeTab, setActiveTab] = useState<EspaceTab>("dossier")
+  const [analysisResult, setAnalysisResult] = useState<{
+    extraction: ExtractedContract
+    comparison: ComparisonResult
+  } | null>(null)
+  const uploadRef = useRef<DocumentUploadHandle>(null)
+
+  const handleAnalysisComplete = useCallback((result: { extraction: ExtractedContract; comparison: ComparisonResult }) => {
+    setAnalysisResult(result)
+  }, [])
+
+  const handleImageFromChat = useCallback((file: File) => {
+    setActiveTab("analyse")
+    setTimeout(() => {
+      uploadRef.current?.addFileAndAnalyze(file)
+    }, 100)
+  }, [])
+
   return (
     <>
       <ProfileBar data={data} code={code} />
+      <TabBar active={activeTab} onChange={setActiveTab} hasAnalysis={!!analysisResult} />
 
-      <div className="max-w-[1100px] mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main column — 2/3 */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Risks */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <AlertTriangle className="h-5 w-5 text-[#75787B]" />
-                <h2 className="text-lg font-bold text-[#1A1A1A]">
-                  Identified risks
-                </h2>
-              </div>
-              <div className="bg-white rounded-xl border border-[#E5E5E5] p-5">
-                <RisksList risks={data.risks} />
-              </div>
-            </motion.section>
-
-            {/* Products */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <CheckCircle2 className="h-5 w-5 text-[#0090DA]" />
-                <h2 className="text-lg font-bold text-[#1A1A1A]">
-                  Recommended MetLife solutions
-                </h2>
-              </div>
-              <ProductsList products={data.products} />
-            </motion.section>
-
-            {/* Resources */}
-            {data.resources.length > 0 && (
+      {activeTab === "dossier" && (
+        <div className="max-w-[1100px] mx-auto px-6 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-8">
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.1 }}
               >
                 <div className="flex items-center gap-2 mb-4">
-                  <BookOpen className="h-5 w-5 text-[#75787B]" />
-                  <h2 className="text-lg font-bold text-[#1A1A1A]">
-                    Useful resources
-                  </h2>
+                  <AlertTriangle className="h-5 w-5 text-[#75787B]" />
+                  <h2 className="text-lg font-bold text-[#1A1A1A]">Risques identifiés</h2>
                 </div>
-                <ResourcesList resources={data.resources} />
+                <div className="bg-white rounded-xl border border-[#E5E5E5] p-5">
+                  <RisksList risks={data.risks} />
+                </div>
               </motion.section>
-            )}
-          </div>
 
-          {/* Sidebar — 1/3 */}
-          <div className="space-y-6">
-            {/* Partners */}
-            {data.partners.length > 0 && (
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.25 }}
               >
-                <h3 className="text-sm font-bold text-[#1A1A1A] mb-3 uppercase tracking-wide">
-                  Partner services
-                </h3>
-                <div className="bg-white rounded-xl border border-[#E5E5E5] p-4">
-                  <PartnersList partnerRecs={data.partners} />
+                <div className="flex items-center gap-2 mb-4">
+                  <CheckCircle2 className="h-5 w-5 text-[#0090DA]" />
+                  <h2 className="text-lg font-bold text-[#1A1A1A]">Solutions MetLife recommandées</h2>
                 </div>
+                <ProductsList products={data.products} />
               </motion.section>
-            )}
 
-            {/* CTA */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45 }}
-            >
-              <AdvisorSection />
-            </motion.section>
+              {data.resources.length > 0 && (
+                <motion.section
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <BookOpen className="h-5 w-5 text-[#75787B]" />
+                    <h2 className="text-lg font-bold text-[#1A1A1A]">Ressources utiles</h2>
+                  </div>
+                  <ResourcesList resources={data.resources} />
+                </motion.section>
+              )}
+            </div>
 
-            {/* Legal */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.55 }}
-              className="space-y-4"
-            >
-              <Disclaimer />
-              <TrustSignals />
-            </motion.section>
+            <div className="space-y-6">
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                id="whatsapp-section"
+              >
+                <WhatsAppCTA prospectId={prospectId} profession={data.profile.profession} />
+              </motion.section>
+
+              {data.partners.length > 0 && (
+                <motion.section
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <h3 className="text-sm font-bold text-[#1A1A1A] mb-3 uppercase tracking-wide">Services partenaires</h3>
+                  <div className="bg-white rounded-xl border border-[#E5E5E5] p-4">
+                    <PartnersList partnerRecs={data.partners} />
+                  </div>
+                </motion.section>
+              )}
+
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45 }}
+              >
+                <AdvisorSection />
+              </motion.section>
+
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.55 }}
+                className="space-y-4"
+              >
+                <Disclaimer />
+                <TrustSignals />
+              </motion.section>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {activeTab === "analyse" && (
+        <div className="max-w-[1200px] mx-auto px-6 py-8">
+          <div className="space-y-8">
+            <DocumentUpload
+              ref={uploadRef}
+              prospectId={prospectId}
+              onAnalysisComplete={handleAnalysisComplete}
+            />
+
+            {analysisResult && (
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <ComparisonTable data={analysisResult.comparison} />
+              </motion.section>
+            )}
+          </div>
+        </div>
+      )}
+
+      <EspaceChat
+        prospectId={prospectId}
+        prospectCode={code || ''}
+        initialMessages={initialMessages}
+        onImageUpload={handleImageFromChat}
+      />
     </>
   );
 }
@@ -523,6 +609,7 @@ export default function EspacePage({
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [profession, setProfession] = useState("");
   const [prospectCode, setProspectCode] = useState<string | null>(null);
+  const [chatMessages, setChatMessages] = useState<Array<{ id: string; role: 'user' | 'assistant'; content: string }>>([]);
 
   useEffect(() => {
     // Demo mode: read dashboard from sessionStorage
@@ -558,6 +645,13 @@ export default function EspacePage({
         setDashboardData(data.dashboard || null);
         setProfession(data.dashboard?.profile?.profession || "TNS");
         setProspectCode(data.code ?? null);
+        if (Array.isArray(data.messages) && data.messages.length > 0) {
+          setChatMessages(data.messages.map((m: { id?: string; role: string; content: string }, i: number) => ({
+            id: m.id || `loaded-${i}`,
+            role: m.role as 'user' | 'assistant',
+            content: m.content,
+          })));
+        }
         setLoadState("loaded");
       })
       .catch(() => {
@@ -576,43 +670,51 @@ export default function EspacePage({
   if (loadState === "not-found") {
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4 px-6">
-        <h1 className="text-xl font-semibold">Space not found</h1>
+        <h1 className="text-xl font-semibold">Espace introuvable</h1>
         <p className="text-sm text-[#75787B] text-center">
-          This space does not exist or has been deleted.
+          Cet espace n&apos;existe pas ou a été supprimé.
         </p>
         <a
           href="/"
           className="inline-flex items-center gap-1 text-sm font-medium text-[#0090DA] hover:underline"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          Back to MetLife site
+          Retour au site MetLife
         </a>
       </div>
     );
   }
 
-  if (loadState === "error" || !dashboardData) {
+  if (loadState === "error") {
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4 px-6">
-        <h1 className="text-xl font-semibold">Loading error</h1>
+        <h1 className="text-xl font-semibold">Erreur de chargement</h1>
         <p className="text-sm text-[#75787B] text-center">
-          Unable to load your space. Please try again.
+          Impossible de charger votre espace. Veuillez réessayer.
         </p>
         <a
           href="/"
           className="inline-flex items-center gap-1 text-sm font-medium text-[#0090DA] hover:underline"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          Back to MetLife site
+          Retour au site MetLife
         </a>
       </div>
     );
   }
+
+  const effectiveData: DashboardData = dashboardData ?? {
+    risks: [],
+    products: [],
+    partners: [],
+    resources: [],
+    profile: { profession: "TNS", sector: "", concerns: [] },
+  };
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <DashboardHeader profession={profession} />
-      <DashboardContent data={dashboardData} code={prospectCode} />
+      <DashboardHeader profession={profession || effectiveData.profile.profession} />
+      <DashboardContent data={effectiveData} code={prospectCode} prospectId={prospectId} initialMessages={chatMessages} />
     </div>
   );
 }

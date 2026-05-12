@@ -5,15 +5,15 @@ export interface ChatError {
   retryable: boolean;
 }
 
-export function mapErrorToUserMessage(error: Error): ChatError {
+export function mapErrorToFrench(error: Error): ChatError {
   const msg = error.message?.toLowerCase() || '';
 
   // Rate limiting (Claude API 429)
   if (msg.includes('rate') || msg.includes('429')) {
     return {
-      title: 'One moment, please',
+      title: "Un instant, s'il vous plait",
       message:
-        'Our service is temporarily overloaded. Please try again in a few seconds.',
+        'Notre service est temporairement surchargé. Veuillez réessayer dans quelques secondes.',
       action: 'wait',
       retryable: true,
     };
@@ -22,9 +22,9 @@ export function mapErrorToUserMessage(error: Error): ChatError {
   // Auth / API key errors (401, 403)
   if (msg.includes('401') || msg.includes('403') || msg.includes('api_key') || msg.includes('authentication')) {
     return {
-      title: 'Service unavailable',
+      title: 'Service indisponible',
       message:
-        'Our analysis service is momentarily unavailable. We invite you to contact a MetLife advisor directly.',
+        "Notre service d'analyse est momentanément indisponible. Nous vous invitons à contacter directement un conseiller MetLife.",
       action: 'contact',
       retryable: false,
     };
@@ -33,9 +33,9 @@ export function mapErrorToUserMessage(error: Error): ChatError {
   // Network / timeout errors
   if (msg.includes('network') || msg.includes('fetch') || msg.includes('timeout') || msg.includes('failed to fetch')) {
     return {
-      title: 'Connection issue',
+      title: 'Problème de connexion',
       message:
-        'The connection was interrupted. Please check your internet connection and try again.',
+        'La connexion a été interrompue. Vérifiez votre connexion internet et réessayez.',
       action: 'retry',
       retryable: true,
     };
@@ -44,9 +44,9 @@ export function mapErrorToUserMessage(error: Error): ChatError {
   // Claude overloaded (529)
   if (msg.includes('overloaded') || msg.includes('529')) {
     return {
-      title: 'High demand',
+      title: 'Service en forte demande',
       message:
-        'Our assistant is experiencing high demand right now. Please try again in a moment.',
+        'Notre assistant est très sollicité en ce moment. Veuillez réessayer dans un instant.',
       action: 'wait',
       retryable: true,
     };
@@ -55,9 +55,9 @@ export function mapErrorToUserMessage(error: Error): ChatError {
   // Stream disconnected mid-response
   if (msg.includes('disconnect') || msg.includes('abort')) {
     return {
-      title: 'Response interrupted',
+      title: 'Réponse interrompue',
       message:
-        'The response was interrupted. You can resend your request.',
+        'La réponse a été interrompue. Vous pouvez relancer votre demande.',
       action: 'retry',
       retryable: true,
     };
@@ -66,19 +66,19 @@ export function mapErrorToUserMessage(error: Error): ChatError {
   // Server error (500)
   if (msg.includes('500') || msg.includes('internal server error')) {
     return {
-      title: 'Processing error',
+      title: 'Erreur de traitement',
       message:
-        'A technical issue occurred. Please try again in a few moments.',
+        "Un problème technique est survenu. Veuillez réessayer dans quelques instants.",
       action: 'retry',
       retryable: true,
     };
   }
 
-  // Default fallback
+  // Default fallback — always in French, always retryable
   return {
-    title: 'An error occurred',
+    title: 'Une erreur est survenue',
     message:
-      'We were unable to process your request. Please try again or contact a MetLife advisor.',
+      "Nous n'avons pas pu traiter votre demande. Veuillez réessayer ou contacter un conseiller MetLife.",
     action: 'retry',
     retryable: true,
   };
