@@ -405,7 +405,7 @@ function TabBar({ active, onChange, hasAnalysis }: { active: EspaceTab; onChange
   )
 }
 
-function DashboardContent({ data, code, prospectId, initialMessages }: { data: DashboardData; code: string | null; prospectId: string; initialMessages: Array<{ id: string; role: 'user' | 'assistant'; content: string }> }) {
+function DashboardContent({ data, code, prospectId, initialMessages, onDashboardRefresh }: { data: DashboardData; code: string | null; prospectId: string; initialMessages: Array<{ id: string; role: 'user' | 'assistant'; content: string }>; onDashboardRefresh?: () => void }) {
   const [activeTab, setActiveTab] = useState<EspaceTab>("dossier")
   const [analysisResult, setAnalysisResult] = useState<{
     extraction: ExtractedContract
@@ -546,6 +546,7 @@ function DashboardContent({ data, code, prospectId, initialMessages }: { data: D
         prospectCode={code || ''}
         initialMessages={initialMessages}
         onImageUpload={handleImageFromChat}
+        onConversationUpdate={onDashboardRefresh}
       />
     </>
   );
@@ -610,6 +611,18 @@ export default function EspacePage({
   const [profession, setProfession] = useState("");
   const [prospectCode, setProspectCode] = useState<string | null>(null);
   const [chatMessages, setChatMessages] = useState<Array<{ id: string; role: 'user' | 'assistant'; content: string }>>([]);
+
+  const handleDashboardRefresh = useCallback(() => {
+    fetch(`/api/prospect/${prospectId}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(d => {
+        if (d?.dashboard) {
+          setDashboardData(d.dashboard);
+          setProfession(d.dashboard.profile?.profession || profession);
+        }
+      })
+      .catch(() => {});
+  }, [prospectId, profession]);
 
   useEffect(() => {
     // Demo mode: read dashboard from sessionStorage
@@ -714,7 +727,7 @@ export default function EspacePage({
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
       <DashboardHeader profession={profession || effectiveData.profile.profession} />
-      <DashboardContent data={effectiveData} code={prospectCode} prospectId={prospectId} initialMessages={chatMessages} />
+      <DashboardContent data={effectiveData} code={prospectCode} prospectId={prospectId} initialMessages={chatMessages} onDashboardRefresh={handleDashboardRefresh} />
     </div>
   );
 }

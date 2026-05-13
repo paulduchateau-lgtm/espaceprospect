@@ -1,5 +1,7 @@
 import { client, ensureSchema } from './db';
-import type { ChatMessage, DashboardData } from './types';
+import type { DashboardData } from './types';
+
+type MessageRecord = { role: 'user' | 'assistant'; content: string };
 
 // 6-char alphanumeric code — excludes ambiguous chars (O, 0, I, 1, L)
 const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -26,7 +28,7 @@ export async function createProspect(): Promise<{ id: string; code: string }> {
 
 export async function loadProspectByCode(code: string): Promise<{
   id: string;
-  messages: ChatMessage[];
+  messages: MessageRecord[];
   dashboard: DashboardData | null;
   code: string;
 } | null> {
@@ -43,26 +45,46 @@ export async function loadProspectByCode(code: string): Promise<{
 
 export async function saveProspectData(
   prospectId: string,
-  messages: ChatMessage[],
+  messages: MessageRecord[],
   dashboardData: DashboardData
 ): Promise<void> {
-  const convId = crypto.randomUUID();
-  await client.execute({
-    sql: `INSERT OR REPLACE INTO conversations (id, prospect_id, messages, created_at, updated_at)
-          VALUES (?, ?, ?, unixepoch(), unixepoch())`,
-    args: [convId, prospectId, JSON.stringify(messages)],
+  await saveMessages(prospectId, messages);
+  await saveDashboard(prospectId, dashboardData);
+}
+
+export async function saveMessages(prospectId: string, messages: MessageRecord[]): Promise<void> {
+  await ensureSchema();
+  const existing = await client.execute({
+    sql: `SELECT id FROM conversations WHERE prospect_id = ? LIMIT 1`,
+    args: [prospectId],
   });
+  if (existing.rows.length > 0) {
+    await client.execute({
+      sql: `UPDATE conversations SET messages = ?, updated_at = unixepoch() WHERE id = ?`,
+      args: [JSON.stringify(messages), existing.rows[0].id as string],
+    });
+  } else {
+    await client.execute({
+      sql: `INSERT INTO conversations (id, prospect_id, messages, created_at, updated_at)
+            VALUES (?, ?, ?, unixepoch(), unixepoch())`,
+      args: [crypto.randomUUID(), prospectId, JSON.stringify(messages)],
+    });
+  }
+}
+
+export async function saveDashboard(prospectId: string, data: unknown): Promise<void> {
+  await ensureSchema();
   await client.execute({
     sql: `INSERT INTO dashboard_snapshots (id, prospect_id, data, created_at)
           VALUES (?, ?, ?, unixepoch())`,
-    args: [crypto.randomUUID(), prospectId, JSON.stringify(dashboardData)],
+    args: [crypto.randomUUID(), prospectId, JSON.stringify(data)],
   });
 }
 
 export async function loadProspect(prospectId: string): Promise<{
   id: string;
   code: string | null;
-  messages: ChatMessage[];
+  messages: MessageRecord[];
   dashboard: DashboardData | null;
 } | null> {
   await ensureSchema();

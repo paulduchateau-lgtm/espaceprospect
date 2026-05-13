@@ -6,6 +6,7 @@ import { db } from '@/lib/db'
 import { prospects, conversations } from '@/db/schema'
 import { getSailorClient } from '@/lib/sailor-client'
 import { formatSailorChunksAsRAG } from '@/lib/prompts'
+import { saveMessages } from '@/lib/prospect'
 import {
   getVerifyToken,
   parseWebhookPayload,
@@ -73,24 +74,7 @@ async function loadConversationHistory(prospectId: string): Promise<ChatMessage[
 }
 
 async function saveConversationHistory(prospectId: string, messages: ChatMessage[]) {
-  const [existing] = await db
-    .select()
-    .from(conversations)
-    .where(eq(conversations.prospectId, prospectId))
-    .limit(1)
-
-  if (existing) {
-    await db
-      .update(conversations)
-      .set({ messages, updatedAt: new Date() })
-      .where(eq(conversations.id, existing.id))
-  } else {
-    await db.insert(conversations).values({
-      id: crypto.randomUUID(),
-      prospectId,
-      messages,
-    })
-  }
+  await saveMessages(prospectId, messages)
 }
 
 const WHATSAPP_SYSTEM_PROMPT = `Tu es un conseiller digital MetLife spécialisé TNS, disponible sur WhatsApp.

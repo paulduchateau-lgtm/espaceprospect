@@ -20,6 +20,7 @@ interface EspaceChatProps {
   prospectCode: string
   initialMessages?: ChatMessage[]
   onImageUpload?: (file: File) => void
+  onConversationUpdate?: () => void
 }
 
 function LoadingDotsInline() {
@@ -35,7 +36,7 @@ function LoadingDotsInline() {
   )
 }
 
-export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onImageUpload }: EspaceChatProps) {
+export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onImageUpload, onConversationUpdate }: EspaceChatProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
   const [input, setInput] = useState("")
@@ -145,8 +146,10 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
       setIsStreaming(false)
       abortRef.current = null
       if (!isOpen) setHasUnread(true)
+      // Dashboard may have been updated server-side via generate_dashboard tool
+      setTimeout(() => onConversationUpdate?.(), 500)
     }
-  }, [isStreaming, prospectId, isOpen])
+  }, [isStreaming, prospectId, isOpen, onConversationUpdate])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
