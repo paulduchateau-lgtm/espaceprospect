@@ -25,6 +25,7 @@ import {
   ClipboardList,
   GitCompare,
   X,
+  Lightbulb,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { DashboardData, Risk, ProductRecommendation, PartnerRecommendation, Resource } from "@/lib/types";
@@ -402,7 +403,7 @@ function TabBar({ active, onChange, hasAnalysis, showTip, onDismissTip }: { acti
             )}
           </button>
 
-          {/* Tooltip tip en dessous de l'onglet */}
+          {/* Tooltip astuce en dessous de l'onglet */}
           {showTip && (
             <div
               className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap"
@@ -416,22 +417,22 @@ function TabBar({ active, onChange, hasAnalysis, showTip, onDismissTip }: { acti
                   height: 0,
                   borderLeft: '7px solid transparent',
                   borderRight: '7px solid transparent',
-                  borderBottom: '7px solid #E88C0A',
+                  borderBottom: '7px solid #F5F5F3',
                 }}
               />
               <div
-                className="relative flex items-center gap-2 px-3.5 py-2 rounded-lg shadow-lg text-xs font-medium text-white cursor-pointer"
-                style={{ background: "#E88C0A" }}
+                className="relative flex items-center gap-2 px-3.5 py-2.5 rounded-lg shadow-lg text-xs font-medium cursor-pointer border"
+                style={{ background: "#F5F5F3", color: "#3A3A38", borderColor: "#E0E0DC" }}
                 onClick={() => { onChange("analyse"); onDismissTip?.() }}
               >
-                <GitCompare className="h-3.5 w-3.5 shrink-0" />
-                Comparez votre contrat avec nos offres
+                <Lightbulb className="h-3.5 w-3.5 shrink-0 text-[#6DAE2E]" />
+                <span><span className="font-semibold text-[#6DAE2E]">Astuce</span> — Comparez votre contrat avec nos offres</span>
                 <button
                   onClick={(e) => { e.stopPropagation(); onDismissTip?.() }}
-                  className="ml-1 p-0.5 rounded-full hover:bg-white/20 transition-colors"
+                  className="ml-1 p-0.5 rounded-full hover:bg-black/5 transition-colors"
                   aria-label="Fermer"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-3 w-3 text-[#999]" />
                 </button>
               </div>
             </div>
