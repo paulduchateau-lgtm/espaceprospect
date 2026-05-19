@@ -431,6 +431,14 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
 
       {activeTab === "dossier" && (
         <div className="max-w-[1100px] mx-auto px-6 py-8">
+          <button
+            onClick={() => setActiveTab("analyse")}
+            className="w-full mb-6 flex items-center gap-3 px-4 py-3 bg-[#EFF8FF] border border-[#B6DEFF] rounded-lg text-sm text-[#0060A0] hover:bg-[#E0F0FF] transition-colors cursor-pointer text-left"
+          >
+            <GitCompare className="h-4 w-4 shrink-0" />
+            <span><strong>Astuce</strong> — Cliquez ici pour comparer votre contrat actuel avec nos offres MetLife</span>
+            <ChevronRight className="h-4 w-4 shrink-0 ml-auto" />
+          </button>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <motion.section
