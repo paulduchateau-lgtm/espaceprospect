@@ -555,6 +555,7 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
         initialMessages={initialMessages}
         onImageUpload={handleImageFromChat}
         onConversationUpdate={onDashboardRefresh}
+        comparisonContext={analysisResult?.comparison ?? null}
       />
     </>
   );

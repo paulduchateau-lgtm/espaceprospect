@@ -15,12 +15,21 @@ interface ChatMessage {
   content: string
 }
 
+interface ComparisonContext {
+  document_type: string
+  current_contract: { insurer: string; product_name: string; monthly_price?: string }
+  rows: Array<{ category: string; label: string; current_value: string; metlife_essentiel: string; metlife_premium: string; verdict: string }>
+  summary: string
+  recommendation: string
+}
+
 interface EspaceChatProps {
   prospectId: string
   prospectCode: string
   initialMessages?: ChatMessage[]
   onImageUpload?: (file: File) => void
   onConversationUpdate?: () => void
+  comparisonContext?: ComparisonContext | null
 }
 
 function LoadingDotsInline() {
@@ -36,7 +45,7 @@ function LoadingDotsInline() {
   )
 }
 
-export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onImageUpload, onConversationUpdate }: EspaceChatProps) {
+export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onImageUpload, onConversationUpdate, comparisonContext }: EspaceChatProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
   const [input, setInput] = useState("")
@@ -89,7 +98,7 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text.trim(), prospectId }),
+        body: JSON.stringify({ message: text.trim(), prospectId, comparisonContext: comparisonContext ?? undefined }),
         signal: abortRef.current.signal,
       })
 
@@ -149,7 +158,7 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
       // Dashboard may have been updated server-side via generate_dashboard tool
       setTimeout(() => onConversationUpdate?.(), 500)
     }
-  }, [isStreaming, prospectId, isOpen, onConversationUpdate])
+  }, [isStreaming, prospectId, isOpen, onConversationUpdate, comparisonContext])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

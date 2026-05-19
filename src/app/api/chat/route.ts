@@ -39,6 +39,7 @@ function extractUserText(messages: Array<{ role: string; parts?: Array<{ type: s
 export async function POST(req: Request) {
   const body = await req.json();
   const prospectId = body.prospectId as string | undefined;
+  const comparisonContext = body.comparisonContext ?? null;
 
   let messageText: string;
   if (typeof body.message === 'string' && body.message.length > 0) {
@@ -95,7 +96,7 @@ export async function POST(req: Request) {
   try {
     const result = streamText({
       model: getAnthropic()('claude-sonnet-4-20250514'),
-      system: buildSystemPrompt(ragContext),
+      system: buildSystemPrompt(ragContext, comparisonContext),
       messages: allMessages,
       tools: { generate_dashboard: dashboardTool },
       onFinish: async (event) => {
