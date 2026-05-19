@@ -402,15 +402,26 @@ function TabBar({ active, onChange, hasAnalysis, showTip, onDismissTip }: { acti
             )}
           </button>
 
-          {/* Tooltip tip au-dessus de l'onglet */}
+          {/* Tooltip tip en dessous de l'onglet */}
           {showTip && (
             <div
-              className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 whitespace-nowrap animate-in fade-in slide-in-from-bottom-2 duration-300"
+              className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap"
               style={{ zIndex: 30 }}
             >
+              {/* Flèche vers le haut */}
+              <div
+                className="absolute left-1/2 -top-[7px] -translate-x-1/2"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: '7px solid transparent',
+                  borderRight: '7px solid transparent',
+                  borderBottom: '7px solid #E88C0A',
+                }}
+              />
               <div
                 className="relative flex items-center gap-2 px-3.5 py-2 rounded-lg shadow-lg text-xs font-medium text-white cursor-pointer"
-                style={{ background: "#0061A0" }}
+                style={{ background: "#E88C0A" }}
                 onClick={() => { onChange("analyse"); onDismissTip?.() }}
               >
                 <GitCompare className="h-3.5 w-3.5 shrink-0" />
@@ -422,17 +433,6 @@ function TabBar({ active, onChange, hasAnalysis, showTip, onDismissTip }: { acti
                 >
                   <X className="h-3 w-3" />
                 </button>
-                {/* Flèche vers le bas */}
-                <div
-                  className="absolute left-1/2 top-full -translate-x-1/2"
-                  style={{
-                    width: 0,
-                    height: 0,
-                    borderLeft: '7px solid transparent',
-                    borderRight: '7px solid transparent',
-                    borderTop: '7px solid #0061A0',
-                  }}
-                />
               </div>
             </div>
           )}
