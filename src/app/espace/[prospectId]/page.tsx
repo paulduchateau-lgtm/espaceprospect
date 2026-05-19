@@ -35,7 +35,7 @@ import { TrustSignals } from "@/components/legal/TrustSignals";
 import { DocumentUpload, type DocumentUploadHandle } from "@/components/dashboard/DocumentUpload";
 import { ComparisonTable } from "@/components/dashboard/ComparisonTable";
 import { WhatsAppCTA } from "@/components/dashboard/WhatsAppCTA";
-import { EspaceChat } from "@/components/dashboard/EspaceChat";
+import { EspaceChat, CHAT_PANEL_WIDTH } from "@/components/dashboard/EspaceChat";
 
 type LoadState = "loading" | "loaded" | "not-found" | "error";
 
@@ -411,6 +411,7 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
     extraction: ExtractedContract
     comparison: ComparisonResult
   } | null>(null)
+  const [isChatOpen, setIsChatOpen] = useState(false)
   const uploadRef = useRef<DocumentUploadHandle>(null)
 
   const handleAnalysisComplete = useCallback((result: { extraction: ExtractedContract; comparison: ComparisonResult }) => {
@@ -424,8 +425,18 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
     }, 100)
   }, [])
 
+  const handleChatToggle = useCallback(() => {
+    setIsChatOpen(prev => !prev)
+  }, [])
+
   return (
     <>
+      <div
+        style={{
+          marginRight: isChatOpen ? `${CHAT_PANEL_WIDTH}px` : '0px',
+          transition: 'margin-right 300ms cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
+      >
       <ProfileBar data={data} code={code} />
       <TabBar active={activeTab} onChange={setActiveTab} hasAnalysis={!!analysisResult} />
 
@@ -549,6 +560,8 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
         </div>
       )}
 
+      </div>
+
       <EspaceChat
         prospectId={prospectId}
         prospectCode={code || ''}
@@ -556,6 +569,8 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
         onImageUpload={handleImageFromChat}
         onConversationUpdate={onDashboardRefresh}
         comparisonContext={analysisResult?.comparison ?? null}
+        isOpen={isChatOpen}
+        onToggle={handleChatToggle}
       />
     </>
   );

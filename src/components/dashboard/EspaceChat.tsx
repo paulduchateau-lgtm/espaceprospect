@@ -7,7 +7,7 @@ import {
   useCallback,
   useId,
 } from "react"
-import { MessageCircle, X, SendHorizonal, Camera, ArrowRight } from "lucide-react"
+import { MessageCircle, X, SendHorizonal, Camera, ArrowRight, PanelRightClose } from "lucide-react"
 
 interface ChatMessage {
   id: string
@@ -30,6 +30,8 @@ interface EspaceChatProps {
   onImageUpload?: (file: File) => void
   onConversationUpdate?: () => void
   comparisonContext?: ComparisonContext | null
+  isOpen: boolean
+  onToggle: () => void
 }
 
 function LoadingDotsInline() {
@@ -45,8 +47,11 @@ function LoadingDotsInline() {
   )
 }
 
-export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onImageUpload, onConversationUpdate, comparisonContext }: EspaceChatProps) {
-  const [isOpen, setIsOpen] = useState(false)
+const PANEL_WIDTH = 420
+
+export { PANEL_WIDTH as CHAT_PANEL_WIDTH }
+
+export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onImageUpload, onConversationUpdate, comparisonContext, isOpen, onToggle }: EspaceChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
   const [input, setInput] = useState("")
   const [isStreaming, setIsStreaming] = useState(false)
@@ -71,6 +76,13 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
       setHasUnread(false)
     }
   }, [isOpen, messages, scrollToBottom])
+
+  // Focus textarea when panel opens
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => textareaRef.current?.focus(), 300)
+    }
+  }, [isOpen])
 
   const sendMessage = useCallback(async (text: string) => {
     if (!text.trim() || isStreaming) return
@@ -199,22 +211,22 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
     const businessPhone = process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS_PHONE
     if (!businessPhone) {
       document.getElementById("whatsapp-section")?.scrollIntoView({ behavior: "smooth" })
-      setIsOpen(false)
+      onToggle()
       return
     }
     const text = encodeURIComponent(`Bonjour, je souhaite poursuivre ma conversation MetLife. Mon code : ${prospectCode}`)
     window.open(`https://wa.me/${businessPhone}?text=${text}`, '_blank')
-  }, [prospectCode])
+  }, [prospectCode, onToggle])
 
   const handleOpen = useCallback(() => {
-    setIsOpen(true)
+    onToggle()
     setHasUnread(false)
-  }, [])
+  }, [onToggle])
 
   const handleClose = useCallback(() => {
-    setIsOpen(false)
+    onToggle()
     abortRef.current?.abort()
-  }, [])
+  }, [onToggle])
 
   const canSend = input.trim().length > 0 && !isStreaming
 
@@ -253,22 +265,17 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
         </button>
       </div>
 
-      {/* Expanded panel */}
+      {/* Side panel */}
       <div
         role="dialog"
         aria-label="Assistant MetLife"
-        aria-modal="true"
-        className="fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-2xl shadow-2xl border"
+        className="fixed top-0 right-0 bottom-0 z-40 flex flex-col border-l shadow-xl"
         style={{
-          width: "400px",
-          height: "500px",
+          width: `${PANEL_WIDTH}px`,
           borderColor: "#D9D9D6",
           background: "#FFFFFF",
-          opacity: isOpen ? 1 : 0,
-          transform: isOpen ? "translateY(0) scale(1)" : "translateY(16px) scale(0.96)",
-          pointerEvents: isOpen ? "auto" : "none",
-          transition: "opacity 220ms ease, transform 220ms ease",
-          transformOrigin: "bottom right",
+          transform: isOpen ? "translateX(0)" : `translateX(${PANEL_WIDTH}px)`,
+          transition: "transform 300ms cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         {/* Header */}
@@ -288,8 +295,9 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
             onClick={handleClose}
             aria-label="Fermer l'assistant"
             className="p-1.5 rounded-full hover:bg-white/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            title="Fermer le panel"
           >
-            <X className="w-4 h-4 text-white" strokeWidth={2} />
+            <PanelRightClose className="w-4 h-4 text-white" strokeWidth={2} />
           </button>
         </div>
 
@@ -301,7 +309,7 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
           aria-label="Conversation avec l'assistant"
         >
           {messages.length === 0 && !isStreaming && (
-            <p className="text-xs text-center" style={{ color: "#75787B" }}>
+            <p className="text-xs text-center py-6" style={{ color: "#75787B" }}>
               Bonjour ! Posez-moi vos questions sur nos solutions, ou envoyez-moi votre tableau de garanties actuel pour le comparer aux produits MetLife.
             </p>
           )}
@@ -327,7 +335,7 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
                 )}
 
                 <div
-                  className={`px-3 py-2 rounded-2xl text-sm max-w-[82%] ${
+                  className={`px-3 py-2 rounded-2xl text-sm max-w-[85%] ${
                     isUser ? "rounded-br-sm" : "rounded-bl-sm"
                   }`}
                   style={
@@ -372,7 +380,7 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
           <div
             className="absolute left-4 right-4 flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-white shadow-md transition-all"
             style={{
-              bottom: "76px",
+              bottom: "100px",
               background: "#0061A0",
             }}
             role="status"
@@ -411,7 +419,7 @@ export function EspaceChat({ prospectId, prospectCode, initialMessages = [], onI
               value={input}
               onChange={handleTextareaInput}
               onKeyDown={handleKeyDown}
-              placeholder="Posez-moi vos questions sur nos solutions, ou envoyez-moi votre tableau de garanties actuel pour le comparer aux produits MetLife."
+              placeholder="Posez votre question..."
               aria-label="Saisir un message"
               disabled={isStreaming}
               rows={1}
