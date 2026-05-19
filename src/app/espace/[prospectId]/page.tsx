@@ -16,7 +16,6 @@ import {
   Scale,
   Activity,
   Moon,
-  ChevronRight,
   ArrowLeft,
   User,
   Briefcase,
@@ -25,6 +24,7 @@ import {
   Check,
   ClipboardList,
   GitCompare,
+  X,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { DashboardData, Risk, ProductRecommendation, PartnerRecommendation, Resource } from "@/lib/types";
@@ -371,7 +371,7 @@ function AdvisorSection() {
 // ──────────────────────────────────────────────
 type EspaceTab = "dossier" | "analyse"
 
-function TabBar({ active, onChange, hasAnalysis }: { active: EspaceTab; onChange: (t: EspaceTab) => void; hasAnalysis: boolean }) {
+function TabBar({ active, onChange, hasAnalysis, showTip, onDismissTip }: { active: EspaceTab; onChange: (t: EspaceTab) => void; hasAnalysis: boolean; showTip?: boolean; onDismissTip?: () => void }) {
   return (
     <div className="border-b border-[#E5E5E5] bg-white sticky top-16 z-20">
       <div className="max-w-[1200px] mx-auto px-6 flex gap-1">
@@ -386,20 +386,57 @@ function TabBar({ active, onChange, hasAnalysis }: { active: EspaceTab; onChange
           <ClipboardList className="h-4 w-4" />
           Mon dossier
         </button>
-        <button
-          onClick={() => onChange("analyse")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-            active === "analyse"
-              ? "border-[#0090DA] text-[#0090DA]"
-              : "border-transparent text-[#75787B] hover:text-[#1A1A1A]"
-          }`}
-        >
-          <GitCompare className="h-4 w-4" />
-          Analyse contrat
-          {hasAnalysis && (
-            <span className="flex items-center justify-center w-2 h-2 rounded-full bg-[#A4CE4E]" />
+        <div className="relative">
+          <button
+            onClick={() => { onChange("analyse"); onDismissTip?.() }}
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+              active === "analyse"
+                ? "border-[#0090DA] text-[#0090DA]"
+                : "border-transparent text-[#75787B] hover:text-[#1A1A1A]"
+            }`}
+          >
+            <GitCompare className="h-4 w-4" />
+            Analyse contrat
+            {hasAnalysis && (
+              <span className="flex items-center justify-center w-2 h-2 rounded-full bg-[#A4CE4E]" />
+            )}
+          </button>
+
+          {/* Tooltip tip au-dessus de l'onglet */}
+          {showTip && (
+            <div
+              className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 whitespace-nowrap animate-in fade-in slide-in-from-bottom-2 duration-300"
+              style={{ zIndex: 30 }}
+            >
+              <div
+                className="relative flex items-center gap-2 px-3.5 py-2 rounded-lg shadow-lg text-xs font-medium text-white cursor-pointer"
+                style={{ background: "#0061A0" }}
+                onClick={() => { onChange("analyse"); onDismissTip?.() }}
+              >
+                <GitCompare className="h-3.5 w-3.5 shrink-0" />
+                Comparez votre contrat avec nos offres
+                <button
+                  onClick={(e) => { e.stopPropagation(); onDismissTip?.() }}
+                  className="ml-1 p-0.5 rounded-full hover:bg-white/20 transition-colors"
+                  aria-label="Fermer"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+                {/* Flèche vers le bas */}
+                <div
+                  className="absolute left-1/2 top-full -translate-x-1/2"
+                  style={{
+                    width: 0,
+                    height: 0,
+                    borderLeft: '7px solid transparent',
+                    borderRight: '7px solid transparent',
+                    borderTop: '7px solid #0061A0',
+                  }}
+                />
+              </div>
+            </div>
           )}
-        </button>
+        </div>
       </div>
     </div>
   )
@@ -412,6 +449,7 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
     comparison: ComparisonResult
   } | null>(null)
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [showTip, setShowTip] = useState(true)
   const uploadRef = useRef<DocumentUploadHandle>(null)
 
   const handleAnalysisComplete = useCallback((result: { extraction: ExtractedContract; comparison: ComparisonResult }) => {
@@ -429,6 +467,10 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
     setIsChatOpen(prev => !prev)
   }, [])
 
+  const handleDismissTip = useCallback(() => {
+    setShowTip(false)
+  }, [])
+
   return (
     <>
       <div
@@ -438,18 +480,10 @@ function DashboardContent({ data, code, prospectId, initialMessages, onDashboard
         }}
       >
       <ProfileBar data={data} code={code} />
-      <TabBar active={activeTab} onChange={setActiveTab} hasAnalysis={!!analysisResult} />
+      <TabBar active={activeTab} onChange={setActiveTab} hasAnalysis={!!analysisResult} showTip={showTip && activeTab === "dossier"} onDismissTip={handleDismissTip} />
 
       {activeTab === "dossier" && (
         <div className="max-w-[1100px] mx-auto px-6 py-8">
-          <button
-            onClick={() => setActiveTab("analyse")}
-            className="w-full mb-6 flex items-center gap-3 px-4 py-3 bg-[#EFF8FF] border border-[#B6DEFF] rounded-lg text-sm text-[#0060A0] hover:bg-[#E0F0FF] transition-colors cursor-pointer text-left"
-          >
-            <GitCompare className="h-4 w-4 shrink-0" />
-            <span><strong>Astuce</strong> — Cliquez ici pour comparer votre contrat actuel avec nos offres MetLife</span>
-            <ChevronRight className="h-4 w-4 shrink-0 ml-auto" />
-          </button>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <motion.section
